@@ -10,6 +10,8 @@ const Color kLightRedColor = Color(0xFFFFEBEB);
 const Color errorTextFieldBorderColor = Color(0xFFF32D2D);
 const Color textFieldBorderColor = Color(0xFFE0E2E6);
 const Color kSecondaryGray900 = Color(0xFF6F727A);
+const Color kSecondaryGray700 = Color(0xFF9CA1AD);
+const Color kPrimaryBlack = Color(0xFF232325);
 
 const Color kPrimary100 = Color(0xFFAFCBE9);
 const Color kPrimary200 = Color(0xFF98BCE3);

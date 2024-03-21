@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
@@ -23,3 +24,72 @@ ButtonStyle buttonDecoration(bool isButtonEnabled) {
     ),
   );
 }
+
+TextStyle textFormFieldTextInterStyle = GoogleFonts.inter(
+    color: kPrimaryBlack,
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+    fontStyle: FontStyle.normal);
+
+TextStyle textFormFieldTextGreyInterStyle = GoogleFonts.inter(
+    color: kSecondaryGray700,
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+    fontStyle: FontStyle.normal);
+
+InputDecoration textFormFieldDecoration(
+    {required String hintText,
+    required TextStyle textFormFieldHintStyle,
+    required String labelText,
+    required TextStyle textFormFieldLabelStyle,
+    required bool isEnable}) {
+  return InputDecoration(
+    border: const OutlineInputBorder(
+      borderRadius: BorderRadius.all(
+        Radius.circular(8),
+      ),
+    ),
+    counterText: '',
+    errorBorder: const OutlineInputBorder(
+      borderSide: BorderSide(color: errorTextFieldBorderColor),
+      borderRadius: BorderRadius.all(
+        Radius.circular(8),
+      ),
+    ),
+    focusedBorder: const OutlineInputBorder(
+      borderSide: BorderSide(color: textFieldBorderColor),
+      borderRadius: BorderRadius.all(
+        Radius.circular(8),
+      ),
+    ),
+    enabledBorder: const OutlineInputBorder(
+      borderSide: BorderSide(color: textFieldBorderColor),
+      borderRadius: BorderRadius.all(
+        Radius.circular(8),
+      ),
+    ),
+    disabledBorder: const OutlineInputBorder(
+      borderSide: BorderSide(color: textFieldBorderColor),
+      borderRadius: BorderRadius.all(
+        Radius.circular(8),
+      ),
+    ),
+    hintText: hintText,
+    hintStyle: textFormFieldHintStyle,
+    labelText: labelText,
+    labelStyle: textFormFieldLabelStyle,
+    contentPadding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+  );
+}
+
+TextStyle textFormFieldHintInterStyle = GoogleFonts.inter(
+    color: kSecondaryGray700,
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    fontStyle: FontStyle.normal);
+
+TextStyle textFormFieldLabelInterStyle = GoogleFonts.inter(
+    color: kSecondaryGray900,
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    fontStyle: FontStyle.normal);
