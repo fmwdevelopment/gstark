@@ -7,6 +7,7 @@ import '../../constants/string_constants.dart';
 import '../../utils/text_utils/normal_text.dart';
 import '../../widgets/button.dart';
 import '../../widgets/input_textfield.dart';
+import 'login_screen_loader.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_page';
@@ -38,9 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: kWhite,
       body: Obx(() => loginScreenController.isBusy
           ? const Center(
-              child: NormalText(
-                text: 'Loading...',
-              ),
+              child: LoginScreenLoader(),
             )
           : LayoutBuilder(
               builder: (context, constraint) {
