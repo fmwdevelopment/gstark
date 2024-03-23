@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gstark/controller/login_screen_controller.dart';
+import 'package:gstark/utils/invoice_pdf_generator.dart';
 
 import '../../constants/app_colors.dart';
 import '../../constants/string_constants.dart';
@@ -101,11 +102,34 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             const SizedBox(height: 46),
                             Button(
-                              onPress: () {
-                                loginScreenController.signCustomerIn(
-                                    email: _emailController.text,
-                                    password: _passwordController.text,
-                                    context: context);
+                              onPress: () async {
+                                // loginScreenController.signCustomerIn(
+                                //     email: _emailController.text,
+                                //     password: _passwordController.text,
+                                //     context: context);
+                                final invoiceData = [
+                                  {
+                                    'name': 'Product A',
+                                    'quantity': 2,
+                                    'price': 25.00
+                                  },
+                                  {
+                                    'name': 'Product B',
+                                    'quantity': 1,
+                                    'price': 50.00
+                                  },
+                                  {
+                                    'name': 'Product C',
+                                    'quantity': 3,
+                                    'price': 15.00
+                                  },
+                                ];
+
+                                final generator = InvoicePdfGenerator();
+                                final filePath = await generator
+                                    .generateInvoicePdf(invoiceData);
+
+                                print('Invoice PDF generated at: $filePath');
                               },
                               backgroundColor: kPrimaryMain,
                               buttonText: signInCapitalized,
