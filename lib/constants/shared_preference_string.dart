@@ -1,3 +1,12 @@
 class SharedPreferenceString {
   static const String authToken = 'auth_token';
+  static const String reviewerId = 'reviewer_id';
+  static const String phoneNumber = 'phone_number';
+  static const String gstNumber = 'gst_number';
+  static const String clientName = 'client_name';
+  static const String clienId = 'client_id';
+  static const String email = 'email';
+  static const String securityAnswer = 'security_answer';
+
+
 }

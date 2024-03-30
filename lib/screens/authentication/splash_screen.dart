@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gstark/constants/app_colors.dart';
 import 'package:gstark/utils/text_utils/normal_text.dart';
 
 import 'login_screen.dart';
@@ -32,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: NormalText(text: 'Splash Screen'),
+        child: NormalText(text: 'gStark',textSize: 48,textColor: kPrimaryMain,textFontWeight: FontWeight.w500,),
       ),
     );
   }

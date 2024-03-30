@@ -30,6 +30,15 @@ class LoginScreenLoader extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
               ),
             ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 24),
+            child: ShimmerLoader(
+              child: ShimmerHorizontalLoadingTile(
+                height: 60,
+                width: MediaQuery.of(context).size.width,
+              ),
+            ),
           )
         ],
       ),

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gstark/constants/shared_preference_string.dart';
 import 'package:gstark/constants/string_constants.dart';
 import 'package:gstark/models/login_response_model.dart';
+import 'package:gstark/utils/shared_preference/custom_shared_preference.dart';
 import 'package:gstark/utils/toast_utils/error_toast.dart';
 
 import '../helper/network/api_end_point.dart';
 import '../helper/network/network_helper.dart';
+import '../screens/Home/home_screen.dart';
 
 class LoginScreenController extends GetxController {
   ApiService apiService = ApiService();
@@ -19,9 +22,10 @@ class LoginScreenController extends GetxController {
   }
 
   void signCustomerIn(
-      {required String email,
+      {required String userId,
       required String password,
       required BuildContext context}) async {
+
     setBusy(true);
     // bool isConnectedToInternet = await checkIsConnectedToInternet();
 
@@ -30,13 +34,24 @@ class LoginScreenController extends GetxController {
         var value = await apiService.post(
             ApiEndPoint.baseUrl + ApiEndPoint.loginApi,
             Get.overlayContext ?? context,
-            body: {"userid": email, "password": password});
+            body: {"userid": userId, "password": password});
 
         if (value.statusCode == 200 && value.response != null) {
           LoginResponseModel loginResponseModel =
               LoginResponseModel.fromJson(value.response);
           if (loginResponseModel.response != null) {
-            print('hello ${loginResponseModel.response!.email}');
+            // print('hello ${loginResponseModel.response!.email}');
+            CustomSharedPref.setPref<String>(SharedPreferenceString.reviewerId, loginResponseModel.response?.reviewerId ?? "");
+            CustomSharedPref.setPref<String>(SharedPreferenceString.phoneNumber, loginResponseModel.response?.phone ?? "");
+            CustomSharedPref.setPref<String>(SharedPreferenceString.gstNumber, loginResponseModel.response?.gstn ?? "");
+            CustomSharedPref.setPref<String>(SharedPreferenceString.clientName, loginResponseModel.response?.name ?? "");
+            CustomSharedPref.setPref<String>(SharedPreferenceString.clienId, loginResponseModel.response?.id ?? "");
+            CustomSharedPref.setPref<String>(SharedPreferenceString.email, loginResponseModel.response?.email ?? "");
+            CustomSharedPref.setPref<String>(SharedPreferenceString.authToken, loginResponseModel.response?.jwt ?? "");
+            CustomSharedPref.setPref<String>(SharedPreferenceString.securityAnswer, loginResponseModel.response?.securityAnswer ?? "");
+
+            Get.to(const HomeScreen(), transition: Transition.rightToLeft);
+
           }
           setBusy(false);
         } else {
@@ -51,4 +66,8 @@ class LoginScreenController extends GetxController {
       setBusy(false);
     }
   }
+
+
+
+
 }

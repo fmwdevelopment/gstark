@@ -1,5 +1,5 @@
 /// Authentication Screens
-const String hiWelcomeBack = 'Hi, Welcome Back!';
+const String welcomeNote = 'gStark';
 const String forgotPassword = 'Forgot password?';
 const String dontHaveAnAccount = 'Don\'t have an account?';
 const String invalidEmailOrPasswordPleaseTryAgain =
@@ -16,7 +16,7 @@ const weWillSendYouAnEmailToResetYourPassword =
 const String invalidEmailPleaseTryAccount = 'Invalid email. Please try again.';
 const String firstName = 'First Name';
 const String lastName = 'Last Name';
-const String email = 'Email';
+const String phoneNumber = 'Phone Number';
 const String password = 'Password';
 const String pleaseEnterFirstName = 'Please enter your First Name';
 const String pleaseEnterLastName = 'Please enter your Last Name';
@@ -24,12 +24,12 @@ const String pleaseEnterPassword = 'Please enter your Password';
 const String checkYourEmail = 'Please check your email';
 const String enterYourFirstName = 'Enter Your First Name';
 const String enterYourLastName = 'Enter Your Last Name';
-const String enterYourEmail = 'Enter Your Email';
+const String enterYourNumber = 'Enter Your Phone Number';
 const String enterYourPassword = 'Enter Your Password';
 const String signInCapitalized = 'SIGN IN';
 const String signUpCapitalized = 'SIGN UP';
 const String signIn = 'Sign in';
-const String signUp = 'Sign up';
+const String signUp = 'Register';
 
 /// Errors
 const String somethingWentWrong = 'Something went wrong';
