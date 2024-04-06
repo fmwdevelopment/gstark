@@ -107,27 +107,41 @@ class _LoginScreenState extends State<LoginScreen> {
                                 //     email: _emailController.text,
                                 //     password: _passwordController.text,
                                 //     context: context);
-                                final invoiceData = [
-                                  {
-                                    'name': 'Product A',
-                                    'quantity': 2,
-                                    'price': 25.00
-                                  },
-                                  {
-                                    'name': 'Product B',
-                                    'quantity': 1,
-                                    'price': 50.00
-                                  },
-                                  {
-                                    'name': 'Product C',
-                                    'quantity': 3,
-                                    'price': 15.00
-                                  },
-                                ];
+                                final invoiceData = {
+                                  'customer_name': 'John Doe',
+                                  'customer_address': '123 Main St',
+                                  'invoice_date': 'Mar 27, 2024',
+                                  'invoice_no': '6884876403',
+                                  'total_before_tax': 100.00,
+                                  'total_tax': 18.00,
+                                  'total_after_tax': 118.00,
+                                  'items': [
+                                    {
+                                      'name': 'Product A',
+                                      'quantity': 2,
+                                      'price': 25.00,
+                                      'tax': 18
+                                    },
+                                    {
+                                      'name': 'Product B',
+                                      'quantity': 1,
+                                      'price': 50.00,
+                                      'tax': 18
+                                    },
+                                    {
+                                      'name': 'Product C',
+                                      'quantity': 3,
+                                      'price': 15.00,
+                                      'tax': 5
+                                    },
+                                  ]
+                                };
 
                                 final generator = InvoicePdfGenerator();
-                                final filePath = await generator
-                                    .generateInvoicePdf(invoiceData);
+                                final filePath = await generator.generateInvoicePdf(
+                                    'Apollo Pharmaceutical Lab. LTD.',
+                                    'Central Sales Depo: Plot # 11, Block # Ka, Main Road-1, Section # 6, Mirpur, Dhaka 1216, Bangladesh\nTel:- +88 02 9030747, 9001794, 9025719, Fax:- +88 02 900 713\nMobile:- 01711-697995',
+                                    invoiceData);
 
                                 print('Invoice PDF generated at: $filePath');
                               },
