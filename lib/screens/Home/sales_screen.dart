@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:gstark/constants/app_colors.dart';
+import 'package:gstark/controller/sales_invoice_controller.dart';
 
 import '../../utils/text_utils/normal_text.dart';
 
@@ -11,6 +14,23 @@ class SalesScreen extends StatefulWidget {
 }
 
 class _SalesScreenState extends State<SalesScreen> {
+
+  late final SalesInvoiceController salesInvoiceController;
+  bool isLoading = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+    salesInvoiceController = Get.isRegistered<SalesInvoiceController>()
+        ? Get.find<SalesInvoiceController>()
+        : Get.put(SalesInvoiceController());
+    
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => salesInvoiceController.getAllSalesInvoice(context));
+    //initCall();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,12 +59,12 @@ class _SalesScreenState extends State<SalesScreen> {
       ),
       body: Column(
         children: [
-          Expanded(
+          Obx(() => Expanded(
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: ListView.builder(
                   scrollDirection: Axis.vertical,
-                  itemCount: 5,
+                  itemCount: salesInvoiceController.salesData.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: const EdgeInsets.all(4.0),
@@ -55,24 +75,24 @@ class _SalesScreenState extends State<SalesScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               SizedBox(
-                                child: Image.asset("assets/images/dummy.png"),
+                                child: Image.network(salesInvoiceController.salesData[index].thumbnail ?? ""),
                                 height: 20,
                                 width: 20,
                               ),
                               SizedBox(
                                 width: 20,
                               ),
-                              const Column(
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   NormalText(
-                                    text: "Sale_2024_03_07-150014",
+                                    text: salesInvoiceController.salesData[index].name ?? "",
                                     textAlign: TextAlign.center,
                                     textFontWeight: FontWeight.w500,
                                     textSize: 14,
                                   ),
                                   NormalText(
-                                    text: "01-01-2024",
+                                    text: salesInvoiceController.salesData[index].cratedAt ?? "",
                                     textAlign: TextAlign.center,
                                     textFontWeight: FontWeight.w200,
                                     textSize: 12,
@@ -86,7 +106,7 @@ class _SalesScreenState extends State<SalesScreen> {
                     );
                   }),
             ),
-          )
+          ))
         ],
       ),
     );
