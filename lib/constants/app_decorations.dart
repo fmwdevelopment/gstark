@@ -125,8 +125,8 @@ BoxDecoration listItemDecoration = BoxDecoration(
   boxShadow: [
     BoxShadow(
       color: kSecondaryGray900.withOpacity(0.5),
-      spreadRadius: 5,
-      blurRadius: 7,
+      spreadRadius: 2,
+      blurRadius: 2,
       offset: const Offset(0, 3), // changes position of shadow
     ),
   ],

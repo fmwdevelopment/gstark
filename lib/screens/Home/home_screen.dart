@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
-                      Get.to(const SalesScreen(),
+                      Get.to(const SalesInvoiceScreen(),
                           transition: Transition.rightToLeft);
                     },
                   ),
