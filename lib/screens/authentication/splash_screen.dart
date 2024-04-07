@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gstark/constants/app_colors.dart';
 import 'package:gstark/utils/text_utils/normal_text.dart';
+import '../../constants/string_constants.dart';
 
 import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -31,9 +32,17 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: NormalText(text: 'gStark',textSize: 48,textColor: kPrimaryMain,textFontWeight: FontWeight.w500,),
+    return Scaffold(
+      body: Container(
+        color: kApplicationThemeColor,
+        child: const Center(
+          child: NormalText(
+            text: gStark,
+            textSize: 52,
+            textColor: kWhite,
+            textFontWeight: FontWeight.w600,
+          ),
+        ),
       ),
     );
   }

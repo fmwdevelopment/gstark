@@ -1,8 +1,8 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
+// import 'package:connectivity_plus/connectivity_plus.dart';
 
 /// Checking if connected to internet or not.
 Future<bool> checkIsConnectedToInternet() async {
-  var connectivityResult = await (Connectivity().checkConnectivity());
+  /*var connectivityResult = await (Connectivity().checkConnectivity());
   if (connectivityResult == ConnectivityResult.mobile) {
     return true;
   } else if (connectivityResult == ConnectivityResult.wifi) {
@@ -13,5 +13,6 @@ Future<bool> checkIsConnectedToInternet() async {
     return false;
   } else {
     return false;
-  }
+  }*/
+  return true;
 }

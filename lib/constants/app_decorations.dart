@@ -93,3 +93,28 @@ TextStyle textFormFieldLabelInterStyle = GoogleFonts.inter(
     fontSize: 14,
     fontWeight: FontWeight.w400,
     fontStyle: FontStyle.normal);
+
+BoxDecoration containerBottomCurvedDecoration = BoxDecoration(
+  color: kApplicationThemeColor,
+  borderRadius: const BorderRadius.only(
+    bottomLeft: Radius.circular(30.0),
+    bottomRight: Radius.circular(30.0),
+  ),
+  border: Border.all(
+    color: kApplicationThemeColor,
+    width: 3.0,
+  ),
+);
+
+BoxDecoration curvedEdgeContainerDecoration = BoxDecoration(
+  color: kWhite,
+  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+  boxShadow: [
+    BoxShadow(
+      color: kSecondaryGray900.withOpacity(0.5),
+      spreadRadius: 5,
+      blurRadius: 7,
+      offset: const Offset(0, 3), // changes position of shadow
+    ),
+  ],
+);

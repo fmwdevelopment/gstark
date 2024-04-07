@@ -11,7 +11,7 @@ class InputTextField extends StatelessWidget {
   final double fontSize;
   final Color hintTextColor;
   final bool autofocus;
-  final  Widget? suffixIcon ;
+  final Widget? suffixIcon;
 
   const InputTextField(
       {Key? key,
@@ -21,10 +21,9 @@ class InputTextField extends StatelessWidget {
       this.horizontalPadding = 8,
       this.verticalPadding = 13.5,
       this.fontSize = 16,
-      this.hintTextColor = kBlack,
+      this.hintTextColor = kSecondaryGray700,
       this.autofocus = true,
-      this.suffixIcon
-      })
+      this.suffixIcon})
       : super(key: key);
 
   @override
@@ -39,18 +38,18 @@ class InputTextField extends StatelessWidget {
             horizontal: horizontalPadding, vertical: verticalPadding),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: kNeutral400),
-          borderRadius: BorderRadius.circular(0),
+          borderRadius: BorderRadius.circular(18),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: kBlack),
-          borderRadius: BorderRadius.circular(0),
+          borderRadius: BorderRadius.circular(18),
         ),
         // label: Text(
         //   hintText,
         //   style: const TextStyle(
         //       color: Colors.black54, fontWeight: FontWeight.w500),
         // ),
-        suffixIcon : suffixIcon,
+        suffixIcon: suffixIcon,
         hintText: hintText,
         hintStyle: TextStyle(
           color: hintTextColor,

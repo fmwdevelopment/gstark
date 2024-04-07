@@ -9,6 +9,7 @@ import 'package:gstark/utils/toast_utils/error_toast.dart';
 import '../helper/network/api_end_point.dart';
 import '../helper/network/network_helper.dart';
 import '../screens/Home/home_screen.dart';
+import '../utils/internet_utils.dart';
 
 class LoginScreenController extends GetxController {
   ApiService apiService = ApiService();
@@ -25,11 +26,10 @@ class LoginScreenController extends GetxController {
       {required String userId,
       required String password,
       required BuildContext context}) async {
-
     setBusy(true);
-    // bool isConnectedToInternet = await checkIsConnectedToInternet();
+    bool isConnectedToInternet = await checkIsConnectedToInternet();
 
-    if (true) {
+    if (isConnectedToInternet) {
       try {
         var value = await apiService.post(
             ApiEndPoint.baseUrl + ApiEndPoint.loginApi,
@@ -41,17 +41,25 @@ class LoginScreenController extends GetxController {
               LoginResponseModel.fromJson(value.response);
           if (loginResponseModel.response != null) {
             // print('hello ${loginResponseModel.response!.email}');
-            CustomSharedPref.setPref<String>(SharedPreferenceString.reviewerId, loginResponseModel.response?.reviewerId ?? "");
-            CustomSharedPref.setPref<String>(SharedPreferenceString.phoneNumber, loginResponseModel.response?.phone ?? "");
-            CustomSharedPref.setPref<String>(SharedPreferenceString.gstNumber, loginResponseModel.response?.gstn ?? "");
-            CustomSharedPref.setPref<String>(SharedPreferenceString.clientName, loginResponseModel.response?.name ?? "");
-            CustomSharedPref.setPref<String>(SharedPreferenceString.clienId, loginResponseModel.response?.id ?? "");
-            CustomSharedPref.setPref<String>(SharedPreferenceString.email, loginResponseModel.response?.email ?? "");
-            CustomSharedPref.setPref<String>(SharedPreferenceString.authToken, loginResponseModel.response?.jwt ?? "");
-            CustomSharedPref.setPref<String>(SharedPreferenceString.securityAnswer, loginResponseModel.response?.securityAnswer ?? "");
+            CustomSharedPref.setPref<String>(SharedPreferenceString.reviewerId,
+                loginResponseModel.response?.reviewerId ?? "");
+            CustomSharedPref.setPref<String>(SharedPreferenceString.phoneNumber,
+                loginResponseModel.response?.phone ?? "");
+            CustomSharedPref.setPref<String>(SharedPreferenceString.gstNumber,
+                loginResponseModel.response?.gstn ?? "");
+            CustomSharedPref.setPref<String>(SharedPreferenceString.clientName,
+                loginResponseModel.response?.name ?? "");
+            CustomSharedPref.setPref<String>(SharedPreferenceString.clienId,
+                loginResponseModel.response?.id ?? "");
+            CustomSharedPref.setPref<String>(SharedPreferenceString.email,
+                loginResponseModel.response?.email ?? "");
+            CustomSharedPref.setPref<String>(SharedPreferenceString.authToken,
+                loginResponseModel.response?.jwt ?? "");
+            CustomSharedPref.setPref<String>(
+                SharedPreferenceString.securityAnswer,
+                loginResponseModel.response?.securityAnswer ?? "");
 
             Get.to(const HomeScreen(), transition: Transition.rightToLeft);
-
           }
           setBusy(false);
         } else {
@@ -66,8 +74,4 @@ class LoginScreenController extends GetxController {
       setBusy(false);
     }
   }
-
-
-
-
 }

@@ -1,6 +1,9 @@
 /// Authentication Screens
-const String welcomeNote = 'gStark';
+const String gStark = 'gStark';
+const String pleaseFillTheCredentials = 'Please fill the credentials';
+const String login = 'Login';
 const String forgotPassword = 'Forgot password?';
+const String resetPassword = 'Reset Password';
 const String dontHaveAnAccount = 'Don\'t have an account?';
 const String invalidEmailOrPasswordPleaseTryAgain =
     'Invalid email or password. Please try again.';

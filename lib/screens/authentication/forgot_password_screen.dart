@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:gstark/constants/app_colors.dart';
 import 'package:gstark/controller/forgot_password_controller.dart';
 
+import '../../constants/app_decorations.dart';
 import '../../constants/string_constants.dart';
-import '../../controller/login_screen_controller.dart';
 import '../../widgets/button.dart';
 import '../../utils/text_utils/normal_text.dart';
 import '../../widgets/input_textfield.dart';
-import 'login_screen_loader.dart';
+import 'validate_user_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
-  const ForgotPasswordScreen({Key? key}) : super(key: key);
+  const ForgotPasswordScreen({super.key});
 
   @override
   State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
@@ -39,125 +38,138 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: kWhite,
-      body: LayoutBuilder(
-        builder: (context, constraint) {
-          return SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints:
-              BoxConstraints(minHeight: constraint.maxHeight),
-              child: IntrinsicHeight(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 35, vertical: 40),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const SizedBox(height: 24),
-                      const NormalText(
-                        text: "Forget Password?",
-                        textAlign: TextAlign.center,
-                        textFontWeight: FontWeight.w700,
-                        textSize: 24,
-                      ),
-                      const SizedBox(height: 96),
-                      const NormalText(
-                        text: phoneNumber,
-                        textSize: 14,
-                        textColor: kNeutral400,
-                      ),
-                      const SizedBox(height: 8),
-                      InputTextField(
-                        controller: _phoneNumberController,
-                        hintText: enterYourNumber,
-                        obscureText: false,
-                        autofocus: false,
-                      ),
-                      const SizedBox(height: 16),
-                      const NormalText(
-                        text: "GST Number",
-                        textSize: 14,
-                        textColor: kNeutral400,
-                      ),
-                      const SizedBox(height: 8),
-                      InputTextField(
-                        controller: _gstController,
-                        hintText: "Enter GST Number",
-                        obscureText: false,
-                        autofocus: false,
-                      ),
-                      const SizedBox(height: 16),
-                      const NormalText(
-                        text: "Birth Place",
-                        textSize: 14,
-                        textColor: kNeutral400,
-                      ),
-                      const SizedBox(height: 8),
-                      InputTextField(
-                        controller: _birthplaceController,
-                        hintText: "Enter your birth place",
-                        obscureText: false,
-                        autofocus: false,
-                      ),
-                      const SizedBox(height: 16),
-                      const NormalText(
-                        text: password,
-                        textSize: 14,
-                        textColor: kNeutral400,
-                      ),
-                      const SizedBox(height: 8),
-                      InputTextField(
-                        controller: _passwordController,
-                        hintText: enterYourPassword,
-                        obscureText: false,
-                        autofocus: false,
-                      ),
-                      const SizedBox(height: 46),
-                      isLoading
-                          ? Center(
+        body: SingleChildScrollView(
+      child: Stack(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.5,
+            decoration: containerBottomCurvedDecoration,
+          ),
+          Container(
+            decoration: curvedEdgeContainerDecoration,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+            margin: const EdgeInsets.only(left: 25, right: 25, top: 70),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const NormalText(
+                    text: "Forget Password?",
+                    textSize: 20,
+                    textColor: kApplicationThemeColor,
+                    textFontWeight: FontWeight.w600),
+                const SizedBox(height: 16),
+                const NormalText(
+                    text: phoneNumber,
+                    textColor: kBlackColor,
+                    textFontWeight: FontWeight.w600),
+                const SizedBox(height: 8),
+                InputTextField(
+                  controller: _phoneNumberController,
+                  hintText: enterYourNumber,
+                  obscureText: false,
+                  autofocus: false,
+                ),
+                const SizedBox(height: 16),
+                const NormalText(
+                    text: "GST Number",
+                    textColor: kBlackColor,
+                    textFontWeight: FontWeight.w600),
+                const SizedBox(height: 8),
+                InputTextField(
+                  controller: _gstController,
+                  hintText: "Enter GST Number",
+                  obscureText: false,
+                  autofocus: false,
+                ),
+                const SizedBox(height: 16),
+                const NormalText(
+                    text: "Birth Place",
+                    textColor: kBlackColor,
+                    textFontWeight: FontWeight.w600),
+                const SizedBox(height: 8),
+                InputTextField(
+                  controller: _birthplaceController,
+                  hintText: "Enter your birth place",
+                  obscureText: false,
+                  autofocus: false,
+                ),
+                const SizedBox(height: 16),
+                const NormalText(
+                    text: password,
+                    textColor: kBlackColor,
+                    textFontWeight: FontWeight.w600),
+                const SizedBox(height: 8),
+                InputTextField(
+                  controller: _passwordController,
+                  hintText: enterYourPassword,
+                  obscureText: false,
+                  autofocus: false,
+                ),
+                const SizedBox(height: 46),
+                isLoading
+                    ? const Center(
                         child: NormalText(
                           text: "Resetting...",
                         ),
                       )
-                          : Button(
+                    : Button(
                         onPress: () async {
                           print("reset tapped");
                           setState(() {
                             isLoading = !isLoading;
                           });
                         },
-                        backgroundColor: kPrimaryMain,
-                        buttonText: "RESET PASSWORD",
-                        borderRadius: 0,
-                        textColor: kWhite,
+                        fontSize: 18,
+                        buttonText: resetPassword,
                       ),
-                      const SizedBox(height: 25),
-                      Button(
-                        onPress: () async {
-                          Get.back();
-                        },
-                        backgroundColor: kWhite,
-                        buttonText: "Back",
-                        borderRadius: 0,
-                        textColor: kPrimaryMain,
-                      ),
-                      const SizedBox(height: 10),
-                      if (errorMessage != null)
-                        Center(
-                          child: NormalText(
-                            text: errorMessage!,
-                            textColor: kError,
-                            textSize: 14,
-                          ),
-                        ),
-                    ],
-                  ),
+                const SizedBox(height: 25),
+                Button(
+                  onPress: () async {
+                    Get.back();
+                  },
+                  backgroundColor: kWhite,
+                  buttonText: "Back",
+                  borderRadius: 0,
+                  textColor: kPrimaryMain,
+                ),
+                const SizedBox(height: 10),
+                if (errorMessage != null)
+                  Center(
+                    child: NormalText(
+                      text: errorMessage!,
+                      textColor: kError,
+                      textSize: 14,
+                    ),
+                  )
+              ],
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const NormalText(
+                text: dontHaveAnAccount,
+                textFontWeight: FontWeight.w500,
+                textSize: 16,
+              ),
+              const SizedBox(width: 10),
+              GestureDetector(
+                onTap: () {
+                  Get.to(const ValidateUserScreen(),
+                      transition: Transition.rightToLeft);
+                },
+                child: const NormalText(
+                  text: signUp,
+                  textSize: 18,
+                  textFontWeight: FontWeight.w500,
+                  textColor: kPrimaryMain,
                 ),
               ),
-            ),
-          );
-        },
+            ],
+          )
+        ],
       ),
-    );
+    ));
   }
 }
