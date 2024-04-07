@@ -40,21 +40,30 @@ class LoginScreenController extends GetxController {
           LoginResponseModel loginResponseModel =
               LoginResponseModel.fromJson(value.response);
           if (loginResponseModel.response != null) {
-            // print('hello ${loginResponseModel.response!.email}');
+            CustomSharedPref.setPref<bool>(
+                SharedPreferenceString.isLoggedIn, true);
+
             CustomSharedPref.setPref<String>(SharedPreferenceString.reviewerId,
                 loginResponseModel.response?.reviewerId ?? "");
+
             CustomSharedPref.setPref<String>(SharedPreferenceString.phoneNumber,
                 loginResponseModel.response?.phone ?? "");
+
             CustomSharedPref.setPref<String>(SharedPreferenceString.gstNumber,
                 loginResponseModel.response?.gstn ?? "");
+
             CustomSharedPref.setPref<String>(SharedPreferenceString.clientName,
                 loginResponseModel.response?.name ?? "");
+
             CustomSharedPref.setPref<String>(SharedPreferenceString.clienId,
                 loginResponseModel.response?.id ?? "");
+
             CustomSharedPref.setPref<String>(SharedPreferenceString.email,
                 loginResponseModel.response?.email ?? "");
+
             CustomSharedPref.setPref<String>(SharedPreferenceString.authToken,
                 loginResponseModel.response?.jwt ?? "");
+
             CustomSharedPref.setPref<String>(
                 SharedPreferenceString.securityAnswer,
                 loginResponseModel.response?.securityAnswer ?? "");

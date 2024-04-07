@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:gstark/constants/app_colors.dart';
 import 'package:gstark/controller/forgot_password_controller.dart';
 
 import '../../constants/app_decorations.dart';
 import '../../constants/string_constants.dart';
+import '../../utils/toast_utils/error_toast.dart';
 import '../../widgets/button.dart';
 import '../../utils/text_utils/normal_text.dart';
 import '../../widgets/input_textfield.dart';
-import 'validate_user_screen.dart';
+import 'register_user_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -20,12 +22,11 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   String? errorMessage;
   late final ForgotPasswordController forgotPasswordController;
-  bool isLoading = false;
 
   final _phoneNumberController = TextEditingController();
-  final _passwordController = TextEditingController();
   final _gstController = TextEditingController();
   final _birthplaceController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   void initState() {
@@ -33,6 +34,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     forgotPasswordController = Get.isRegistered<ForgotPasswordController>()
         ? Get.find<ForgotPasswordController>()
         : Get.put(ForgotPasswordController());
+    _phoneNumberController.text = '';
+
+    _gstController.text = '';
+    _birthplaceController.text = '';
+    _passwordController.text = '';
   }
 
   @override
@@ -107,67 +113,55 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   autofocus: false,
                 ),
                 const SizedBox(height: 46),
-                isLoading
-                    ? const Center(
-                        child: NormalText(
-                          text: "Resetting...",
-                        ),
-                      )
-                    : Button(
-                        onPress: () async {
-                          print("reset tapped");
-                          setState(() {
-                            isLoading = !isLoading;
-                          });
-                        },
-                        fontSize: 18,
-                        buttonText: resetPassword,
-                      ),
+                Obx(() => Button(
+                      onPress: () async {
+                        if (!forgotPasswordController.isBusy) {
+                          print(
+                              "data: ${_phoneNumberController.text} ${_passwordController.text}");
+
+                          if (_phoneNumberController.text.isEmpty ||
+                              _gstController.text.isEmpty ||
+                              _birthplaceController.text.isEmpty ||
+                              _passwordController.text.isEmpty) {
+                            errorToast(pleaseFillAllTheDetails, context);
+                          } else {
+                            forgotPasswordController.resetPassword(
+                                phoneNumber: _phoneNumberController.text,
+                                gstn: _gstController.text,
+                                securityAnswer: _birthplaceController.text,
+                                password: _passwordController.text,
+                                context: context);
+                          }
+                        }
+                      },
+                      buttonText: forgotPasswordController.isBusy
+                          ? verifiying
+                          : resetPassword,
+                      fontSize: 18,
+                      backgroundColor: forgotPasswordController.isBusy
+                          ? kPrimary200
+                          : kApplicationThemeColor,
+                      borderColor: forgotPasswordController.isBusy
+                          ? kPrimary200
+                          : kApplicationThemeColor,
+                    )),
                 const SizedBox(height: 25),
-                Button(
-                  onPress: () async {
+                GestureDetector(
+                  onTap: () {
                     Get.back();
                   },
-                  backgroundColor: kWhite,
-                  buttonText: "Back",
-                  borderRadius: 0,
-                  textColor: kPrimaryMain,
+                  child: const NormalText(
+                    textColor: kPrimaryMain,
+                    text: 'Back',
+
+                    /// Todo: Back Button is side clickable
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 const SizedBox(height: 10),
-                if (errorMessage != null)
-                  Center(
-                    child: NormalText(
-                      text: errorMessage!,
-                      textColor: kError,
-                      textSize: 14,
-                    ),
-                  )
               ],
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const NormalText(
-                text: dontHaveAnAccount,
-                textFontWeight: FontWeight.w500,
-                textSize: 16,
-              ),
-              const SizedBox(width: 10),
-              GestureDetector(
-                onTap: () {
-                  Get.to(const ValidateUserScreen(),
-                      transition: Transition.rightToLeft);
-                },
-                child: const NormalText(
-                  text: signUp,
-                  textSize: 18,
-                  textFontWeight: FontWeight.w500,
-                  textColor: kPrimaryMain,
-                ),
-              ),
-            ],
-          )
         ],
       ),
     ));

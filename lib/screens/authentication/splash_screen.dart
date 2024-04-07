@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gstark/constants/app_colors.dart';
+import 'package:gstark/screens/Home/home_screen.dart';
 import 'package:gstark/utils/text_utils/normal_text.dart';
+import '../../constants/shared_preference_string.dart';
 import '../../constants/string_constants.dart';
 
+import '../../utils/shared_preference/custom_shared_preference.dart';
 import 'login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -24,8 +27,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void initCall(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      Timer(const Duration(seconds: 3), () {
-        Get.off(const LoginScreen(), transition: Transition.leftToRight);
+      Timer(const Duration(seconds: 3), () async {
+        bool isLoggedIn = await CustomSharedPref.getPref<bool>(
+                SharedPreferenceString.isLoggedIn) ??
+            false;
+        if (isLoggedIn) {
+          Get.to(const HomeScreen(), transition: Transition.rightToLeft);
+        } else {
+          Get.off(const LoginScreen(), transition: Transition.leftToRight);
+        }
       });
     });
   }

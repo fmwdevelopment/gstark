@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gstark/controller/login_screen_controller.dart';
-import 'package:gstark/screens/authentication/validate_user_screen.dart';
+import 'package:gstark/screens/authentication/register_user_screen.dart';
 import 'package:gstark/utils/toast_utils/error_toast.dart';
 import '../../constants/app_colors.dart';
 import '../../constants/app_decorations.dart';
@@ -34,6 +34,8 @@ class _LoginScreenState extends State<LoginScreen> {
     loginScreenController = Get.isRegistered<LoginScreenController>()
         ? Get.find<LoginScreenController>()
         : Get.put(LoginScreenController());
+    _phoneNumberController.text = '';
+    _passwordController.text = '';
   }
 
   @override
@@ -133,30 +135,34 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const SizedBox(height: 46),
                         Obx(
-                          () => loginScreenController.isBusy
-                              ? Button(
-                                  onPress: () {},
-                                  buttonText: "Signing In...",
-                                )
-                              : Button(
-                                  onPress: () async {
-                                    print(
-                                        "data: ${_phoneNumberController.text} ${_passwordController.text}");
+                          () => Button(
+                            onPress: () async {
+                              if (!loginScreenController.isBusy) {
+                                print(
+                                    "data: ${_phoneNumberController.text} ${_passwordController.text}");
 
-                                    if (_phoneNumberController.text.isEmpty ||
-                                        _passwordController.text.isEmpty) {
-                                      errorToast(
-                                          pleaseFillTheCredentials, context);
-                                    } else {
-                                      loginScreenController.signCustomerIn(
-                                          userId: _phoneNumberController.text,
-                                          password: _passwordController.text,
-                                          context: context);
-                                    }
-                                  },
-                                  buttonText: signIn,
-                                  fontSize: 18,
-                                ),
+                                if (_phoneNumberController.text.isEmpty ||
+                                    _passwordController.text.isEmpty) {
+                                  errorToast(pleaseFillTheCredentials, context);
+                                } else {
+                                  loginScreenController.signCustomerIn(
+                                      userId: _phoneNumberController.text,
+                                      password: _passwordController.text,
+                                      context: context);
+                                }
+                              }
+                            },
+                            buttonText: loginScreenController.isBusy
+                                ? "Signing In..."
+                                : signIn,
+                            fontSize: 18,
+                            backgroundColor: loginScreenController.isBusy
+                                ? kPrimary200
+                                : kApplicationThemeColor,
+                            borderColor: loginScreenController.isBusy
+                                ? kPrimary200
+                                : kApplicationThemeColor,
+                          ),
                         ),
                         const SizedBox(height: 10),
                       ],

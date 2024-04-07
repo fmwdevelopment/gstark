@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gstark/constants/shared_preference_string.dart';
 import 'package:gstark/constants/string_constants.dart';
 import 'package:gstark/models/login_response_model.dart';
-import 'package:gstark/utils/shared_preference/custom_shared_preference.dart';
+import 'package:gstark/screens/authentication/login_screen.dart';
 import 'package:gstark/utils/toast_utils/error_toast.dart';
 
 import '../helper/network/api_end_point.dart';
 import '../helper/network/network_helper.dart';
-import '../screens/Home/home_screen.dart';
+import '../utils/internet_utils.dart';
 
 class ForgotPasswordController extends GetxController {
   ApiService apiService = ApiService();
@@ -28,9 +27,9 @@ class ForgotPasswordController extends GetxController {
       required String password,
       required BuildContext context}) async {
     setBusy(true);
-    // bool isConnectedToInternet = await checkIsConnectedToInternet();
+    bool isConnectedToInternet = await checkIsConnectedToInternet();
 
-    if (true) {
+    if (isConnectedToInternet) {
       try {
         var value = await apiService.post(
             ApiEndPoint.baseUrl + ApiEndPoint.resetPasswordApi,
@@ -45,7 +44,11 @@ class ForgotPasswordController extends GetxController {
         if (value.statusCode == 200 && value.response != null) {
           LoginResponseModel loginResponseModel =
               LoginResponseModel.fromJson(value.response);
-          if (loginResponseModel.response != null) {}
+          if (loginResponseModel.response != null) {
+            /// LoginResponseModel need to be change
+            /// Todo: Need to show the success toast
+            Get.to(const LoginScreen(), transition: Transition.rightToLeft);
+          }
           setBusy(false);
         } else {
           setBusy(false);
