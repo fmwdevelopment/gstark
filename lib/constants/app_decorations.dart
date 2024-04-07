@@ -118,3 +118,16 @@ BoxDecoration curvedEdgeContainerDecoration = BoxDecoration(
     ),
   ],
 );
+
+BoxDecoration listItemDecoration = BoxDecoration(
+  color: kWhite,
+  borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+  boxShadow: [
+    BoxShadow(
+      color: kSecondaryGray900.withOpacity(0.5),
+      spreadRadius: 5,
+      blurRadius: 7,
+      offset: const Offset(0, 3), // changes position of shadow
+    ),
+  ],
+);

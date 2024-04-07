@@ -189,14 +189,17 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                           : kApplicationThemeColor,
                     ),
                     const SizedBox(height: 25),
-                    Button(
-                      onPress: () async {
+                    GestureDetector(
+                      onTap: () {
                         Get.back();
                       },
-                      backgroundColor: kWhite,
-                      buttonText: "Back",
-                      borderRadius: 0,
-                      textColor: kPrimaryMain,
+                      child: const NormalText(
+                        textColor: kPrimaryMain,
+                        text: 'Back',
+
+                        /// Todo: Back Button is side clickable
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     const SizedBox(height: 10),
                     if (errorMessage != null)
