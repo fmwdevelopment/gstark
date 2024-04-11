@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gstark/constants/app_colors.dart';
-import 'package:gstark/screens/Home/generate_invoice_screen.dart';
-import 'package:gstark/screens/Home/gst_return_screen.dart';
-import 'package:gstark/screens/Home/profile_screen.dart';
-import 'package:gstark/screens/Home/purchase_screen.dart';
-import 'package:gstark/screens/Home/reconciliation_list_screen.dart';
+import 'package:gstark/screens/generate_invoice/generate_invoice_screen.dart';
+import 'package:gstark/screens/GST_Returns/gst_return_screen.dart';
+import 'package:gstark/screens/Profile/profile_screen.dart';
+import 'package:gstark/screens/purchase_inovice/purchase_invoice_screen.dart';
+import 'package:gstark/screens/reconciliation_list/reconciliation_list_screen.dart';
 import 'package:gstark/utils/text_utils/normal_text.dart';
 
 import '../sales_invoice/sales_invoice_screen.dart';
@@ -19,10 +19,11 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        backgroundColor: kPrimaryMain,
+        backgroundColor: kApplicationThemeColor,
         title: const NormalText(
           text: "gStark",
           textSize: 24,
+          textFontWeight:FontWeight.w700,
           textColor: kWhite,
         ),
       ),
@@ -71,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
-                      Get.to(const PurchaseScreen(),
+                      Get.to(const PurchaseInvoiceScreen(),
                           transition: Transition.rightToLeft);
                     },
                   ),

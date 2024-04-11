@@ -39,6 +39,7 @@ const String signInCapitalized = 'SIGN IN';
 const String signUpCapitalized = 'SIGN UP';
 const String signIn = 'Sign in';
 const String signUp = 'Register';
+const String logOut = 'LogOut';
 
 /// Errors
 const String somethingWentWrong = 'Something went wrong';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../constants/app_colors.dart';
 import '../../utils/text_utils/normal_text.dart';
 
 class ReconciliationListScreen extends StatefulWidget {
@@ -15,11 +16,14 @@ class _ReconciliationListScreenState extends State<ReconciliationListScreen> {
     return Scaffold(
 
       appBar: AppBar(
-        title: NormalText(
+        backgroundColor: kApplicationThemeColor,
+        iconTheme: const IconThemeData(color: kWhite, size: 24),
+        title: const NormalText(
           text: "Reconciliation List",
           textAlign: TextAlign.center,
           textFontWeight: FontWeight.w500,
           textSize: 20,
+          textColor: kWhite,
         ),
         centerTitle: true,
       ),

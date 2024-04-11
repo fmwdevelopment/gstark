@@ -201,15 +201,7 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    if (errorMessage != null)
-                      Center(
-                        child: NormalText(
-                          text: errorMessage!,
-                          textColor: kError,
-                          textSize: 14,
-                        ),
-                      ),
+
                   ],
                 ),
               )),

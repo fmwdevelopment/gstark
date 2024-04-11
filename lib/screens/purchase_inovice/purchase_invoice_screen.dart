@@ -2,27 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gstark/constants/app_colors.dart';
 import 'package:gstark/controller/sales_invoice_controller.dart';
+import 'package:gstark/screens/purchase_inovice/purchase_invoice_view.dart';
+import '../../controller/purchase_invoice_controller.dart';
 import '../../utils/text_utils/normal_text.dart';
-import 'sales_invoice_view.dart';
 
-class SalesInvoiceScreen extends StatefulWidget {
-  const SalesInvoiceScreen({super.key});
+
+class PurchaseInvoiceScreen extends StatefulWidget {
+  const PurchaseInvoiceScreen({super.key});
 
   @override
-  State<SalesInvoiceScreen> createState() => _SalesInvoiceScreenState();
+  State<PurchaseInvoiceScreen> createState() => _PurchaseInvoiceScreenState();
 }
 
-class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
-  late final SalesInvoiceController salesInvoiceController;
-
+class _PurchaseInvoiceScreenState extends State<PurchaseInvoiceScreen> {
+  late final PurchaseInvoiceController purchaseInvoiceController;
   @override
   void initState() {
     super.initState();
-    salesInvoiceController = Get.isRegistered<SalesInvoiceController>()
-        ? Get.find<SalesInvoiceController>()
-        : Get.put(SalesInvoiceController());
+    purchaseInvoiceController = Get.isRegistered<PurchaseInvoiceController>()
+        ? Get.find<PurchaseInvoiceController>()
+        : Get.put(PurchaseInvoiceController());
 
-    salesInvoiceController.initCall(context);
+    purchaseInvoiceController.initCall(context);
   }
 
   @override
@@ -46,7 +47,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
         backgroundColor: kApplicationThemeColor,
         iconTheme: const IconThemeData(color: kWhite, size: 24),
         title: const NormalText(
-          text: "Sales",
+          text: "Purchase",
           textAlign: TextAlign.center,
           textFontWeight: FontWeight.w500,
           textSize: 20,
@@ -54,7 +55,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
         ),
         centerTitle: true,
       ),
-      body: const SalesInvoiceView(),
+      body: const PurchaseInvoiceView(),
     );
   }
 }

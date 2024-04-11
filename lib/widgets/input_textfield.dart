@@ -18,7 +18,7 @@ class InputTextField extends StatelessWidget {
       required this.controller,
       required this.hintText,
       required this.obscureText,
-      this.horizontalPadding = 8,
+      this.horizontalPadding = 16,
       this.verticalPadding = 13.5,
       this.fontSize = 16,
       this.hintTextColor = kSecondaryGray700,
@@ -56,6 +56,7 @@ class InputTextField extends StatelessWidget {
           fontWeight: FontWeight.w400,
           fontSize: 16,
         ),
+
       ),
       style: TextStyle(
         color: kBlack,

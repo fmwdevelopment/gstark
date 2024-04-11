@@ -18,7 +18,7 @@ class PurchaseInvoiceListResponseModel {
 }
 
 class Response {
-  final List<Documents>? documents;
+  final List<PurchaseDocuments>? documents;
   final int? month;
   final int? year;
 
@@ -29,7 +29,7 @@ class Response {
   });
 
   Response.fromJson(Map<String, dynamic> json)
-      : documents = (json['documents'] as List?)?.map((dynamic e) => Documents.fromJson(e as Map<String,dynamic>)).toList(),
+      : documents = (json['documents'] as List?)?.map((dynamic e) => PurchaseDocuments.fromJson(e as Map<String,dynamic>)).toList(),
         month = json['month'] as int?,
         year = json['year'] as int?;
 
@@ -40,7 +40,7 @@ class Response {
   };
 }
 
-class Documents {
+class PurchaseDocuments {
   final String? thumbnail;
   final String? updatedAt;
   final int? month;
@@ -56,7 +56,7 @@ class Documents {
   final int? year;
   final String? file;
 
-  Documents({
+  PurchaseDocuments({
     this.thumbnail,
     this.updatedAt,
     this.month,
@@ -73,7 +73,7 @@ class Documents {
     this.file,
   });
 
-  Documents.fromJson(Map<String, dynamic> json)
+  PurchaseDocuments.fromJson(Map<String, dynamic> json)
       : thumbnail = json['thumbnail'] as String?,
         updatedAt = json['updated_at'] as String?,
         month = json['month'] as int?,

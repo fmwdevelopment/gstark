@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../constants/app_colors.dart';
 import '../../utils/text_utils/normal_text.dart';
 
 class GSTReturnScreen extends StatefulWidget {
@@ -14,11 +15,14 @@ class _GSTReturnScreenState extends State<GSTReturnScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: NormalText(
-          text: "GST Returns",
+        backgroundColor: kApplicationThemeColor,
+        iconTheme: const IconThemeData(color: kWhite, size: 24),
+        title: const NormalText(
+          text: "GST Return",
           textAlign: TextAlign.center,
           textFontWeight: FontWeight.w500,
           textSize: 20,
+          textColor: kWhite,
         ),
         centerTitle: true,
       ),
