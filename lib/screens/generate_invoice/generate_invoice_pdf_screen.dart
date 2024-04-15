@@ -15,13 +15,13 @@ import 'package:pdf/pdf.dart';
 /// The total amount before tax, total tax amount, and net payable amount are also included in the invoice.
 ///
 /// Example usage:
-/// ```dart
+/// dart
 /// InvoicePdfGenerator generator = InvoicePdfGenerator();
 /// String filePath = await generator.generateInvoicePdf('Company Name', 'Company Address', invoiceData);
 /// print('Invoice PDF generated at: $filePath');
-/// ```
 ///
-/// Note: This class uses the `pdf` package for PDF generation. Make sure to include the package in your project's dependencies.
+///
+/// Note: This class uses the pdf package for PDF generation. Make sure to include the package in your project's dependencies.
 
 class InvoicePdfGenerator {
   Future<String> generateInvoicePdf(String companyName, String companyAddress,

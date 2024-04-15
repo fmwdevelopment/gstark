@@ -27,6 +27,7 @@ dependencies:
   open_file: ^3.3.2
   path_provider: ^2.1.2
   image_picker: ^1.0.7
+  uuid: ^4.3.3
 
 dev_dependencies:
   flutter_test:
