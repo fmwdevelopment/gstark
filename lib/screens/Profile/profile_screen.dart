@@ -47,9 +47,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     String gstn = await CustomSharedPref.getPref<String>(
         SharedPreferenceString.gstNumber);
     String email =
-        await CustomSharedPref.getPref<String>(SharedPreferenceString.email);
+    await CustomSharedPref.getPref<String>(SharedPreferenceString.email);
     String id =
-        await CustomSharedPref.getPref<String>(SharedPreferenceString.clienId);
+    await CustomSharedPref.getPref<String>(SharedPreferenceString.clienId);
     String name = await CustomSharedPref.getPref<String>(
         SharedPreferenceString.clientName);
 
@@ -66,8 +66,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         iconTheme:
-            const IconThemeData(color: kWhite, size: 24 //change your color here
-                ),
+        const IconThemeData(color: kWhite, size: 24 //change your color here
+        ),
         backgroundColor: kApplicationThemeColor,
         title: const NormalText(
           text: "Profile",
@@ -78,17 +78,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         centerTitle: true,
       ),
-      body: Obx(() => SingleChildScrollView(
+      body: Obx(() =>
+          SingleChildScrollView(
             child: Stack(
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.5,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height * 0.5,
                   decoration: containerBottomCurvedDecoration,
                 ),
                 Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   margin: const EdgeInsets.only(left: 16, right: 16, top: 20),
                   decoration: BoxDecoration(
                       color: Colors.white,
@@ -146,7 +153,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       const SizedBox(height: 5),
                       InputTextField(
-                        controller: _emailController..text = profileScreenController.email,
+                        controller: _emailController
+                          ..text = profileScreenController.email,
                         hintText: "Email",
                         obscureText: false,
                         autofocus: false,
@@ -159,7 +167,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       const SizedBox(height: 5),
                       InputTextField(
-                        controller: _clientIdController..text = profileScreenController.clientId,
+                        controller: _clientIdController
+                          ..text = profileScreenController.clientId,
                         hintText: "Client ID",
                         obscureText: false,
                         autofocus: false,
@@ -172,7 +181,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       const SizedBox(height: 5),
                       InputTextField(
-                        controller: _reviewerIdController..text = profileScreenController.reviewerId,
+                        controller: _reviewerIdController
+                          ..text = profileScreenController.reviewerId,
                         hintText: "Reviewer ID",
                         obscureText: false,
                         autofocus: false,
