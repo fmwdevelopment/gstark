@@ -41,6 +41,16 @@ const String signIn = 'Sign in';
 const String signUp = 'Register';
 const String logOut = 'LogOut';
 
+const String uploadSalesInvoice = 'Upload Sales Invoice';
+const String chooseDifferent = 'Choose Different';
+const String uploadBill = 'Upload Bill';
+const String captureSalesBill = 'Capture Sales Bill';
+const String chooseTheBillFromGalleryOrCaptureFromCamera =
+    'Choose the bill from gallery or capture from camera';
+const String cameraString = 'Camera';
+const String photoGallery = 'Photo Gallery';
+const String tryAgainAfterSomeTime = "Try again after some time";
+
 /// Errors
 const String somethingWentWrong = 'Something went wrong';
 const String pleaseCheckYourInternetConnectivityAndTryAgain =

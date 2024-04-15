@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gstark/constants/app_colors.dart';
 import 'package:gstark/controller/sales_invoice_controller.dart';
+
 import '../../utils/text_utils/normal_text.dart';
+import 'sales_invoice_image_upload_screen.dart';
 import 'sales_invoice_view.dart';
 
 class SalesInvoiceScreen extends StatefulWidget {
@@ -34,7 +36,10 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
         child: FloatingActionButton(
           // isExtended: true,
           backgroundColor: kPrimaryMain,
-          onPressed: () {},
+          onPressed: () {
+            Get.to(const SalesInvoiceImageUploadScreen(),
+                transition: Transition.rightToLeft);
+          },
           // isExtended: true,
           child: const Icon(
             Icons.photo_camera,
@@ -44,7 +49,6 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
       ),
       appBar: AppBar(
         backgroundColor: kApplicationThemeColor,
-        iconTheme: const IconThemeData(color: kWhite, size: 24),
         title: const NormalText(
           text: "Sales",
           textAlign: TextAlign.center,
