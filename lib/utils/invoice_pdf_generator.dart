@@ -201,7 +201,7 @@ class InvoicePdfGenerator {
                   item['name'],
                   '${item['price']}',
                   item['quantity'].toString(),
-                  '${item['price'] * item['quantity']}',
+                  '${double.parse(item['price']) * double.parse(item['quantity'])}',
                   '${item['tax']}',
                 ])),
           ],
@@ -210,7 +210,9 @@ class InvoicePdfGenerator {
             border: pw.TableBorder.all(width: 1, color: PdfColors.grey400),
             children: [
               _buildTotalAmount("Total", '${invoiceData['total_before_tax']}'),
-              _buildTotalAmount("Tax", '${invoiceData['total_tax']}'),
+              _buildTotalAmount("CGST Tax", '${double.parse(invoiceData['total_tax'])/2} %'),
+              _buildTotalAmount("SGST Tax", '${double.parse(invoiceData['total_tax'])/2} %'),
+              _buildTotalAmount("Total Tax Amount", '${invoiceData['tax_amount']}'),
               _buildTotalAmount(
                   "Net payable", '${invoiceData['total_after_tax']}'),
             ])

@@ -11,6 +11,7 @@ import 'package:gstark/utils/toast_utils/error_toast.dart';
 import 'package:intl/intl.dart';
 import '../../constants/app_colors.dart';
 import '../../controller/generate_invoice_controller.dart';
+import '../../utils/invoice_pdf_generator.dart';
 import '../../utils/validation_utils/price_validation.dart';
 import '../../utils/text_utils/normal_text.dart';
 import '../../utils/validation_utils/tax_validation.dart';
@@ -53,7 +54,7 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
           child: FloatingActionButton(
             // isExtended: true,
             backgroundColor: kApplicationThemeColor,
-            onPressed: () {
+            onPressed: () async {
               if (_customerNameController.text.isEmpty) {
                 errorToast("Please enter the custome name", context);
               } else if (_phoneNumberController.text.isEmpty ||
@@ -66,15 +67,91 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                 var inoviceNo = generateRandomInvoiceNumber(_phoneNumberController.text);
                 print("inovice No: $inoviceNo");
 
-                var invoiceData = {
-                  "invoiceName":_customerNameController.text,
-                  "inoviceNumber":inoviceNo,
-                  "inoviceAddress":_phoneNumberController.text,
-                  "cgst":double.parse(_taxController.text)/2,
-                  "sgst":double.parse(_taxController.text)/2,
-                  "salesDate": DateFormat("MMMM d, y").format(DateTime.now()),
-                  "productData":generateInvoiceController.dataList,
+                List<Map<String, dynamic>> formattedProductList = generateInvoiceController.dataList.map((product) {
+                  return {
+                    'name': product[0],
+                    'quantity': product[1],
+                    'price': product[2],
+                    'tax': product[3]
+                  };
+                }).toList();
+
+                double overallTotal = 0;
+                double overallTotalWithTax = 0;
+
+                // Calculate total price for each product without tax and sum up
+                for (var product in formattedProductList) {
+                  double totalPrice =  double.parse(product['price']) * double.parse(product['quantity']);
+                  overallTotal += totalPrice;
+                }
+
+                // Calculate total price for each product
+                for (var product in formattedProductList) {
+                  double totalPrice = double.parse(product['price']) * double.parse(product['quantity']) * (1 + double.parse(product['tax']) / 100);
+                  overallTotalWithTax += totalPrice;
+                }
+
+                //total tax
+                var totalTax = overallTotal * (double.parse(_taxController.text) / 100);
+
+                final invoiceData = {
+                  'customer_name': _customerNameController.text,
+                  'customer_address': _phoneNumberController.text,
+                  'invoice_date': DateFormat("MMMM d, y").format(DateTime.now()),
+                  'invoice_no': inoviceNo,
+                  'total_before_tax': overallTotal,
+                  'total_tax': _taxController.text,
+                  'total_after_tax': overallTotalWithTax,
+                  'tax_amount':totalTax,
+                  "items":formattedProductList
+
+                  // "customer_name":_customerNameController.text,
+                  // "customer_address":inoviceNo,
+                  // "inoviceAddress":_phoneNumberController.text,
+                  // "cgst":double.parse(_taxController.text)/2,
+                  // "sgst":double.parse(_taxController.text)/2,
+                  // "salesDate": DateFormat("MMMM d, y").format(DateTime.now()),
+                  // "productData":generateInvoiceController.dataList,
+
                 };
+
+                // final invoiceData = {
+                //   'customer_name': 'John Doe',
+                //   'customer_address': '123 Main St',
+                //   'invoice_date': 'Mar 27, 2024',
+                //   'invoice_no': '6884876403',
+                //   'total_before_tax': 100.00,
+                //   'total_tax': 18.00,
+                //   'total_after_tax': 118.00,
+                //   'items': [
+                //     {
+                //       'name': 'Product A',
+                //       'quantity': 2,
+                //       'price': 25.00,
+                //       'tax': 18
+                //     },
+                //     {
+                //       'name': 'Product B',
+                //       'quantity': 1,
+                //       'price': 50.00,
+                //       'tax': 18
+                //     },
+                //     {
+                //       'name': 'Product C',
+                //       'quantity': 3,
+                //       'price': 15.00,
+                //       'tax': 5
+                //     },
+                //   ]
+                // };
+
+                final generator = InvoicePdfGenerator();
+                final filePath = await generator.generateInvoicePdf(
+                    'Apollo Pharmaceutical Lab. LTD.',
+                    'Central Sales Depo: Plot # 11, Block # Ka, Main Road-1, Section # 6, Mirpur, Dhaka 1216, Bangladesh\nTel:- +88 02 9030747, 9001794, 9025719, Fax:- +88 02 900 713\nMobile:- 01711-697995',
+                    invoiceData);
+
+                print('Invoice PDF generated at: $filePath');
 
                 print("invoiceData $invoiceData");
 
@@ -221,6 +298,7 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                     ]));
                                   });
                                   Get.back();
+                                  print(generateInvoiceController.dataList);
                                 }
                               },
                               child: Container(
