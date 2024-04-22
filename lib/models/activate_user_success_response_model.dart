@@ -1,13 +1,13 @@
-class ActivateUserResponseModel {
+class ActivateUserSuccessResponseModel {
   final Response? response;
   final bool? status;
 
-  ActivateUserResponseModel({
+  ActivateUserSuccessResponseModel({
     this.response,
     this.status,
   });
 
-  ActivateUserResponseModel.fromJson(Map<String, dynamic> json)
+  ActivateUserSuccessResponseModel.fromJson(Map<String, dynamic> json)
       : response = (json['response'] as Map<String,dynamic>?) != null ? Response.fromJson(json['response'] as Map<String,dynamic>) : null,
         status = json['status'] as bool?;
 

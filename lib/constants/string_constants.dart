@@ -10,6 +10,8 @@ const String validate = 'Validate';
 const String register = 'Register';
 const String validateUser = 'Validate User';
 
+const String imagePreview = 'Image Preview';
+
 const String dontHaveAnAccount = 'Don\'t have an account?';
 const String invalidEmailOrPasswordPleaseTryAgain =
     'Invalid email or password. Please try again.';
@@ -42,6 +44,7 @@ const String signUp = 'Register';
 const String logOut = 'LogOut';
 
 const String uploadSalesInvoice = 'Upload Sales Invoice';
+const String uploadPurchaseInvoice = 'Upload Purchase Invoice';
 const String chooseDifferent = 'Choose Different';
 const String uploadBill = 'Upload Bill';
 const String captureSalesBill = 'Capture Sales Bill';

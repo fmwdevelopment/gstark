@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
@@ -24,6 +25,7 @@ import 'package:pdf/pdf.dart';
 /// Note: This class uses the `pdf` package for PDF generation. Make sure to include the package in your project's dependencies.
 
 class InvoicePdfGenerator {
+
   Future<String> generateInvoicePdf(String companyName, String companyAddress,
       Map<String, dynamic> invoiceData) async {
     final pdf = pw.Document();
@@ -158,9 +160,9 @@ class InvoicePdfGenerator {
                   ),
                 ]),
                 pw.TableRow(children: [
-                  _getText('Customer Address'),
+                  _getText('Customer Number'),
                   pw.Expanded(
-                    child: _getText('${invoiceData['customer_address']}'),
+                    child: _getText('${invoiceData['customer_number']}'),
                   ),
                   _getText('Sales Date'),
                   pw.Expanded(
@@ -210,8 +212,8 @@ class InvoicePdfGenerator {
             border: pw.TableBorder.all(width: 1, color: PdfColors.grey400),
             children: [
               _buildTotalAmount("Total", '${invoiceData['total_before_tax']}'),
-              _buildTotalAmount("CGST Tax", '${double.parse(invoiceData['total_tax'])/2} %'),
-              _buildTotalAmount("SGST Tax", '${double.parse(invoiceData['total_tax'])/2} %'),
+              invoiceData['inter_state']==true ? _buildTotalAmount("CGST Tax", '${invoiceData['tax_amount']/2}'):_buildTotalAmount('IGST Tax','${invoiceData['tax_amount']}'),
+              invoiceData['inter_state']==true ? _buildTotalAmount("SGST Tax", '${invoiceData['tax_amount']/2}'): _buildTotalAmount('', ''),
               _buildTotalAmount("Total Tax Amount", '${invoiceData['tax_amount']}'),
               _buildTotalAmount(
                   "Net payable", '${invoiceData['total_after_tax']}'),

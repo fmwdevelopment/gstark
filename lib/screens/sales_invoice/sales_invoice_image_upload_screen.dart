@@ -74,6 +74,7 @@ class _SalesInvoiceImageUploadScreenState
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kApplicationThemeColor,
+        iconTheme: const IconThemeData(color: kWhite),
         title: const NormalText(
           text: uploadSalesInvoice,
           textAlign: TextAlign.center,

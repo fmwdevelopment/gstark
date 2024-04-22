@@ -5,7 +5,8 @@ class SharedPreferenceString {
   static const String phoneNumber = 'phone_number';
   static const String gstNumber = 'gst_number';
   static const String clientName = 'client_name';
-  static const String clienId = 'client_id';
+  static const String clientId = 'client_id';
   static const String email = 'email';
   static const String securityAnswer = 'security_answer';
+  static const String clientAddress = 'client_address';
 }

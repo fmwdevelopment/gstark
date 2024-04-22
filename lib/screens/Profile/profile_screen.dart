@@ -28,6 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _emailController = TextEditingController();
   final _clientIdController = TextEditingController();
   final _reviewerIdController = TextEditingController();
+  final _addressIdController = TextEditingController();
 
   @override
   void initState() {
@@ -49,9 +50,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     String email =
     await CustomSharedPref.getPref<String>(SharedPreferenceString.email);
     String id =
-    await CustomSharedPref.getPref<String>(SharedPreferenceString.clienId);
+    await CustomSharedPref.getPref<String>(SharedPreferenceString.clientId);
     String name = await CustomSharedPref.getPref<String>(
         SharedPreferenceString.clientName);
+    String address = await CustomSharedPref.getPref<String>(
+        SharedPreferenceString.clientAddress);
 
     profileScreenController.setReviewerId(reviewerId);
     profileScreenController.setPhoneNumber(phoneNumber);
@@ -59,6 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     profileScreenController.setEmail(email);
     profileScreenController.setClientId(id);
     profileScreenController.setClientName(name);
+    profileScreenController.setClientAddress(address);
   }
 
   @override
@@ -159,31 +163,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         obscureText: false,
                         autofocus: false,
                       ),
+                      // const SizedBox(height: 16),
+                      // const NormalText(
+                      //   text: "ID",
+                      //   textSize: 14,
+                      //   textColor: kNeutral400,
+                      // ),
+                      // const SizedBox(height: 5),
+                      // InputTextField(
+                      //   controller: _clientIdController
+                      //     ..text = profileScreenController.clientId,
+                      //   hintText: "Client ID",
+                      //   obscureText: false,
+                      //   autofocus: false,
+                      // ),
                       const SizedBox(height: 16),
                       const NormalText(
-                        text: "ID",
+                        text: "Address",
                         textSize: 14,
                         textColor: kNeutral400,
                       ),
                       const SizedBox(height: 5),
                       InputTextField(
-                        controller: _clientIdController
-                          ..text = profileScreenController.clientId,
-                        hintText: "Client ID",
-                        obscureText: false,
-                        autofocus: false,
-                      ),
-                      const SizedBox(height: 16),
-                      const NormalText(
-                        text: "Reviewer Id",
-                        textSize: 14,
-                        textColor: kNeutral400,
-                      ),
-                      const SizedBox(height: 5),
-                      InputTextField(
-                        controller: _reviewerIdController
-                          ..text = profileScreenController.reviewerId,
-                        hintText: "Reviewer ID",
+                        controller: _addressIdController
+                          ..text = profileScreenController.clientAddress,
+                        hintText: "Address",
                         obscureText: false,
                         autofocus: false,
                       ),

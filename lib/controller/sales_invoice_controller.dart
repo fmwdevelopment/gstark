@@ -36,9 +36,30 @@ class SalesInvoiceController extends GetxController {
     bool isConnectedToInternet = await checkIsConnectedToInternet();
     if (isConnectedToInternet) {
       try {
-        var value = await apiService.get(
-            "https://run.mocky.io/v3/aa5b7167-eee2-40ce-aa18-6e734c8cf71e",
-            Get.overlayContext ?? context);
+
+        String token =
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnc3RuIjoiQUJDREVGR0hFUzEyMzQ1IiwidXNlcklkIjoiYzg3ZmJjMjUtZjE2OC00NDg4LTlmODctZjBiMDhiNWNiMzNjIiwiZW1haWwiOiJjbGllbnRfNzIwNDYzMTcwNUBnc3RhcmsuY29tIiwicm9sZXMiOlt7InR5cGUiOiJjcmVhdGUiLCJ0YXJnZXQiOiJkb2N1bWVudCJ9LHsidHlwZSI6InVwZGF0ZSIsInRhcmdldCI6ImRvY3VtZW50In1dLCJ1c2VyVHlwZSI6ImNsaWVudCIsImlhdCI6MTcxMTU1NzcyMCwiZXhwIjoxNzQzMDkzNzIwfQ.bBN_Gus7JnJ_Om34Qawm4Fs3ui_umQhL3blBfBBWoWo';
+
+        var value = await apiService.post(
+            ApiEndPoint.baseUrl + ApiEndPoint.salesInvoiceListApi,
+            Get.overlayContext ?? context,
+            body: {
+              "userId": "c87fbc25-f168-4488-9f87-f0b08b5cb33c",
+              "month": null,
+              "type": "sale"
+            },
+          headers: {
+            'x-header-token': 'client_7204631705@gstark.com',
+            'authorization': token,
+            'Content-Type':"application/json",
+          }
+
+        );
+
+        // var value = await apiService.get(
+        //     "https://run.mocky.io/v3/aa5b7167-eee2-40ce-aa18-6e734c8cf71e",
+        //     Get.overlayContext ?? context);
+
         if (value.statusCode == 200 || value.statusCode == 201) {
           SalesInvoiceListResponseModel salesInvoiceListResponseModel =
               SalesInvoiceListResponseModel.fromJson(value.response);

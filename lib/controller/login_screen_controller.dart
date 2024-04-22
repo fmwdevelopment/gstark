@@ -55,7 +55,7 @@ class LoginScreenController extends GetxController {
             CustomSharedPref.setPref<String>(SharedPreferenceString.clientName,
                 loginResponseModel.response?.name ?? "");
 
-            CustomSharedPref.setPref<String>(SharedPreferenceString.clienId,
+            CustomSharedPref.setPref<String>(SharedPreferenceString.clientId,
                 loginResponseModel.response?.id ?? "");
 
             CustomSharedPref.setPref<String>(SharedPreferenceString.email,
@@ -67,6 +67,10 @@ class LoginScreenController extends GetxController {
             CustomSharedPref.setPref<String>(
                 SharedPreferenceString.securityAnswer,
                 loginResponseModel.response?.securityAnswer ?? "");
+
+            CustomSharedPref.setPref<String>(
+                SharedPreferenceString.clientAddress,
+                "GStark, Plot # 11, 2nd cross rd, Munireddy Layout,GB Palya, Bengaluru, India" ?? "");
 
             Get.to(const HomeScreen(), transition: Transition.rightToLeft);
           }

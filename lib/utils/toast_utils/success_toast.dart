@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../constants/app_colors.dart';
 import '../text_utils/normal_text.dart';
 import 'toast_utils.dart';
@@ -11,7 +10,7 @@ successToast(
   // ToastUtils.showSuccessToast(
   // context, descriptionText, isShortDurationText, true);
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    backgroundColor: Colors.red,
+    backgroundColor: Colors.green,
     content: NormalText(
       text: descriptionText,
       textSize: 14,

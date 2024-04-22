@@ -4,6 +4,7 @@ import 'package:gstark/constants/string_constants.dart';
 import 'package:gstark/models/login_response_model.dart';
 import 'package:gstark/screens/authentication/login_screen.dart';
 import 'package:gstark/utils/toast_utils/error_toast.dart';
+import 'package:gstark/utils/toast_utils/success_toast.dart';
 
 import '../helper/network/api_end_point.dart';
 import '../helper/network/network_helper.dart';
@@ -46,7 +47,7 @@ class ForgotPasswordController extends GetxController {
               LoginResponseModel.fromJson(value.response);
           if (loginResponseModel.response != null) {
             /// LoginResponseModel need to be change
-            /// Todo: Need to show the success toast
+            successToast(descriptionText: "Password reset successful", context: context);
             Get.to(const LoginScreen(), transition: Transition.rightToLeft);
           }
           setBusy(false);

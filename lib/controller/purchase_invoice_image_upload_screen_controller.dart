@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:gstark/helper/network/api_end_point.dart';
+import 'package:gstark/screens/purchase_inovice/purchase_invoice_screen.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,7 @@ import 'package:http/http.dart' as http;
 import '../utils/image_type_getter.dart';
 import '../utils/shared_preference/custom_shared_preference.dart';
 
-class SalesInvoiceImageUploadScreenController extends GetxController {
+class PurchaseInvoiceImageUploadScreenController extends GetxController {
   ApiService apiService = ApiService();
 
   final RxBool _isBusy = RxBool(false);
@@ -37,27 +38,27 @@ class SalesInvoiceImageUploadScreenController extends GetxController {
     _isImageCaptured.value = value;
   }
 
-  Timer? salesInvoiceUploadApiCallTimer;
+  Timer? purchaseInvoiceUploadApiCallTimer;
 
   salesInvoiceUploadApi(
       BuildContext context, File file, String fileName, String imagePath) {
-    salesInvoiceUploadApiCall(context, file, fileName, imagePath);
+    purchaseInvoiceUploadApiCall(context, file, fileName, imagePath);
 
-    salesInvoiceUploadApiCallTimer =
+   purchaseInvoiceUploadApiCallTimer =
         Timer(const Duration(seconds: 30), () async {
-      setBusy(false);
+          setBusy(false);
 
-      debugPrint('api is success');
+          debugPrint('api is success');
 
-      errorToast(tryAgainAfterSomeTime, Get.overlayContext ?? context,
-          isShortDurationText: false);
-      salesInvoiceUploadApiCallTimer?.cancel();
+          errorToast(tryAgainAfterSomeTime, Get.overlayContext ?? context,
+              isShortDurationText: false);
+          purchaseInvoiceUploadApiCallTimer?.cancel();
 
-      Get.to(const SalesInvoiceScreen(), transition: Transition.rightToLeft);
-    });
+          Get.to(const PurchaseInvoiceScreen(), transition: Transition.rightToLeft);
+        });
   }
 
-  salesInvoiceUploadApiCall(BuildContext context, File file, String fileName,
+  purchaseInvoiceUploadApiCall(BuildContext context, File file, String fileName,
       String imagePath) async {
     setBusy(true);
 
@@ -69,8 +70,9 @@ class SalesInvoiceImageUploadScreenController extends GetxController {
     bool isConnectedToInternet = await checkIsConnectedToInternet();
     if (isConnectedToInternet) {
       try {
-        String url = ApiEndPoint.salesInvoiceImageUploadApi;
-        String token = "Bearer $authToken";
+        String url = ApiEndPoint.purchaseInvoiceImageUploadApi;
+        String token =
+            'Bearer $authToken';
         Map<String, String> headers = {'authorization': token};
         Map<String, String> headers1 = {
           'x-header-token': email
@@ -80,19 +82,17 @@ class SalesInvoiceImageUploadScreenController extends GetxController {
         request.headers.addAll(headers);
         request.headers.addAll(headers1);
 
-        String id = await CustomSharedPref.getPref<String>(
-            SharedPreferenceString.clientId);
+
 
         //request.files.add(await http.MultipartFile.fromPath("file", imagePath));
         String imageType = getImageType(fileName);
         request.files.add(http.MultipartFile.fromBytes(
             'file', File(imagePath).readAsBytesSync(),
-
             contentType: MediaType('image', imageType), filename: fileName));
 
-        request.fields["userId"] = userId;
-        request.fields["type"] = "sale";
-        request.fields["description"] = "sale";
+        request.fields["userId"] = userId ; //'c87fbc25-f168-4488-9f87-f0b08b5cb33c';
+        request.fields["type"] = "purchase";
+        request.fields["description"] = "purchase";
 
         var response = await request.send();
 
@@ -103,48 +103,48 @@ class SalesInvoiceImageUploadScreenController extends GetxController {
           var parsedJson = json.decode(event);
 
           if (response.statusCode == 200 || response.statusCode == 201) {
-            salesInvoiceUploadApiCallTimer?.cancel();
+            purchaseInvoiceUploadApiCallTimer?.cancel();
             setBusy(false);
             successToast(
-                descriptionText: 'Sales Invoice Uploaded Successfully',
+                descriptionText: 'Purchase Invoice Uploaded Successfully',
                 context: context);
 
-            Get.off(const SalesInvoiceScreen(),
+            Get.off(const PurchaseInvoiceScreen(),
                 transition: Transition.rightToLeft);
 
           } else if (response.statusCode == 400) {
-            salesInvoiceUploadApiCallTimer?.cancel();
+            purchaseInvoiceUploadApiCallTimer?.cancel();
 
             CommonModel commonModel = CommonModel.fromJson(parsedJson);
             if (commonModel.response != null) {
               errorToast(commonModel.response!, Get.overlayContext ?? context);
             } else {
-              salesInvoiceUploadApiCallTimer?.cancel();
+              purchaseInvoiceUploadApiCallTimer?.cancel();
               errorToast(somethingWentWrong, Get.overlayContext ?? context);
             }
 
             setBusy(false);
           } else if (response.statusCode == 401) {
-            salesInvoiceUploadApiCallTimer?.cancel();
+            purchaseInvoiceUploadApiCallTimer?.cancel();
             await apiService.storeJwt(false);
 
-            salesInvoiceUploadApiCall(
+            purchaseInvoiceUploadApiCall(
                 Get.overlayContext ?? context, file, fileName, imagePath);
             setBusy(false);
           } else {
-            salesInvoiceUploadApiCallTimer?.cancel();
+            purchaseInvoiceUploadApiCallTimer?.cancel();
             errorToast(somethingWentWrong, context);
             setBusy(false);
           }
         });
       } catch (e) {
         debugPrint(e.toString());
-        salesInvoiceUploadApiCallTimer?.cancel();
+        purchaseInvoiceUploadApiCallTimer?.cancel();
         setBusy(false);
         rethrow;
       }
     } else {
-      salesInvoiceUploadApiCallTimer?.cancel();
+      purchaseInvoiceUploadApiCallTimer?.cancel();
       setBusy(false);
       errorToast(pleaseCheckYourInternetConnectivityAndTryAgain,
           Get.overlayContext ?? context);

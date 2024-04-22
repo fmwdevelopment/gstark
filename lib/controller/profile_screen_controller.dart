@@ -62,4 +62,12 @@ class ProfileScreenController extends GetxController {
     _clientName.value = value;
   }
 
+  final RxString  _clientAddress = RxString("");
+
+  String get clientAddress => _clientAddress.value;
+
+  setClientAddress(String value) {
+    _clientAddress.value = value;
+  }
+
 }
