@@ -42,13 +42,25 @@ class HomeScreen extends StatelessWidget {
                 Column(
                   children: [
                     GestureDetector(
-                      child: CircleAvatar(
-                        backgroundColor: kNeutral100,
-                        maxRadius: 60,
-                        child: Image.asset(
-                          "assets/images/dummy.png",
-                          width: 60,
-                          height: 60,
+                      child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: kApplicationThemeColor, // Border color
+                              width: 2.0, // Border width
+                            ),
+                          ),
+                        child: CircleAvatar(
+                          backgroundColor: kWhite,
+                          maxRadius: 60,
+                          child: SizedBox(
+                            width: 85, // Diameter of the CircleAvatar
+                            height: 85,
+                            child: Image.asset(
+                              "assets/images/sale1.JPG",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ),
                       onTap: () {
@@ -68,13 +80,25 @@ class HomeScreen extends StatelessWidget {
                 Column(
                   children: [
                     GestureDetector(
-                      child: CircleAvatar(
-                        backgroundColor: kNeutral100,
-                        maxRadius: 60,
-                        child: Image.asset(
-                          "assets/images/dummy.png",
-                          width: 60,
-                          height: 60,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: kApplicationThemeColor, // Border color
+                            width: 2.0, // Border width
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          backgroundColor: kWhite,
+                          maxRadius: 60,
+                          child: SizedBox(
+                            width: 85, // Diameter of the CircleAvatar
+                            height: 85,
+                            child: Image.asset(
+                              "assets/images/purchase.jpg",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ),
                       onTap: () {
@@ -103,13 +127,25 @@ class HomeScreen extends StatelessWidget {
                         Get.to(const GSTReturnScreen(),
                             transition: Transition.rightToLeft);
                       },
-                      child: CircleAvatar(
-                        backgroundColor: kNeutral100,
-                        radius: 60,
-                        child: Image.asset(
-                          "assets/images/dummy.png",
-                          width: 60,
-                          height: 60,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: kApplicationThemeColor, // Border color
+                            width: 2.0, // Border width
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          backgroundColor: kWhite,
+                          maxRadius: 60,
+                          child: SizedBox(
+                            width: 85, // Diameter of the CircleAvatar
+                            height: 85,
+                            child: Image.asset(
+                              "assets/images/gst_returns.jpg",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -129,13 +165,25 @@ class HomeScreen extends StatelessWidget {
                         Get.to(const ProfileScreen(),
                             transition: Transition.rightToLeftWithFade);
                       },
-                      child: CircleAvatar(
-                        backgroundColor: kNeutral100,
-                        maxRadius: 60,
-                        child: Image.asset(
-                          "assets/images/dummy.png",
-                          width: 60,
-                          height: 60,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: kApplicationThemeColor, // Border color
+                            width: 2.0, // Border width
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          backgroundColor: kWhite,
+                          maxRadius: 60,
+                          child: SizedBox(
+                            width: 85, // Diameter of the CircleAvatar
+                            height: 85,
+                            child: Image.asset(
+                              "assets/images/profile.jpg",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -160,13 +208,25 @@ class HomeScreen extends StatelessWidget {
                         Get.to(const ReconciliationListScreen(),
                             transition: Transition.rightToLeft);
                       },
-                      child: CircleAvatar(
-                        backgroundColor: kNeutral100,
-                        maxRadius: 60,
-                        child: Image.asset(
-                          "assets/images/dummy.png",
-                          width: 60,
-                          height: 60,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: kApplicationThemeColor, // Border color
+                            width: 2.0, // Border width
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          backgroundColor: kWhite,
+                          maxRadius: 60,
+                          child: SizedBox(
+                            width: 85, // Diameter of the CircleAvatar
+                            height: 85,
+                            child: Image.asset(
+                              "assets/images/reconciliation.jpg",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -186,13 +246,25 @@ class HomeScreen extends StatelessWidget {
                         Get.to(const GenerateInvoiceScreen(),
                             transition: Transition.rightToLeft);
                       },
-                      child: CircleAvatar(
-                        backgroundColor: kNeutral100,
-                        maxRadius: 60,
-                        child: Image.asset(
-                          "assets/images/dummy.png",
-                          width: 60,
-                          height: 60,
+                      child:Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: kApplicationThemeColor, // Border color
+                            width: 2.0, // Border width
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          backgroundColor: kWhite,
+                          maxRadius: 60,
+                          child: SizedBox(
+                            width: 85, // Diameter of the CircleAvatar
+                            height: 85,
+                            child: Image.asset(
+                              "assets/images/invoice.jpg",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
                       ),
                     ),
