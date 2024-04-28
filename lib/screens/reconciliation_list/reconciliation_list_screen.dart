@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:gstark/controller/reconciliation_list_screen_controller.dart';
 
 import '../../constants/app_colors.dart';
 import '../../utils/text_utils/normal_text.dart';
@@ -11,6 +14,17 @@ class ReconciliationListScreen extends StatefulWidget {
 }
 
 class _ReconciliationListScreenState extends State<ReconciliationListScreen> {
+
+  late final ReconciliationListScreenController reconciliationListScreenController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    reconciliationListScreenController = Get.isRegistered<ReconciliationListScreenController>()
+        ? Get.find<ReconciliationListScreenController>()
+        : Get.put(ReconciliationListScreenController());
+    reconciliationListScreenController.initCall(context);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -4,10 +4,12 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:gstark/models/purchase_invoice_list_response_model.dart';
+import '../constants/shared_preference_string.dart';
 import '../helper/network/api_end_point.dart';
 import '../helper/network/network_helper.dart';
 import '../models/sales_inovice_list_response_model.dart';
 import '../utils/internet_utils.dart';
+import '../utils/shared_preference/custom_shared_preference.dart';
 
 class PurchaseInvoiceController extends GetxController {
   ApiService apiService = ApiService();
@@ -40,19 +42,24 @@ class PurchaseInvoiceController extends GetxController {
     if (isConnectedToInternet) {
       try {
 
+        String authToken = await CustomSharedPref.getPref(SharedPreferenceString.authToken);
+        String email = await CustomSharedPref.getPref(SharedPreferenceString.email);
+        String userId = await CustomSharedPref.getPref<String>(
+            SharedPreferenceString.clientId);
+
         String token =
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnc3RuIjoiQUJDREVGR0hFUzEyMzQ1IiwidXNlcklkIjoiYzg3ZmJjMjUtZjE2OC00NDg4LTlmODctZjBiMDhiNWNiMzNjIiwiZW1haWwiOiJjbGllbnRfNzIwNDYzMTcwNUBnc3RhcmsuY29tIiwicm9sZXMiOlt7InR5cGUiOiJjcmVhdGUiLCJ0YXJnZXQiOiJkb2N1bWVudCJ9LHsidHlwZSI6InVwZGF0ZSIsInRhcmdldCI6ImRvY3VtZW50In1dLCJ1c2VyVHlwZSI6ImNsaWVudCIsImlhdCI6MTcxMTU1NzcyMCwiZXhwIjoxNzQzMDkzNzIwfQ.bBN_Gus7JnJ_Om34Qawm4Fs3ui_umQhL3blBfBBWoWo';
+            'Bearer $authToken';
 
         var value = await apiService.post(
             ApiEndPoint.baseUrl + ApiEndPoint.purchaseInvoiceListApi,
             Get.overlayContext ?? context,
             body: {
-              "userId": "c87fbc25-f168-4488-9f87-f0b08b5cb33c",
+              "userId": userId,
               "month": null,
               "type": "purchase"
             },
             headers: {
-              'x-header-token': 'client_7204631705@gstark.com',
+              'x-header-token': email,
               'authorization': token,
               'Content-Type':"application/json",
             }
