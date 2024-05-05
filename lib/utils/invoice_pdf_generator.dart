@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 import 'dart:io';
 import 'package:gstark/utils/collection_extensions.dart';
 import 'package:pdf/pdf.dart';
+import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 
 /// A class that generates PDF invoices based on provided data.
 ///
@@ -26,7 +27,7 @@ import 'package:pdf/pdf.dart';
 
 class InvoicePdfGenerator {
 
-  Future<String> generateInvoicePdf(String companyName, String companyAddress,
+  Future<File> generateInvoicePdf(String companyName, String companyAddress,
       Map<String, dynamic> invoiceData) async {
     final pdf = pw.Document();
 
@@ -66,9 +67,9 @@ class InvoicePdfGenerator {
     final file = File('${output.path}/$fileName');
     await file.writeAsBytes(await pdf.save());
 
-    OpenFile.open(file.path);
+    // OpenFile.open(file.path);
 
-    return file.path;
+    return file;
   }
 
   pw.Widget _buildHeader(

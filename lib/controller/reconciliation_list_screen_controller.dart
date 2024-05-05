@@ -64,7 +64,6 @@ class ReconciliationListScreenController extends GetxController {
       } catch (e) {
         debugPrint(e.toString());
         setBusy(false);
-        rethrow;
       }
     }
   }
