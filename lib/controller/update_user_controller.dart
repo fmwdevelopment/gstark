@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gstark/constants/string_constants.dart';
 import 'package:gstark/screens/Profile/profile_screen.dart';
-import 'package:gstark/screens/authentication/login_screen.dart';
 import 'package:gstark/utils/toast_utils/error_toast.dart';
 import 'package:gstark/utils/toast_utils/success_toast.dart';
 import '../constants/shared_preference_string.dart';
@@ -14,12 +13,11 @@ import '../utils/internet_utils.dart';
 import '../utils/shared_preference/custom_shared_preference.dart';
 
 class UpdateUserController extends GetxController {
+
   ApiService apiService = ApiService();
 
   final RxBool _isBusy = RxBool(false);
-
   bool get isBusy => _isBusy.value;
-
   setBusy(bool value) {
     _isBusy.value = value;
   }

@@ -1,6 +1,5 @@
 import 'dart:io';
-
-// import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
+import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -447,7 +446,7 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                 Obx(() => SizedBox(
                                       height:
                                           MediaQuery.of(context).size.height /
-                                              2,
+                                              3,
                                       child: ListView.builder(
                                           itemCount: generateInvoiceController
                                               .dataList.length,
@@ -1000,27 +999,27 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                       if (generateInvoiceController
                                               .generatedPdf !=
                                           null) {
-                                        // PDFDocument pdfDocument =
-                                        //     await PDFDocument.fromFile(
-                                        //         generateInvoiceController
-                                        //             .generatedPdf!);
+                                        PDFDocument pdfDocument =
+                                            await PDFDocument.fromFile(
+                                                generateInvoiceController
+                                                    .generatedPdf!);
                                         //show pdfviewer in dialog
                                         await showDialog(
                                           context: context,
                                           builder: (context) => Stack(
                                             children: [
-                                              // PDFViewer(document: pdfDocument),
-                                              // Positioned(
-                                              //   top: 15,
-                                              //   left: 15,
-                                              //   child: IconButton(
-                                              //     icon: const Icon(Icons.close,
-                                              //         color: kBlack, size: 24),
-                                              //     onPressed: () {
-                                              //       Navigator.pop(context);
-                                              //     },
-                                              //   ),
-                                              // ),
+                                              PDFViewer(document: pdfDocument),
+                                              Positioned(
+                                                top: 15,
+                                                left: 15,
+                                                child: IconButton(
+                                                  icon: const Icon(Icons.close,
+                                                      color: kBlack, size: 24),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         );
