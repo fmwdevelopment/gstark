@@ -6,7 +6,7 @@ import 'package:uuid/uuid.dart';
 import 'dart:io';
 import 'package:gstark/utils/collection_extensions.dart';
 import 'package:pdf/pdf.dart';
-import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
+// import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 
 /// A class that generates PDF invoices based on provided data.
 ///

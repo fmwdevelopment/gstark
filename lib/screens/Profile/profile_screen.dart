@@ -7,6 +7,7 @@ import 'package:gstark/utils/shared_preference/custom_shared_preference.dart';
 import 'package:gstark/widgets/input_textfield.dart';
 import '../../constants/app_decorations.dart';
 import '../../constants/string_constants.dart';
+import '../../controller/update_user_controller.dart';
 import '../../widgets/button.dart';
 import '../../constants/app_colors.dart';
 import '../../utils/text_utils/normal_text.dart';
@@ -21,6 +22,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   late final ProfileScreenController profileScreenController;
+  late final UpdateUserController updateUserController;
 
   final _nameController = TextEditingController();
   final _phoneNumberController = TextEditingController();
@@ -36,6 +38,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     profileScreenController = Get.isRegistered<ProfileScreenController>()
         ? Get.find<ProfileScreenController>()
         : Get.put(ProfileScreenController());
+    updateUserController = Get.isRegistered<UpdateUserController>()
+        ? Get.find<UpdateUserController>()
+        : Get.put(UpdateUserController());
 
     initCall();
   }
@@ -48,9 +53,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     String gstn = await CustomSharedPref.getPref<String>(
         SharedPreferenceString.gstNumber);
     String email =
-    await CustomSharedPref.getPref<String>(SharedPreferenceString.email);
+        await CustomSharedPref.getPref<String>(SharedPreferenceString.email);
     String id =
-    await CustomSharedPref.getPref<String>(SharedPreferenceString.clientId);
+        await CustomSharedPref.getPref<String>(SharedPreferenceString.clientId);
     String name = await CustomSharedPref.getPref<String>(
         SharedPreferenceString.clientName);
     String address = await CustomSharedPref.getPref<String>(
@@ -70,8 +75,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         iconTheme:
-        const IconThemeData(color: kWhite, size: 24 //change your color here
-        ),
+            const IconThemeData(color: kWhite, size: 24 //change your color here
+                ),
         backgroundColor: kApplicationThemeColor,
         title: const NormalText(
           text: "Profile",
@@ -81,25 +86,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
           textColor: kWhite,
         ),
         centerTitle: true,
+        actions: [
+          Container(
+            margin: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(width: 1, color: kWhite)),
+            child: TextButton(
+                onPressed: () {
+                    updateUserController.updateUser(phoneNumber: _phoneNumberController.text,
+                        gstn: _gstController.text, email: _emailController.text,
+                        name: _nameController.text, address: _addressIdController.text,
+                        context: context);
+
+                },
+                child: const NormalText(
+                    text: "Save",
+                    textColor: kWhite,
+                    textSize: 20,
+                    textFontWeight: FontWeight.w600)),
+          )
+        ],
       ),
-      body: Obx(() =>
-          SingleChildScrollView(
+      body: Obx(() => SingleChildScrollView(
             child: Stack(
               children: [
                 Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.5,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.5,
                   decoration: containerBottomCurvedDecoration,
                 ),
                 Container(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   margin: const EdgeInsets.only(left: 16, right: 16, top: 20),
                   decoration: BoxDecoration(
                       color: Colors.white,

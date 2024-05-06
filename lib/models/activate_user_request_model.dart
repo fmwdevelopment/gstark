@@ -4,6 +4,7 @@ class ActivateUserRequestModel {
   final String? securityAnswer;
   final String? password;
   final String? confirmPassword;
+  final String? address;
 
   ActivateUserRequestModel({
     this.phone,
@@ -11,6 +12,7 @@ class ActivateUserRequestModel {
     this.securityAnswer,
     this.password,
     this.confirmPassword,
+    this.address,
   });
 
   ActivateUserRequestModel.fromJson(Map<String, dynamic> json)
@@ -18,13 +20,15 @@ class ActivateUserRequestModel {
         gstn = json['gstn'] as String?,
         securityAnswer = json['securityAnswer'] as String?,
         password = json['password'] as String?,
-        confirmPassword = json['confirmPassword'] as String?;
+        confirmPassword = json['confirmPassword'] as String?,
+        address = json['address'] as String?;
 
   Map<String, dynamic> toJson() => {
     'phone' : phone,
     'gstn' : gstn,
     'securityAnswer' : securityAnswer,
     'password' : password,
-    'confirmPassword' : confirmPassword
+    'confirmPassword' : confirmPassword,
+    'address' : address
   };
 }

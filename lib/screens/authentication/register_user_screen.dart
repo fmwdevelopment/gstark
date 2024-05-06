@@ -22,6 +22,7 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
   final _birthplaceController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final _addressController = TextEditingController();
 
   String? errorMessage;
   late final RegisterScreenController registerScreenController;
@@ -38,6 +39,8 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
     _birthplaceController.text = '';
     _passwordController.text = '';
     _confirmPasswordController.text = '';
+    _confirmPasswordController.text = '';
+    _addressController.text = '';
   }
 
   @override
@@ -128,6 +131,17 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                             hintText: "Confirm Password",
                             obscureText: false,
                             autofocus: false,
+                          ),const SizedBox(height: 16),
+                          const NormalText(
+                              text: "Address",
+                              textColor: kBlackColor,
+                              textFontWeight: FontWeight.w600),
+                          const SizedBox(height: 8),
+                          InputTextField(
+                            controller: _addressController,
+                            hintText: "Enter Address",
+                            obscureText: false,
+                            autofocus: false,
                           ),
                         ],
                       ),
@@ -157,6 +171,7 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                                   password: _passwordController.text,
                                   confirmPassword:
                                       _confirmPasswordController.text,
+                                  address: _addressController.text,
                                   context: context);
                             }
                           } else {

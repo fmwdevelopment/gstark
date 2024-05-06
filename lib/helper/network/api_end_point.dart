@@ -14,4 +14,7 @@ class ApiEndPoint {
   static const String reconciliationListApi = 'https://dev-api.gstark.co/api/document';
 
 
+  static const String updateUserDataApi = 'https://dev-api.gstark.co/api/user';
+
+
 }

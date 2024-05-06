@@ -38,6 +38,8 @@ class RegisterScreenController extends GetxController {
       required String phone,
       required String password,
       required String securityAnswer,
+      required String address,
+
       required BuildContext context}) async {
     setBusy(true);
     bool isConnectedToInternet = await checkIsConnectedToInternet();
@@ -48,6 +50,7 @@ class RegisterScreenController extends GetxController {
       phone: phone,
       password: password,
       securityAnswer: securityAnswer,
+      address: address
     );
 
     if (isConnectedToInternet) {

@@ -41,7 +41,7 @@ const String signInCapitalized = 'SIGN IN';
 const String signUpCapitalized = 'SIGN UP';
 const String signIn = 'Sign in';
 const String signUp = 'Register';
-const String logOut = 'LogOut';
+const String logOut = 'LOGOUT';
 
 const String uploadSalesInvoice = 'Upload Sales Invoice';
 const String uploadPurchaseInvoice = 'Upload Purchase Invoice';
