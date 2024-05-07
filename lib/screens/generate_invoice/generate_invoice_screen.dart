@@ -546,6 +546,20 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                   IconButton(
                                       onPressed: () {
                                         print("pressed at: $index");
+
+                                        _productNameController.text =
+                                            generateInvoiceController
+                                                .dataList[index][0];
+                                        _quantityController.text =
+                                            generateInvoiceController
+                                                .dataList[index][1];
+                                        _unitPriceController.text =
+                                            generateInvoiceController
+                                                .dataList[index][2];
+                                        _taxController.text =
+                                            generateInvoiceController
+                                                .dataList[index][3];
+
                                         showDialog(
                                             context: context,
                                             builder: (BuildContext context) {
