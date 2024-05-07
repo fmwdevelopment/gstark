@@ -6,7 +6,7 @@ import 'package:uuid/uuid.dart';
 import 'dart:io';
 import 'package:gstark/utils/collection_extensions.dart';
 import 'package:pdf/pdf.dart';
-// import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
+import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 
 /// A class that generates PDF invoices based on provided data.
 ///
@@ -26,7 +26,6 @@ import 'package:pdf/pdf.dart';
 /// Note: This class uses the `pdf` package for PDF generation. Make sure to include the package in your project's dependencies.
 
 class InvoicePdfGenerator {
-
   Future<File> generateInvoicePdf(String companyName, String companyAddress,
       Map<String, dynamic> invoiceData) async {
     final pdf = pw.Document();
@@ -213,9 +212,17 @@ class InvoicePdfGenerator {
             border: pw.TableBorder.all(width: 1, color: PdfColors.grey400),
             children: [
               _buildTotalAmount("Total", '${invoiceData['total_before_tax']}'),
-              invoiceData['inter_state']==true ? _buildTotalAmount("CGST Tax", '${invoiceData['tax_amount']/2}'):_buildTotalAmount('IGST Tax','${invoiceData['tax_amount']}'),
-              invoiceData['inter_state']==true ? _buildTotalAmount("SGST Tax", '${invoiceData['tax_amount']/2}'): _buildTotalAmount('', ''),
-              _buildTotalAmount("Total Tax Amount", '${invoiceData['tax_amount']}'),
+              invoiceData['inter_state'] == true
+                  ? _buildTotalAmount(
+                      "CGST Tax", '${invoiceData['tax_amount'] / 2}')
+                  : _buildTotalAmount(
+                      'IGST Tax', '${invoiceData['tax_amount']}'),
+              invoiceData['inter_state'] == true
+                  ? _buildTotalAmount(
+                      "SGST Tax", '${invoiceData['tax_amount'] / 2}')
+                  : _buildTotalAmount('', ''),
+              _buildTotalAmount(
+                  "Total Tax Amount", '${invoiceData['tax_amount']}'),
               _buildTotalAmount(
                   "Net payable", '${invoiceData['total_after_tax']}'),
             ])
