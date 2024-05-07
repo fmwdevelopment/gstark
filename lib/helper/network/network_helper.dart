@@ -432,7 +432,7 @@ class ApiService {
       final http.Response response = await http
           .put(
         Uri.parse(url),
-        body: body,
+        body: jsonEncode(body),
         headers: headers ?? defaultHeaders,
       )
           .timeout(
