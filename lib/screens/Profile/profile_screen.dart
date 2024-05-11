@@ -81,8 +81,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: const NormalText(
           text: "Profile",
           textAlign: TextAlign.center,
-          textFontWeight: FontWeight.w700,
-          textSize: 24,
+          textFontWeight: FontWeight.w500,
+          textSize: 20,
           textColor: kWhite,
         ),
         centerTitle: true,
@@ -90,21 +90,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Container(
             margin: const EdgeInsets.all(5),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(width: 1, color: kWhite)),
+                color: kWhite, borderRadius: BorderRadius.circular(10)),
             child: TextButton(
                 onPressed: () {
-                    updateUserController.updateUser(phoneNumber: _phoneNumberController.text,
-                        gstn: _gstController.text, email: _emailController.text,
-                        name: _nameController.text, address: _addressIdController.text,
-                        context: context);
-
+                  updateUserController.updateUser(
+                      phoneNumber: _phoneNumberController.text,
+                      gstn: _gstController.text,
+                      email: _emailController.text,
+                      name: _nameController.text,
+                      address: _addressIdController.text,
+                      context: context);
                 },
                 child: const NormalText(
-                    text: "Save",
-                    textColor: kWhite,
-                    textSize: 20,
-                    textFontWeight: FontWeight.w600)),
+                  text: "Save",
+                  textAlign: TextAlign.center,
+                  textFontWeight: FontWeight.w500,
+                  textSize: 16,
+                  textColor: kApplicationThemeColor,
+                )),
           )
         ],
       ),

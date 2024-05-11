@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gstark/constants/string_constants.dart';
@@ -33,31 +31,31 @@ class UpdateUserController extends GetxController {
 
     bool isConnectedToInternet = await checkIsConnectedToInternet();
 
-
     if (isConnectedToInternet) {
       try {
-        String authToken = await CustomSharedPref.getPref(SharedPreferenceString.authToken);
-        String email = await CustomSharedPref.getPref(SharedPreferenceString.email);
+        String authToken =
+            await CustomSharedPref.getPref(SharedPreferenceString.authToken);
+        String email =
+            await CustomSharedPref.getPref(SharedPreferenceString.email);
         String userId = await CustomSharedPref.getPref<String>(
             SharedPreferenceString.clientId);
 
-        Map<String, dynamic> responseBody =  {
-           "id": userId,
-           "name": name,
-           "email": email,
-           "phone": phoneNumber,
-           "address": address,
-           "gstn": gstn
-         };
+        Map<String, dynamic> responseBody = {
+          "id": userId,
+          "name": name,
+          "email": email,
+          "phone": phoneNumber,
+          "address": address,
+          "gstn": gstn
+        };
 
         var value = await apiService.put(
-            ApiEndPoint.updateUserDataApi,
-            Get.overlayContext ?? context,
-            body:responseBody,
+            ApiEndPoint.updateUserDataApi, Get.overlayContext ?? context,
+            body: responseBody,
             headers: {
               'x-header-token': email,
               'authorization': 'Bearer $authToken',
-              'Content-Type':"application/json",
+              'Content-Type': "application/json",
             });
 
         if (value.statusCode == 200 && value.response != null) {
@@ -80,7 +78,6 @@ class UpdateUserController extends GetxController {
 
           setBusy(false);
           Get.off(const ProfileScreen(), transition: Transition.rightToLeft);
-
         } else {
           setBusy(false);
         }
