@@ -1,15 +1,15 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gstark/constants/app_colors.dart';
+import 'package:gstark/constants/shared_preference_string.dart';
 import 'package:gstark/screens/generate_invoice/generate_invoice_screen.dart';
 import 'package:gstark/screens/GST_Returns/gst_return_screen.dart';
 import 'package:gstark/screens/Profile/profile_screen.dart';
 import 'package:gstark/screens/purchase_inovice/purchase_invoice_screen.dart';
-import 'package:gstark/screens/reconciliation_list/reconciliation_list_screen.dart';
+import 'package:gstark/screens/reconciliation_list/excel_list_view.dart';
+import 'package:gstark/utils/shared_preference/custom_shared_preference.dart';
 import 'package:gstark/utils/text_utils/normal_text.dart';
-
 import '../sales_invoice/sales_invoice_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: (){
+      onWillPop: () {
         return exit(0);
       },
       child: Scaffold(
@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
           title: const NormalText(
             text: "gStark",
             textSize: 24,
-            textFontWeight:FontWeight.w700,
+            textFontWeight: FontWeight.w700,
             textColor: kWhite,
           ),
         ),
@@ -43,13 +43,13 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     GestureDetector(
                       child: Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: kApplicationThemeColor, // Border color
-                              width: 2.0, // Border width
-                            ),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: kApplicationThemeColor, // Border color
+                            width: 2.0, // Border width
                           ),
+                        ),
                         child: CircleAvatar(
                           backgroundColor: kWhite,
                           maxRadius: 60,
@@ -123,7 +123,13 @@ class HomeScreen extends StatelessWidget {
                 Column(
                   children: [
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        String clientId = await CustomSharedPref.getPref(
+                            SharedPreferenceString.clientId);
+                        String reviewerId = await CustomSharedPref.getPref(
+                            SharedPreferenceString.reviewerId);
+                        print("clientId: $clientId");
+                        print("reviewerIdId: $reviewerId");
                         Get.to(const GSTReturnScreen(),
                             transition: Transition.rightToLeft);
                       },
@@ -205,7 +211,11 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Get.to(const ReconciliationListScreen(),
+
+                        // Get.to(ExcelDownloader(),
+                        //     transition: Transition.rightToLeft);
+
+                            Get.to(const ExcelListView(),
                             transition: Transition.rightToLeft);
                       },
                       child: Container(
@@ -246,7 +256,7 @@ class HomeScreen extends StatelessWidget {
                         Get.to(const GenerateInvoiceScreen(),
                             transition: Transition.rightToLeft);
                       },
-                      child:Container(
+                      child: Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(

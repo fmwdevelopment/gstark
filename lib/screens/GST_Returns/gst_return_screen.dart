@@ -1,17 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:gstark/controller/gst_returns_controller.dart';
+import 'package:gstark/screens/GST_Returns/document_preview_screen.dart';
 
 import '../../constants/app_colors.dart';
+import '../../constants/app_decorations.dart';
+import '../../utils/date_time_utils.dart';
 import '../../utils/text_utils/normal_text.dart';
+import '../authentication/login_screen_loader.dart';
 
 class GSTReturnScreen extends StatefulWidget {
-  const GSTReturnScreen({Key? key}) : super(key: key);
+  const GSTReturnScreen({super.key});
 
   @override
   State<GSTReturnScreen> createState() => _GSTReturnScreenState();
 }
 
+
 class _GSTReturnScreenState extends State<GSTReturnScreen> {
+  late final GSTReturnController gstReturnController;
+
+  @override
+  void initState() {
+    super.initState();
+    gstReturnController = Get.isRegistered<GSTReturnController>()
+        ? Get.find<GSTReturnController>()
+        : Get.put(GSTReturnController());
+    gstReturnController.initCall(context);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,8 +44,111 @@ class _GSTReturnScreenState extends State<GSTReturnScreen> {
         ),
         centerTitle: true,
       ),
-      body: PDF().cachedFromUrl(
-          'https://dev-api.gstark.co/api/document/b29e0b91-7aa2-4118-8623-d3fdb3e77e5f/preview?clientId=dcae8e4d-14bf-4c6c-93eb-b17922e41e43'),
+       body: Obx(() => gstReturnController.isBusy
+           ? const LoginScreenLoader()
+           : gstReturnController.returnsData.isEmpty
+           ? const Center(
+         child: NormalText(
+           text: 'No data available',
+         ),
+       )
+           : Container(
+         margin: const EdgeInsets.only(top: 15),
+         child: Column(
+           children: [
+             Obx(() => Expanded(
+               child: ListView.builder(
+                   scrollDirection: Axis.vertical,
+                   itemCount:
+                   gstReturnController.returnsData.length,
+                   itemBuilder: (BuildContext context, int index) {
+                     return InkWell(
+                       onTap: () {
+                          // TODO: implement doc preview screen
+                         Get.to(DocumentPreviewScreen(file: gstReturnController.returnsData[index].file ?? "",
+                           name: gstReturnController.returnsData[index].name ?? "",));
+                       },
+                       child: Container(
+                         decoration: listItemDecoration,
+                         padding: const EdgeInsets.all(4.0),
+                         margin: const EdgeInsets.symmetric(
+                             horizontal: 15, vertical: 10),
+                         child: Padding(
+                           padding: const EdgeInsets.all(8.0),
+                           child: Row(
+                             mainAxisAlignment:
+                             MainAxisAlignment.start,
+                             children: [
+                               Stack(
+                                 alignment: Alignment.center,
+                                 children: [
+                                   SizedBox(
+                                     height: 50,
+                                     width: 50,
+                                     child: Image.network(
+                                       gstReturnController
+                                           .returnsData[index]
+                                           .thumbnail ??
+                                           "",
+                                       errorBuilder: (BuildContext
+                                       context,
+                                           Object exception,
+                                           StackTrace? stackTrace) {
+                                         return const Icon(
+                                             Icons.error);
+                                       },
+                                     ),
+                                   ),
+                                   gstReturnController
+                                       .returnsData[index]
+                                       .reviewed ==
+                                       true
+                                       ? const Icon(
+                                     Icons.check,
+                                     color: kWhite,
+                                   )
+                                       : Container()
+                                 ],
+                               ),
+                               const SizedBox(
+                                 width: 20,
+                               ),
+                               Column(
+                                 crossAxisAlignment:
+                                 CrossAxisAlignment.start,
+                                 children: [
+                                   NormalText(
+                                     text: gstReturnController
+                                         .returnsData[index]
+                                         .name ??
+                                         "",
+                                     textAlign: TextAlign.center,
+                                     textFontWeight: FontWeight.w500,
+                                     textSize: 14,
+                                   ),
+                                   NormalText(
+                                     text: getDateTime(
+                                         gstReturnController
+                                             .returnsData[index]
+                                             .cratedAt ??
+                                             ""),
+                                     textAlign: TextAlign.center,
+                                     textFontWeight: FontWeight.w200,
+                                     textSize: 12,
+                                   ),
+                                 ],
+                               )
+                             ],
+                           ),
+                         ),
+                       ),
+                     );
+                   }),
+             ))
+           ],
+         ),
+       )),
     );
   }
 }
+

@@ -62,21 +62,22 @@ class UpdateUserController extends GetxController {
           successToast(descriptionText: "Updated user data", context: context);
 
           CustomSharedPref.setPref<String>(
-              SharedPreferenceString.phoneNumber, phoneNumber ?? "");
+              SharedPreferenceString.phoneNumber, phoneNumber);
 
           CustomSharedPref.setPref<String>(
-              SharedPreferenceString.gstNumber, gstn ?? "");
+              SharedPreferenceString.gstNumber, gstn);
 
           CustomSharedPref.setPref<String>(
-              SharedPreferenceString.clientName, name ?? "");
+              SharedPreferenceString.clientName, name);
 
           CustomSharedPref.setPref<String>(
-              SharedPreferenceString.email, email ?? "");
+              SharedPreferenceString.email, email);
 
           CustomSharedPref.setPref<String>(
-              SharedPreferenceString.clientAddress, address ?? "");
+              SharedPreferenceString.clientAddress,address);
 
           setBusy(false);
+
           Get.off(const ProfileScreen(), transition: Transition.rightToLeft);
         } else {
           setBusy(false);

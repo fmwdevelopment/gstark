@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:gstark/constants/shared_preference_string.dart';
 import 'package:gstark/controller/profile_screen_controller.dart';
+import 'package:gstark/screens/Profile/update_profile_screen_loader.dart';
 import 'package:gstark/utils/shared_preference/custom_shared_preference.dart';
 import 'package:gstark/widgets/input_textfield.dart';
 import '../../constants/app_decorations.dart';
@@ -28,9 +29,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _phoneNumberController = TextEditingController();
   final _gstController = TextEditingController();
   final _emailController = TextEditingController();
-  final _clientIdController = TextEditingController();
-  final _reviewerIdController = TextEditingController();
-  final _addressIdController = TextEditingController();
+  // final _clientIdController = TextEditingController();
+  // final _reviewerIdController = TextEditingController();
+  late final _addressController = TextEditingController();
 
   @override
   void initState() {
@@ -46,6 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   initCall() async {
+
     String reviewerId = await CustomSharedPref.getPref<String>(
         SharedPreferenceString.reviewerId);
     String phoneNumber = await CustomSharedPref.getPref<String>(
@@ -68,6 +70,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     profileScreenController.setClientId(id);
     profileScreenController.setClientName(name);
     profileScreenController.setClientAddress(address);
+
+    print(phoneNumber);
+    print(gstn);
+    print(email);
+    print(id);
+    print(name);
+    print(address);
   }
 
   @override
@@ -98,8 +107,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       gstn: _gstController.text,
                       email: _emailController.text,
                       name: _nameController.text,
-                      address: _addressIdController.text,
+                      address: _addressController.text,
                       context: context);
+
                 },
                 child: const NormalText(
                   text: "Save",
@@ -111,7 +121,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           )
         ],
       ),
-      body: Obx(() => SingleChildScrollView(
+      body: Obx(() => updateUserController.isBusy
+          ? const UpdateProfileScreenLoader()
+          :SingleChildScrollView(
             child: Stack(
               children: [
                 Container(
@@ -185,20 +197,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         obscureText: false,
                         autofocus: false,
                       ),
-                      // const SizedBox(height: 16),
-                      // const NormalText(
-                      //   text: "ID",
-                      //   textSize: 14,
-                      //   textColor: kNeutral400,
-                      // ),
-                      // const SizedBox(height: 5),
-                      // InputTextField(
-                      //   controller: _clientIdController
-                      //     ..text = profileScreenController.clientId,
-                      //   hintText: "Client ID",
-                      //   obscureText: false,
-                      //   autofocus: false,
-                      // ),
                       const SizedBox(height: 16),
                       const NormalText(
                         text: "Address",
@@ -207,11 +205,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       const SizedBox(height: 5),
                       InputTextField(
-                        controller: _addressIdController
-                          ..text = profileScreenController.clientAddress,
+                        controller: _addressController,
                         hintText: "Address",
                         obscureText: false,
-                        autofocus: false,
+                        autofocus: true,
                       ),
                       const SizedBox(
                         height: 24,

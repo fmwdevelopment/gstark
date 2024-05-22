@@ -113,6 +113,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.9"
+  easy_pdf_viewer:
+    dependency: "direct main"
+    description:
+      name: easy_pdf_viewer
+      sha256: "1a2e6708000952d9ada5a22f44fbcdc2b163a000369db94f89dc8d07e30a488f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.8"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
+  excel:
+    dependency: "direct main"
+    description:
+      name: excel
+      sha256: f6a76fff6ac14f48fd44a6528e72705965e02cbc593e00427ab1d9a9f5d3bffa
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   fake_async:
     dependency: transitive
     description:
@@ -198,6 +222,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.2"
+  flutter_excel:
+    dependency: "direct main"
+    description:
+      name: flutter_excel
+      sha256: "2e0daa4e8f8d318306e87e9758e0a2d153f21c9989df0ca36a801d566a3bfd31"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -269,6 +301,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.2.1"
+  horizontal_data_table:
+    dependency: "direct main"
+    description:
+      name: horizontal_data_table
+      sha256: c8ab5256bbced698a729f3e0ff2cb0e8e97416cdbb082860370eaf883badf722
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.3.1"
   http:
     dependency: "direct main"
     description:
@@ -357,6 +397,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1+1"
+  infinite_listview:
+    dependency: transitive
+    description:
+      name: infinite_listview
+      sha256: f6062c1720eb59be553dfa6b89813d3e8dd2f054538445aaa5edaddfa5195ce6
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   intl:
     dependency: "direct main"
     description:
@@ -437,6 +485,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
+  numberpicker:
+    dependency: transitive
+    description:
+      name: numberpicker
+      sha256: "4c129154944b0f6b133e693f8749c3f8bfb67c4d07ef9dcab48b595c22d1f156"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.2"
   open_file:
     dependency: "direct main"
     description:
@@ -549,6 +613,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.8.0"
+  provider:
+    dependency: transitive
+    description:
+      name: provider
+      sha256: c8a055ee5ce3fd98d6fc872478b03823ffdb448699c6ebdbbc71d59b596fd48c
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.2"
   qr:
     dependency: transitive
     description:
