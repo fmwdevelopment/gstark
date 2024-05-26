@@ -45,28 +45,31 @@ class _SalesInvoiceImageUploadScreenState
   Future getImageFromGallery() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
+
       if (pickedFile != null) {
         _image = File(pickedFile.path);
         imageName = pickedFile.name;
         imagePath = pickedFile.path;
         salesInvoiceImageUploadScreenController.setIsImageCaptured(true);
       }
-    });
+
+    setState(() {});
+
   }
 
   //Image Picker function to get image from camera
   Future getImageFromCamera() async {
     final pickedFile = await picker.pickImage(source: ImageSource.camera);
 
-    setState(() {
+
       if (pickedFile != null) {
         _image = File(pickedFile.path);
         imageName = pickedFile.name;
         imagePath = pickedFile.path;
         salesInvoiceImageUploadScreenController.setIsImageCaptured(true);
       }
-    });
+
+    setState(() {});
   }
 
   @override

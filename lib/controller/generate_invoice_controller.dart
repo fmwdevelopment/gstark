@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,15 +13,12 @@ import '../constants/shared_preference_string.dart';
 import '../constants/string_constants.dart';
 import '../helper/network/api_end_point.dart';
 import '../helper/network/network_helper.dart';
-import '../models/sales_inovice_list_response_model.dart';
 import '../utils/image_type_getter.dart';
 import '../utils/internet_utils.dart';
 import '../utils/shared_preference/custom_shared_preference.dart';
 import '../utils/toast_utils/error_toast.dart';
 import '../utils/toast_utils/success_toast.dart';
 import 'package:http/http.dart' as http;
-import 'dart:io';
-
 import 'package:gstark/screens/purchase_inovice/purchase_invoice_screen.dart';
 import 'package:gstark/helper/network/common_model.dart';
 import 'package:http_parser/http_parser.dart';
@@ -52,26 +49,18 @@ class GenerateInvoiceController extends GetxController {
   salesInvoiceUploadApi(BuildContext context, File file, String fileName) {
     purchaseInvoiceUploadApiCall(context, file, fileName);
 
-    purchaseInvoiceUploadApiCallTimer =
-        Timer(const Duration(seconds: 30), () async {
+    purchaseInvoiceUploadApiCallTimer = Timer(const Duration(seconds: 30), () async {
       setBusy(false);
-
-      debugPrint('api is success');
-
       errorToast(tryAgainAfterSomeTime, Get.overlayContext ?? context,
           isShortDurationText: false);
       purchaseInvoiceUploadApiCallTimer?.cancel();
-
       Get.to(const PurchaseInvoiceScreen(), transition: Transition.rightToLeft);
     });
   }
 
-  purchaseInvoiceUploadApiCall(
-      BuildContext context, File file, String fileName) async {
+  purchaseInvoiceUploadApiCall(BuildContext context, File file, String fileName) async {
     setBusy(true);
-
-    String authToken =
-        await CustomSharedPref.getPref(SharedPreferenceString.authToken);
+    String authToken = await CustomSharedPref.getPref(SharedPreferenceString.authToken);
     String email = await CustomSharedPref.getPref(SharedPreferenceString.email);
     String userId =
         await CustomSharedPref.getPref<String>(SharedPreferenceString.clientId);
@@ -79,9 +68,10 @@ class GenerateInvoiceController extends GetxController {
     bool isConnectedToInternet = await checkIsConnectedToInternet();
     if (isConnectedToInternet) {
       try {
-        String url = ApiEndPoint.purchaseInvoiceImageUploadApi;
+        String url =  ApiEndPoint.uploadInvoicePdf;
         String token = 'Bearer $authToken';
-        Map<String, String> headers = {'authorization': token};
+
+        Map<String, String> headers = {'Authorization': token};
         Map<String, String> headers1 = {'x-header-token': email};
 
         var request = http.MultipartRequest('POST', Uri.parse(url));
@@ -93,11 +83,9 @@ class GenerateInvoiceController extends GetxController {
         request.files.add(http.MultipartFile.fromBytes(
             'file', file.readAsBytesSync(),
             contentType: MediaType('pdf', imageType), filename: fileName));
-
-        request.fields["userId"] =
-            userId; //'c87fbc25-f168-4488-9f87-f0b08b5cb33c';
-        request.fields["type"] = "report";
-        request.fields["description"] = "report";
+        request.fields["userId"] = userId; //'c87fbc25-f168-4488-9f87-f0b08b5cb33c';
+        request.fields["type"] = "sale";
+        request.fields["description"] = "sale";
 
         var response = await request.send();
 
@@ -111,7 +99,7 @@ class GenerateInvoiceController extends GetxController {
             purchaseInvoiceUploadApiCallTimer?.cancel();
             setBusy(false);
             successToast(
-                descriptionText: 'Purchase Invoice Uploaded Successfully',
+                descriptionText: ' Invoice Uploaded Successfully',
                 context: context);
 
             Get.off(const HomeScreen(), transition: Transition.rightToLeft);

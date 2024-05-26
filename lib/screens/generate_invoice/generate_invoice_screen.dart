@@ -357,6 +357,15 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
                                     setState(() {
+                                      // if (generateInvoiceController
+                                      //         .dataList.length >
+                                      //     19) {
+                                      //   print(
+                                      //       "length:${generateInvoiceController.dataList.length}");
+                                      //   errorToast("Upto 20 items are allowed",
+                                      //       context);
+                                      // } else {
+                                      // }
                                       generateInvoiceController.dataList
                                           .add(RxList<String>([
                                         _productNameController.text,

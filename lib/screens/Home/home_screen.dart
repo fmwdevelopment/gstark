@@ -271,7 +271,7 @@ class HomeScreen extends StatelessWidget {
                             width: 85, // Diameter of the CircleAvatar
                             height: 85,
                             child: Image.asset(
-                              "assets/images/invoice.jpg",
+                              "assets/images/invoice1.png",
                               fit: BoxFit.cover,
                             ),
                           ),

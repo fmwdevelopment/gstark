@@ -32,6 +32,7 @@ class Response {
   final String? updatedAt;
   final bool? active;
   final String? jwt;
+  final String? address;
 
   Response({
     this.reviewerId,
@@ -48,6 +49,7 @@ class Response {
     this.updatedAt,
     this.active,
     this.jwt,
+    this.address
   });
 
   Response.fromJson(Map<String, dynamic> json)
@@ -64,7 +66,8 @@ class Response {
         securityAnswer = json['security_answer'] as String?,
         updatedAt = json['updated_at'] as String?,
         active = json['active'] as bool?,
-        jwt = json['jwt'] as String?;
+        jwt = json['jwt'] as String?,
+        address = json['address'] as String?;
 
   Map<String, dynamic> toJson() => {
     'reviewerId' : reviewerId,
@@ -80,7 +83,8 @@ class Response {
     'security_answer' : securityAnswer,
     'updated_at' : updatedAt,
     'active' : active,
-    'jwt' : jwt
+    'jwt' : jwt,
+    'address': address
   };
 }
 

@@ -12,4 +12,7 @@ class ApiEndPoint {
   static const String purchaseInvoiceImageUploadApi = 'https://dev-api.gstark.co/api/document';
   static const String salesInvoiceImageUploadApi = 'https://dev-api.gstark.co/api/document';
   static const String updateUserDataApi = 'https://dev-api.gstark.co/api/user';
+
+
+  static const String uploadInvoicePdf = 'https://dev-api.gstark.co/api/document';
 }

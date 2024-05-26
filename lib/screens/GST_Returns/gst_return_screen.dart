@@ -94,8 +94,11 @@ class _GSTReturnScreenState extends State<GSTReturnScreen> {
                                        context,
                                            Object exception,
                                            StackTrace? stackTrace) {
-                                         return const Icon(
-                                             Icons.error);
+                                         return (gstReturnController
+                                             .returnsData[index].mimetype != null && gstReturnController
+                                             .returnsData[index].mimetype!.contains("pdf"))?
+                                         const Icon(Icons.picture_as_pdf):
+                                         const Icon(Icons.error);
                                        },
                                      ),
                                    ),

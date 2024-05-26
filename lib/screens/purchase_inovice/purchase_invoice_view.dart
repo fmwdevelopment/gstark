@@ -54,8 +54,7 @@ class _PurchaseInvoiceViewState extends State<PurchaseInvoiceView> {
                   itemBuilder: (BuildContext context, int index) {
                     return InkWell(
                       onTap: (){
-                        Get.to( ImagePreviewScreen(id: purchaseInvoiceController.purchaseData[index].id ?? "",
-                          userId: purchaseInvoiceController.purchaseData[index].userId ?? "",));
+                        Get.to( ImagePreviewScreen(file: purchaseInvoiceController.purchaseData[index].file ?? "", isPdf: false,));
                       },
                       child: Container(
                         decoration: listItemDecoration,

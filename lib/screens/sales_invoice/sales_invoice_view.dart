@@ -4,7 +4,6 @@ import 'package:gstark/constants/app_colors.dart';
 import 'package:gstark/constants/app_decorations.dart';
 import 'package:gstark/controller/sales_invoice_controller.dart';
 import 'package:gstark/utils/image_preview_screen.dart';
-
 import '../../utils/date_time_utils.dart';
 import '../../utils/text_utils/normal_text.dart';
 import '../authentication/login_screen_loader.dart';
@@ -56,12 +55,12 @@ class _SalesInvoiceViewState extends State<SalesInvoiceView> {
                                   return InkWell(
                                     onTap: () {
                                       Get.to(ImagePreviewScreen(
-                                          id: salesInvoiceController
-                                                  .salesData[index].id ??
+                                          file: salesInvoiceController
+                                                  .salesData[index].file ??
                                               "",
-                                          userId: salesInvoiceController
-                                                  .salesData[index].userId ??
-                                              ""));
+                                          isPdf: salesInvoiceController
+                                          .salesData[index].mimetype != null && salesInvoiceController
+                                          .salesData[index].mimetype!.contains("pdf")));
                                     },
                                     child: Container(
                                       decoration: listItemDecoration,
@@ -89,7 +88,9 @@ class _SalesInvoiceViewState extends State<SalesInvoiceView> {
                                                             context,
                                                         Object exception,
                                                         StackTrace? stackTrace) {
-                                                      return const Icon(
+                                                      return (salesInvoiceController
+                                                          .salesData[index].mimetype != null && salesInvoiceController
+                                                          .salesData[index].mimetype!.contains("pdf") )? const Icon(Icons.picture_as_pdf):const Icon(
                                                           Icons.error);
                                                     },
                                                   ),

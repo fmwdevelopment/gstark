@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 import 'package:gstark/utils/text_utils/normal_text.dart';
 
 import '../constants/app_colors.dart';
 import '../constants/string_constants.dart';
 
 class ImagePreviewScreen extends StatefulWidget {
-  final String id;
-  final String userId;
-  const ImagePreviewScreen({required this.id,super.key, required this.userId});
+  final String file;
+  final bool isPdf;
+  const ImagePreviewScreen({required this.file,super.key, required this.isPdf});
 
 
   @override
@@ -47,8 +48,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
             scaleEnabled: true,
             minScale: 0.5,
             maxScale: 4.0,
-            child: Image.network(
-             "https://dev-api.gstark.co/api/document/${widget.id}/preview?clientId=${widget.userId}",
+            child: widget.isPdf ?  const PDF().cachedFromUrl(widget.file):Image.network(widget.file,
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) return child;
                 return Center(

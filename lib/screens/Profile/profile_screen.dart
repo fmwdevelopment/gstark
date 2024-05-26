@@ -205,10 +205,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       const SizedBox(height: 5),
                       InputTextField(
-                        controller: _addressController,
+                        controller: _addressController..text = profileScreenController.clientAddress,
                         hintText: "Address",
                         obscureText: false,
-                        autofocus: true,
+                        autofocus: false,
                       ),
                       const SizedBox(
                         height: 24,

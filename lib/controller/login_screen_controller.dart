@@ -69,7 +69,8 @@ class LoginScreenController extends GetxController {
                 loginResponseModel.response?.securityAnswer ?? "");
 
             CustomSharedPref.setPref<String>(
-                SharedPreferenceString.clientAddress, "");
+                SharedPreferenceString.clientAddress,
+                loginResponseModel.response?.address ?? "");
 
             Get.to(const HomeScreen(), transition: Transition.rightToLeft);
           }
