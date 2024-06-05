@@ -3,6 +3,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 import '../helper/network/network_helper.dart';
+
 class ProfileScreenController extends GetxController {
   ApiService apiService = ApiService();
 
@@ -69,5 +70,6 @@ class ProfileScreenController extends GetxController {
   setClientAddress(String value) {
     _clientAddress.value = value;
   }
+  
 
 }

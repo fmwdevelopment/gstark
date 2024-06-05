@@ -6,7 +6,9 @@ import '../../controller/reconciliation_screen_controller.dart';
 import '../../utils/text_utils/normal_text.dart';
 
 class ExcelListView extends StatefulWidget {
-  const ExcelListView({super.key});
+  final String name;
+  final String fileUrl;
+  const ExcelListView({super.key,  required this.name,required this.fileUrl,});
 
   @override
   _ExcelListViewState createState() => _ExcelListViewState();
@@ -23,7 +25,18 @@ class _ExcelListViewState extends State<ExcelListView> {
         Get.isRegistered<ReconciliationScreenController>()
             ? Get.find<ReconciliationScreenController>()
             : Get.put(ReconciliationScreenController());
-    reconciliationScreenController.initCall(context);
+    initCall(context);
+  }
+  void initCall(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      reconciliationScreenController.fetchDataFromAPI(widget.fileUrl);
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   void _searchText(String searchText) {
@@ -36,9 +49,9 @@ class _ExcelListViewState extends State<ExcelListView> {
         var filteredData = reconciliationScreenController.data.where((element) {
           //row.firstColumnKey.toLowerCase().contains(searchText.toLowerCase())
           return element.tradeLegalName
-                  .toString()
-                  .toLowerCase()
-                  .contains(searchText.toLowerCase()) ||
+              .toString()
+              .toLowerCase()
+              .contains(searchText.toLowerCase()) ||
               element.gstinOfSupplier
                   .toString()
                   .toLowerCase()
@@ -57,7 +70,7 @@ class _ExcelListViewState extends State<ExcelListView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const NormalText(text: '2A/2B Reconciliation'),
+          title:  NormalText(text: widget.name,textSize: 14,),
         ),
         body: Obx(() => Padding(
               padding: const EdgeInsets.all(8.0),
@@ -113,7 +126,7 @@ class _ExcelListViewState extends State<ExcelListView> {
                     height: 15,
                   ),
                   reconciliationScreenController.isBusy?const Center(
-                    child: CircularProgressIndicator(),
+                    child: CircularProgressIndicator(color: kApplicationThemeColor,),
                   ):
                   reconciliationScreenController.filteredData.isEmpty
                       ? const Center(

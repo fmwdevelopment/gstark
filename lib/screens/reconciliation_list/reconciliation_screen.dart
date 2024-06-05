@@ -66,7 +66,9 @@ class _ReconciliationScreenState extends State<ReconciliationScreen> {
                     return InkWell(
                       onTap: () {
                         // TODO: implement doc preview screen
-                        Get.to(const ExcelListView(),transition: Transition.rightToLeft);
+                        print("url: ${ reconciliationScreenController.reconciliationData[index].file } at index: $index");
+                        Get.to( ExcelListView( name:reconciliationScreenController.reconciliationData[index].name ?? "" ,
+                            fileUrl: reconciliationScreenController.reconciliationData[index].file ?? ""),transition: Transition.rightToLeft);
                       },
                       child: Container(
                         decoration: listItemDecoration,
@@ -94,7 +96,7 @@ class _ReconciliationScreenState extends State<ReconciliationScreen> {
                                           Object exception,
                                           StackTrace? stackTrace) {
                                         return const Icon(
-                                            Icons.error);
+                                            Icons.file_copy_outlined);
                                       },
                                     ),
                                   ),

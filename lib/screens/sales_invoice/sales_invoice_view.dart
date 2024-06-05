@@ -57,10 +57,7 @@ class _SalesInvoiceViewState extends State<SalesInvoiceView> {
                                       Get.to(ImagePreviewScreen(
                                           file: salesInvoiceController
                                                   .salesData[index].file ??
-                                              "",
-                                          isPdf: salesInvoiceController
-                                          .salesData[index].mimetype != null && salesInvoiceController
-                                          .salesData[index].mimetype!.contains("pdf")));
+                                              ""));
                                     },
                                     child: Container(
                                       decoration: listItemDecoration,
@@ -84,14 +81,26 @@ class _SalesInvoiceViewState extends State<SalesInvoiceView> {
                                                             .salesData[index]
                                                             .thumbnail ??
                                                         "",
-                                                    errorBuilder: (BuildContext
-                                                            context,
-                                                        Object exception,
-                                                        StackTrace? stackTrace) {
-                                                      return (salesInvoiceController
-                                                          .salesData[index].mimetype != null && salesInvoiceController
-                                                          .salesData[index].mimetype!.contains("pdf") )? const Icon(Icons.picture_as_pdf):const Icon(
-                                                          Icons.error);
+                                                    loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                                      if (loadingProgress == null) {
+                                                        return child;
+                                                      } else {
+                                                        return Center(
+                                                          child: CircularProgressIndicator(
+                                                            color: kApplicationThemeColor,
+                                                            value: loadingProgress.expectedTotalBytes != null
+                                                                ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                                                                : null,
+                                                          ),
+                                                        );
+                                                      }
+                                                    },
+                                                    errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                                      return const Center(
+                                                        child: Icon(
+                                                          Icons.picture_as_pdf,
+                                                        ),
+                                                      );
                                                     },
                                                   ),
                                                 ),
@@ -101,7 +110,8 @@ class _SalesInvoiceViewState extends State<SalesInvoiceView> {
                                                         true
                                                     ? const Icon(
                                                         Icons.check,
-                                                        color: kWhite,
+                                                        color: kSuccess,
+                                                         size: 24,
                                                       )
                                                     : Container()
                                               ],

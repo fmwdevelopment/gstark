@@ -29,9 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _phoneNumberController = TextEditingController();
   final _gstController = TextEditingController();
   final _emailController = TextEditingController();
-  // final _clientIdController = TextEditingController();
-  // final _reviewerIdController = TextEditingController();
-  late final _addressController = TextEditingController();
+  final _addressController = TextEditingController();
 
   @override
   void initState() {
@@ -47,7 +45,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   initCall() async {
-
     String reviewerId = await CustomSharedPref.getPref<String>(
         SharedPreferenceString.reviewerId);
     String phoneNumber = await CustomSharedPref.getPref<String>(
@@ -55,9 +52,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     String gstn = await CustomSharedPref.getPref<String>(
         SharedPreferenceString.gstNumber);
     String email =
-        await CustomSharedPref.getPref<String>(SharedPreferenceString.email);
+    await CustomSharedPref.getPref<String>(SharedPreferenceString.email);
     String id =
-        await CustomSharedPref.getPref<String>(SharedPreferenceString.clientId);
+    await CustomSharedPref.getPref<String>(SharedPreferenceString.clientId);
     String name = await CustomSharedPref.getPref<String>(
         SharedPreferenceString.clientName);
     String address = await CustomSharedPref.getPref<String>(
@@ -71,6 +68,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     profileScreenController.setClientName(name);
     profileScreenController.setClientAddress(address);
 
+    _nameController.text = name;
+    _phoneNumberController.text = phoneNumber;
+    _gstController.text = gstn;
+    _emailController.text = email;
+    _addressController.text = address;
+
     print(phoneNumber);
     print(gstn);
     print(email);
@@ -82,10 +85,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         iconTheme:
-            const IconThemeData(color: kWhite, size: 24 //change your color here
-                ),
+        const IconThemeData(color: kWhite, size: 24 //change your color here
+        ),
         backgroundColor: kApplicationThemeColor,
         title: const NormalText(
           text: "Profile",
@@ -109,7 +113,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       name: _nameController.text,
                       address: _addressController.text,
                       context: context);
-
                 },
                 child: const NormalText(
                   text: "Save",
@@ -123,116 +126,127 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Obx(() => updateUserController.isBusy
           ? const UpdateProfileScreenLoader()
-          :SingleChildScrollView(
-            child: Stack(
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  decoration: containerBottomCurvedDecoration,
+          : SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Stack(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.5,
+                decoration: containerBottomCurvedDecoration,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20, vertical: 20),
+                margin:
+                const EdgeInsets.only(left: 16, right: 16, top: 20),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(18)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const NormalText(
+                      text: "Name",
+                      textSize: 14,
+                      textColor: kNeutral400,
+                    ),
+                    const SizedBox(height: 5),
+                    InputTextField(
+                      controller: _nameController,
+                      hintText: "Name",
+                      obscureText: false,
+                      autofocus: false,
+                    ),
+                    const SizedBox(height: 16),
+                    const NormalText(
+                      text: "Phone Number",
+                      textSize: 14,
+                      textColor: kNeutral400,
+                    ),
+                    const SizedBox(height: 5),
+                    InputTextField(
+                      controller: _phoneNumberController,
+                      hintText: "Phone Number",
+                      obscureText: false,
+                      autofocus: false,
+                    ),
+                    const SizedBox(height: 16),
+                    const NormalText(
+                      text: "GST Number",
+                      textSize: 14,
+                      textColor: kNeutral400,
+                    ),
+                    const SizedBox(height: 5),
+                    InputTextField(
+                      controller: _gstController,
+                      hintText: "GST Number",
+                      obscureText: false,
+                      autofocus: false,
+                    ),
+                    const SizedBox(height: 16),
+                    const NormalText(
+                      text: "Email Address",
+                      textSize: 14,
+                      textColor: kNeutral400,
+                    ),
+                    const SizedBox(height: 5),
+                    InputTextField(
+                      controller: _emailController,
+                      hintText: "Email",
+                      obscureText: false,
+                      autofocus: false,
+                    ),
+                    const SizedBox(height: 16),
+                    const NormalText(
+                      text: "Address",
+                      textSize: 14,
+                      textColor: kNeutral400,
+                    ),
+                    const SizedBox(height: 5),
+                    InputTextField(
+                      controller: _addressController,
+                      hintText: "Address",
+                      obscureText: false,
+                      autofocus: false,
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Center(
+                      child: Button(
+                        onPress: () async {
+                          CustomSharedPref.setPref<bool>(
+                              SharedPreferenceString.isLoggedIn, false);
+                          Get.off(const SplashScreen(),
+                              transition: Transition.leftToRight);
+                        },
+                        backgroundColor: kApplicationThemeColor,
+                        buttonText: logOut,
+                        borderRadius: 18,
+                        textColor: kWhite,
+                      ),
+                    ),
+                  ],
                 ),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  margin: const EdgeInsets.only(left: 16, right: 16, top: 20),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(18)),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const NormalText(
-                        text: "Name",
-                        textSize: 14,
-                        textColor: kNeutral400,
-                      ),
-                      const SizedBox(height: 5),
-                      InputTextField(
-                        controller: _nameController
-                          ..text = profileScreenController.clientName,
-                        hintText: "Name",
-                        obscureText: false,
-                        autofocus: false,
-                      ),
-                      const SizedBox(height: 16),
-                      const NormalText(
-                        text: "Phone Number",
-                        textSize: 14,
-                        textColor: kNeutral400,
-                      ),
-                      const SizedBox(height: 5),
-                      InputTextField(
-                        controller: _phoneNumberController
-                          ..text = profileScreenController.phoneNumber,
-                        hintText: "Phone Number",
-                        obscureText: false,
-                        autofocus: false,
-                      ),
-                      const SizedBox(height: 16),
-                      const NormalText(
-                        text: "GST Number",
-                        textSize: 14,
-                        textColor: kNeutral400,
-                      ),
-                      const SizedBox(height: 5),
-                      InputTextField(
-                        controller: _gstController
-                          ..text = profileScreenController.gstn,
-                        hintText: "GST Number",
-                        obscureText: false,
-                        autofocus: false,
-                      ),
-                      const SizedBox(height: 16),
-                      const NormalText(
-                        text: "Email Address",
-                        textSize: 14,
-                        textColor: kNeutral400,
-                      ),
-                      const SizedBox(height: 5),
-                      InputTextField(
-                        controller: _emailController
-                          ..text = profileScreenController.email,
-                        hintText: "Email",
-                        obscureText: false,
-                        autofocus: false,
-                      ),
-                      const SizedBox(height: 16),
-                      const NormalText(
-                        text: "Address",
-                        textSize: 14,
-                        textColor: kNeutral400,
-                      ),
-                      const SizedBox(height: 5),
-                      InputTextField(
-                        controller: _addressController..text = profileScreenController.clientAddress,
-                        hintText: "Address",
-                        obscureText: false,
-                        autofocus: false,
-                      ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      Center(
-                        child: Button(
-                          onPress: () async {
-                            CustomSharedPref.setPref<bool>(
-                                SharedPreferenceString.isLoggedIn, false);
-                            Get.off(const SplashScreen(),
-                                transition: Transition.leftToRight);
-                          },
-                          backgroundColor: kApplicationThemeColor,
-                          buttonText: logOut,
-                          borderRadius: 18,
-                          textColor: kWhite,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          )),
+              ),
+            ],
+          ),
+        ),
+      )),
     );
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _phoneNumberController.dispose();
+    _gstController.dispose();
+    _emailController.dispose();
+    _addressController.dispose();
+    super.dispose();
   }
 }

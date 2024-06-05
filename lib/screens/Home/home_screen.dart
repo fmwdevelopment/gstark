@@ -8,6 +8,7 @@ import 'package:gstark/screens/GST_Returns/gst_return_screen.dart';
 import 'package:gstark/screens/Profile/profile_screen.dart';
 import 'package:gstark/screens/purchase_inovice/purchase_invoice_screen.dart';
 import 'package:gstark/screens/reconciliation_list/excel_list_view.dart';
+import 'package:gstark/screens/reconciliation_list/reconciliation_screen.dart';
 import 'package:gstark/utils/shared_preference/custom_shared_preference.dart';
 import 'package:gstark/utils/text_utils/normal_text.dart';
 import '../sales_invoice/sales_invoice_screen.dart';
@@ -215,7 +216,7 @@ class HomeScreen extends StatelessWidget {
                         // Get.to(ExcelDownloader(),
                         //     transition: Transition.rightToLeft);
 
-                            Get.to(const ExcelListView(),
+                            Get.to(const ReconciliationScreen(),
                             transition: Transition.rightToLeft);
                       },
                       child: Container(

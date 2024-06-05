@@ -1,6 +1,7 @@
 import 'package:excel/excel.dart';
 import 'package:get/get.dart';
 import 'package:gstark/models/excel_data_model.dart';
+import 'package:supercharged/supercharged.dart';
 import '../constants/shared_preference_string.dart';
 import '../helper/network/api_end_point.dart';
 import '../helper/network/network_helper.dart';
@@ -32,9 +33,17 @@ class ReconciliationScreenController extends GetxController {
   final RxList<ExcelData> _filteredData = RxList();
   List<ExcelData> get filteredData => _filteredData.value;
   setFilteredData(List<ExcelData> value) {
-    _filteredData.value = value;
+    _filteredData.value.clear();
+    _filteredData.value.addAll(value);
+
   }
 
+  final RxList<ReconciliationDocuments> _reconciliationData = RxList();
+  List<ReconciliationDocuments> get reconciliationData =>
+      _reconciliationData.value;
+  setReconciliationList(List<ReconciliationDocuments> value) {
+    _reconciliationData.value = value;
+  }
 
 
   initCall(BuildContext context) {
@@ -43,12 +52,7 @@ class ReconciliationScreenController extends GetxController {
     });
   }
 
-  final RxList<ReconciliationDocuments> _reconciliationData = RxList();
-  List<ReconciliationDocuments> get reconciliationData =>
-      _reconciliationData.value;
-  setReconcilaitionList(List<ReconciliationDocuments> value) {
-    _reconciliationData.value = value;
-  }
+
 
   getReconciliationData(BuildContext context) async {
     setBusy(true);
@@ -68,7 +72,7 @@ class ReconciliationScreenController extends GetxController {
             ApiEndPoint.baseUrl + ApiEndPoint.gstReturnsListApi,
             Get.overlayContext ?? context,
             body: {
-              "userId": "fa6c3e2b-0d58-4098-957f-a832a1eed2b8",
+              "userId": userId,
               "filters": {},
               "type": "gstr_reconciliation"
             },
@@ -81,17 +85,18 @@ class ReconciliationScreenController extends GetxController {
         if (value.statusCode == 200 || value.statusCode == 201) {
           ReconciliationResponseModel reconciliationResponseModel =
               ReconciliationResponseModel.fromJson(value.response);
-          setReconcilaitionList(reconciliationResponseModel.response!.documents ?? []);
-           await fetchDataFromAPI(reconciliationResponseModel.response!.documents?[0].file ?? "");
-          print(_reconciliationData);
+          setReconciliationList(reconciliationResponseModel.response!.documents ?? []);
+
+          print("rec-data: $_reconciliationData");
           setBusy(false);
         } else {
+          setReconciliationList([]);
           setBusy(false);
         }
       } catch (e) {
         debugPrint(e.toString());
+        setReconciliationList([]);
         setBusy(false);
-        rethrow;
       }
     }
   }
@@ -99,11 +104,12 @@ class ReconciliationScreenController extends GetxController {
 
   Future<void> fetchDataFromAPI(String url) async {
     setBusy(true);
-    try {
 
-      //https://dev-api.gstark.co/api/document/265f7f98-79f6-4358-bcfd-bce848213aca/preview?clientId=dcae8e4d-14bf-4c6c-93eb-b17922e41e43
+    try {
+      _data.clear();
       var response = await http.get(Uri.parse(
           url));
+
       if (response.statusCode == 200) {
         var bytes = response.bodyBytes;
         var excel = Excel.decodeBytes(bytes);
@@ -150,7 +156,7 @@ class ReconciliationScreenController extends GetxController {
 
         List.generate(table.maxRows - 1, (index) {
           if (index > 4) {
-            print(
+            debugPrint(
                 'hello $index : ${columnData[0][index + 1]} : ${columnData[1][index + 1]} : ${columnData[2][index + 1]} : ${columnData[3][index + 1]} ');
             data.add(ExcelData(
                 gstinOfSupplier: columnData[0][index + 1]?.toString() ?? '',
@@ -177,7 +183,9 @@ class ReconciliationScreenController extends GetxController {
             column3: columnData[2][index + 1], // Skip header row
           );
         });*/
+
          setFilteredData(data);
+
          setBusy(false);
       } else {
         setBusy(false);

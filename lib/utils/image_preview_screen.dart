@@ -7,8 +7,7 @@ import '../constants/string_constants.dart';
 
 class ImagePreviewScreen extends StatefulWidget {
   final String file;
-  final bool isPdf;
-  const ImagePreviewScreen({required this.file,super.key, required this.isPdf});
+  const ImagePreviewScreen({required this.file,super.key});
 
 
   @override
@@ -48,30 +47,35 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
             scaleEnabled: true,
             minScale: 0.5,
             maxScale: 4.0,
-            child: widget.isPdf ?  const PDF().cachedFromUrl(widget.file):Image.network(widget.file,
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Center(
-                  child: CircularProgressIndicator(color: kApplicationThemeColor,
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                        loadingProgress.expectedTotalBytes!
-                        : null,
-                  ),
-                );
+            child: Image.network(widget.file,
+              loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                          : null,
+                    ),
+                  );
+                }
               },
-              errorBuilder: (context, error, stackTrace) {
+              errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
                 return const Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.error_outline,
+                        Icons.error,
                         color: Colors.red,
-                        size: 48.0,
+                        size: 50,
                       ),
-                      NormalText(text: "Image error")
+                      SizedBox(height: 8),
+                      Text(
+                        'Failed to load image',
+                        style: TextStyle(color: Colors.red),
+                      ),
                     ],
                   ),
                 );

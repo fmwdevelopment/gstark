@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gstark/constants/string_constants.dart';
+import 'package:gstark/controller/profile_screen_controller.dart';
 import 'package:gstark/screens/Profile/profile_screen.dart';
 import 'package:gstark/utils/toast_utils/error_toast.dart';
 import 'package:gstark/utils/toast_utils/success_toast.dart';
@@ -13,6 +14,7 @@ import '../utils/shared_preference/custom_shared_preference.dart';
 class UpdateUserController extends GetxController {
 
   ApiService apiService = ApiService();
+  final  profileScreenController = ProfileScreenController();
 
   final RxBool _isBusy = RxBool(false);
   bool get isBusy => _isBusy.value;

@@ -1,37 +1,30 @@
-import 'package:flutter/cupertino.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
-import 'package:open_file/open_file.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:io';
 import 'package:gstark/utils/collection_extensions.dart';
 import 'package:pdf/pdf.dart';
-import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 
-/// A class that generates PDF invoices based on provided data.
-///
-/// This class provides a method, [generateInvoicePdf], that takes in the company name, company address, and invoice data as parameters.
-/// It generates a PDF invoice document with the provided data and returns the path to the generated PDF file.
-///
-/// The generated PDF invoice includes the company name, company address, customer details, invoice details, and a table of items with their respective prices, quantities, amounts, and taxes.
-/// The total amount before tax, total tax amount, and net payable amount are also included in the invoice.
-///
-/// Example usage:
-/// ```dart
-/// InvoicePdfGenerator generator = InvoicePdfGenerator();
-/// String filePath = await generator.generateInvoicePdf('Company Name', 'Company Address', invoiceData);
-/// print('Invoice PDF generated at: $filePath');
-/// ```
-///
-/// Note: This class uses the `pdf` package for PDF generation. Make sure to include the package in your project's dependencies.
 
 class InvoicePdfGenerator {
   Future<File> generateInvoicePdf(String companyName, String companyAddress,
       Map<String, dynamic> invoiceData) async {
     final pdf = pw.Document();
 
+    // Calculate the required page height based on the number of items
+    int numberOfItems = invoiceData['items'].length;
+    double itemHeight = 40.0; // Estimated height of each item row
+    double baseHeight = 400.0; // Base height for header and other sections
+    double pageHeight = baseHeight + (numberOfItems * itemHeight);
+
+    // Ensure the minimum height of an A4 page to avoid any layout issues
+    pageHeight = pageHeight < PdfPageFormat.a4.height ? PdfPageFormat.a4.height : pageHeight;
+
+
     pdf.addPage(
       pw.Page(
+          pageFormat: PdfPageFormat(
+              PdfPageFormat.a4.width, pageHeight),
         build: (context) => pw.Container(
           decoration: pw.BoxDecoration(border: pw.Border.all(width: 1)),
           child: pw.Column(
@@ -109,30 +102,30 @@ class InvoicePdfGenerator {
             textAlign: pw.TextAlign.center,
           ),
           pw.Divider(color: PdfColor.fromHex('#E0E0E0'), thickness: 1),
-          pw.SizedBox(height: 20),
-          pw.Row(
-            mainAxisAlignment: pw.MainAxisAlignment.center,
-            children: <pw.Widget>[
-              pw.Container(
-                width: 180,
-                height: 2,
-                color: PdfColor.fromHex('#E0E0E0'),
-              ),
-              pw.Padding(
-                padding: const pw.EdgeInsets.symmetric(horizontal: 10),
-                child: pw.Text(
-                  'Invoice Details',
-                  style: pw.TextStyle(
-                      fontSize: 12, fontWeight: pw.FontWeight.normal),
-                ),
-              ),
-              pw.Container(
-                width: 180,
-                height: 2,
-                color: PdfColor.fromHex('#E0E0E0'),
-              ),
-            ],
-          ),
+          // pw.SizedBox(height: 20),
+          // pw.Row(
+          //   mainAxisAlignment: pw.MainAxisAlignment.center,
+          //   children: <pw.Widget>[
+          //     pw.Container(
+          //       width: 180,
+          //       height: 2,
+          //       color: PdfColor.fromHex('#E0E0E0'),
+          //     ),
+          //     pw.Padding(
+          //       padding: const pw.EdgeInsets.symmetric(horizontal: 10),
+          //       child: pw.Text(
+          //         'Invoice Details',
+          //         style: pw.TextStyle(
+          //             fontSize: 12, fontWeight: pw.FontWeight.normal),
+          //       ),
+          //     ),
+          //     pw.Container(
+          //       width: 180,
+          //       height: 2,
+          //       color: PdfColor.fromHex('#E0E0E0'),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );
@@ -167,6 +160,16 @@ class InvoicePdfGenerator {
                   _getText('Sales Date'),
                   pw.Expanded(
                     child: _getText('${invoiceData['invoice_date']}'),
+                  ),
+                ]),
+                pw.TableRow(children: [
+                  _getText('Customer GSTN'),
+                  pw.Expanded(
+                    child: _getText('${invoiceData['customer_gstn']}'),
+                  ),
+                  _getText('Address'),
+                  pw.Expanded(
+                    child: _getText('${invoiceData['customer_address']}'),
                   ),
                 ]),
               ],
