@@ -12,6 +12,7 @@ class InputTextField extends StatelessWidget {
   final Color hintTextColor;
   final bool autofocus;
   final Widget? suffixIcon;
+  final ValueChanged<String>? onChanged;
 
   const InputTextField(
       {Key? key,
@@ -23,12 +24,14 @@ class InputTextField extends StatelessWidget {
       this.fontSize = 16,
       this.hintTextColor = kSecondaryGray700,
       this.autofocus = true,
-      this.suffixIcon})
+      this.suffixIcon,
+        this.onChanged })
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onChanged: onChanged ?? _defaultOnChanged,
       controller: controller,
       obscureText: obscureText,
       autofocus: autofocus,
@@ -64,5 +67,9 @@ class InputTextField extends StatelessWidget {
         fontWeight: FontWeight.w400,
       ),
     );
+  }
+  // Default no-op function
+  void _defaultOnChanged(String value) {
+    // Do nothing
   }
 }

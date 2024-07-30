@@ -69,7 +69,7 @@ class SalesInvoiceImageUploadScreenController extends GetxController {
     bool isConnectedToInternet = await checkIsConnectedToInternet();
     if (isConnectedToInternet) {
       try {
-        String url = ApiEndPoint.salesInvoiceImageUploadApi;
+        String url = ApiEndPoint.baseUrl + ApiEndPoint.salesInvoiceImageUploadApi;
         String token = "Bearer $authToken";
         Map<String, String> headers = {'authorization': token};
         Map<String, String> headers1 = {

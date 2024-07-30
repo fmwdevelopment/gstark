@@ -15,6 +15,14 @@ class ProfileScreenController extends GetxController {
     _isBusy.value = value;
   }
 
+  final RxBool _isChanged = RxBool(false);
+
+  bool get isChanged => _isChanged.value;
+
+  setIsChanged(bool value){
+    _isChanged.value = value;
+  }
+
   final RxString  _reviewerId = RxString("");
 
   String get reviewerId => _reviewerId.value;

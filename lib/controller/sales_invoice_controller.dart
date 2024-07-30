@@ -53,10 +53,6 @@ class SalesInvoiceController extends GetxController {
         String token =
             'Bearer $authToken';
 
-   print("token111:$token");
-   print("xheadertoken111:$email");
-   print("user-id:$userId");
-
         var value = await apiService.post(
             ApiEndPoint.baseUrl + ApiEndPoint.salesInvoiceListApi,
             Get.overlayContext ?? context,

@@ -91,7 +91,7 @@ class GenerateInvoiceController extends GetxController {
         );
 
         // Prepare API call
-        String url = ApiEndPoint.uploadInvoicePdf;
+        String url = ApiEndPoint.baseUrl+ApiEndPoint.uploadInvoicePdf;
         String token = 'Bearer $authToken';
         Map<String, String> headers = {'Authorization': token};
         Map<String, String> headers1 = {'x-header-token': email};

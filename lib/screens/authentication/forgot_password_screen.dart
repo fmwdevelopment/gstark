@@ -60,52 +60,80 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const NormalText(
-                    text: "Forget Password?",
+                    text: "Forgot Password?",
                     textSize: 20,
                     textColor: kApplicationThemeColor,
                     textFontWeight: FontWeight.w600),
                 const SizedBox(height: 16),
-                const NormalText(
-                    text: phoneNumber,
-                    textColor: kBlackColor,
-                    textFontWeight: FontWeight.w600),
-                const SizedBox(height: 8),
+                const Row(
+                  children: [
+                    NormalText(
+                        text: phoneNumber,
+                        textColor: kBlackColor,
+                        textFontWeight: FontWeight.w600),
+                    NormalText(
+                      text: "*",
+                      textColor: kError,
+                      textFontWeight: FontWeight.w600,textSize: 24,),
+                  ],
+                ),
                 InputTextField(
                   controller: _phoneNumberController,
                   hintText: enterYourNumber,
                   obscureText: false,
                   autofocus: false,
                 ),
-                const SizedBox(height: 16),
-                const NormalText(
-                    text: "GST Number",
-                    textColor: kBlackColor,
-                    textFontWeight: FontWeight.w600),
                 const SizedBox(height: 8),
+                const Row(
+                  children: [
+                    NormalText(
+                        text: "GST Number",
+                        textColor: kBlackColor,
+                        textFontWeight: FontWeight.w600),
+                    NormalText(
+                      text: "*",
+                      textColor: kError,
+                      textFontWeight: FontWeight.w600,textSize: 24,),
+                  ],
+                ),
                 InputTextField(
                   controller: _gstController,
                   hintText: "Enter GST Number",
                   obscureText: false,
                   autofocus: false,
                 ),
-                const SizedBox(height: 16),
-                const NormalText(
-                    text: "Birth Place",
-                    textColor: kBlackColor,
-                    textFontWeight: FontWeight.w600),
                 const SizedBox(height: 8),
+                const Row(
+                  children: [
+                    NormalText(
+                        text: "Birth Place",
+                        textColor: kBlackColor,
+                        textFontWeight: FontWeight.w600),
+                    NormalText(
+                      text: "*",
+                      textColor: kError,
+                      textFontWeight: FontWeight.w600,textSize: 24,),
+                  ],
+                ),
                 InputTextField(
                   controller: _birthplaceController,
                   hintText: "Enter your birth place",
                   obscureText: false,
                   autofocus: false,
                 ),
-                const SizedBox(height: 16),
-                const NormalText(
-                    text: password,
-                    textColor: kBlackColor,
-                    textFontWeight: FontWeight.w600),
                 const SizedBox(height: 8),
+                const Row(
+                  children: [
+                    NormalText(
+                        text: password,
+                        textColor: kBlackColor,
+                        textFontWeight: FontWeight.w600),
+                    NormalText(
+                      text: "*",
+                      textColor: kError,
+                      textFontWeight: FontWeight.w600,textSize: 24,),
+                  ],
+                ),
                 InputTextField(
                   controller: _passwordController,
                   hintText: enterYourPassword,

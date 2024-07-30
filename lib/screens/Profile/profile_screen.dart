@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -13,6 +15,7 @@ import '../../widgets/button.dart';
 import '../../constants/app_colors.dart';
 import '../../utils/text_utils/normal_text.dart';
 import '../authentication/splash_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -45,6 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   initCall() async {
+    profileScreenController.setIsChanged(false);
     String reviewerId = await CustomSharedPref.getPref<String>(
         SharedPreferenceString.reviewerId);
     String phoneNumber = await CustomSharedPref.getPref<String>(
@@ -52,9 +56,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     String gstn = await CustomSharedPref.getPref<String>(
         SharedPreferenceString.gstNumber);
     String email =
-    await CustomSharedPref.getPref<String>(SharedPreferenceString.email);
+        await CustomSharedPref.getPref<String>(SharedPreferenceString.email);
     String id =
-    await CustomSharedPref.getPref<String>(SharedPreferenceString.clientId);
+        await CustomSharedPref.getPref<String>(SharedPreferenceString.clientId);
     String name = await CustomSharedPref.getPref<String>(
         SharedPreferenceString.clientName);
     String address = await CustomSharedPref.getPref<String>(
@@ -82,14 +86,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
     print(address);
   }
 
+  Future<void> _makingPhoneCall() async {
+    var url = Uri.parse("tel:7676940879");
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         iconTheme:
-        const IconThemeData(color: kWhite, size: 24 //change your color here
-        ),
+            const IconThemeData(color: kWhite, size: 24 //change your color here
+                ),
         backgroundColor: kApplicationThemeColor,
         title: const NormalText(
           text: "Profile",
@@ -101,142 +114,178 @@ class _ProfileScreenState extends State<ProfileScreen> {
         centerTitle: true,
         actions: [
           Container(
-            margin: const EdgeInsets.all(5),
+            margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: kWhite, borderRadius: BorderRadius.circular(10)),
-            child: TextButton(
-                onPressed: () {
-                  updateUserController.updateUser(
-                      phoneNumber: _phoneNumberController.text,
-                      gstn: _gstController.text,
-                      email: _emailController.text,
-                      name: _nameController.text,
-                      address: _addressController.text,
-                      context: context);
-                },
-                child: const NormalText(
-                  text: "Save",
-                  textAlign: TextAlign.center,
-                  textFontWeight: FontWeight.w500,
-                  textSize: 16,
-                  textColor: kApplicationThemeColor,
-                )),
+                color:kWhite, borderRadius: BorderRadius.circular(8)),
+            child: profileScreenController.isChanged == true
+                ? TextButton(
+                    onPressed: () {
+                      updateUserController.updateUser(
+                          phoneNumber: _phoneNumberController.text,
+                          gstn: _gstController.text,
+                          email: _emailController.text,
+                          name: _nameController.text,
+                          address: _addressController.text,
+                          context: context);
+                    },
+                    child: const NormalText(
+                      text: "Save",
+                      textAlign: TextAlign.center,
+                      textFontWeight: FontWeight.w500,
+                      textSize: 16,
+                      textColor: kApplicationThemeColor,
+                    ))
+                : TextButton(
+                    onPressed: () {},
+                    child: const NormalText(
+                      text: "Save",
+                      textAlign: TextAlign.center,
+                      textFontWeight: FontWeight.w500,
+                      textSize: 16,
+                      textColor: kPrimary100,
+                    )),
           )
         ],
       ),
       body: Obx(() => updateUserController.isBusy
           ? const UpdateProfileScreenLoader()
           : SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: Stack(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.5,
-                decoration: containerBottomCurvedDecoration,
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20, vertical: 20),
-                margin:
-                const EdgeInsets.only(left: 16, right: 16, top: 20),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(18)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              child: Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Stack(
                   children: [
-                    const NormalText(
-                      text: "Name",
-                      textSize: 14,
-                      textColor: kNeutral400,
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      decoration: containerBottomCurvedDecoration,
                     ),
-                    const SizedBox(height: 5),
-                    InputTextField(
-                      controller: _nameController,
-                      hintText: "Name",
-                      obscureText: false,
-                      autofocus: false,
-                    ),
-                    const SizedBox(height: 16),
-                    const NormalText(
-                      text: "Phone Number",
-                      textSize: 14,
-                      textColor: kNeutral400,
-                    ),
-                    const SizedBox(height: 5),
-                    InputTextField(
-                      controller: _phoneNumberController,
-                      hintText: "Phone Number",
-                      obscureText: false,
-                      autofocus: false,
-                    ),
-                    const SizedBox(height: 16),
-                    const NormalText(
-                      text: "GST Number",
-                      textSize: 14,
-                      textColor: kNeutral400,
-                    ),
-                    const SizedBox(height: 5),
-                    InputTextField(
-                      controller: _gstController,
-                      hintText: "GST Number",
-                      obscureText: false,
-                      autofocus: false,
-                    ),
-                    const SizedBox(height: 16),
-                    const NormalText(
-                      text: "Email Address",
-                      textSize: 14,
-                      textColor: kNeutral400,
-                    ),
-                    const SizedBox(height: 5),
-                    InputTextField(
-                      controller: _emailController,
-                      hintText: "Email",
-                      obscureText: false,
-                      autofocus: false,
-                    ),
-                    const SizedBox(height: 16),
-                    const NormalText(
-                      text: "Address",
-                      textSize: 14,
-                      textColor: kNeutral400,
-                    ),
-                    const SizedBox(height: 5),
-                    InputTextField(
-                      controller: _addressController,
-                      hintText: "Address",
-                      obscureText: false,
-                      autofocus: false,
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    Center(
-                      child: Button(
-                        onPress: () async {
-                          CustomSharedPref.setPref<bool>(
-                              SharedPreferenceString.isLoggedIn, false);
-                          Get.off(const SplashScreen(),
-                              transition: Transition.leftToRight);
-                        },
-                        backgroundColor: kApplicationThemeColor,
-                        buttonText: logOut,
-                        borderRadius: 18,
-                        textColor: kWhite,
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 20),
+                      margin:
+                          const EdgeInsets.only(left: 16, right: 16, top: 20),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(18)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const NormalText(
+                            text: "Name",
+                            textSize: 14,
+                            textColor: kNeutral400,
+                          ),
+                          const SizedBox(height: 5),
+                          InputTextField(
+                            controller: _nameController,
+                            hintText: "Name",
+                            obscureText: false,
+                            autofocus: false,
+                            onChanged: (_) {
+                              profileScreenController.setIsChanged(true);
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          const NormalText(
+                            text: "Phone Number",
+                            textSize: 14,
+                            textColor: kNeutral400,
+                          ),
+                          const SizedBox(height: 5),
+                          InputTextField(
+                            controller: _phoneNumberController,
+                            hintText: "Phone Number",
+                            obscureText: false,
+                            autofocus: false,
+                            onChanged: (_) {
+                              profileScreenController.setIsChanged(true);
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          const NormalText(
+                            text: "GST Number",
+                            textSize: 14,
+                            textColor: kNeutral400,
+                          ),
+                          const SizedBox(height: 5),
+                          InputTextField(
+                            controller: _gstController,
+                            hintText: "GST Number",
+                            obscureText: false,
+                            autofocus: false,
+                            onChanged: (_) {
+                              profileScreenController.setIsChanged(true);
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          const NormalText(
+                            text: "Email Address",
+                            textSize: 14,
+                            textColor: kNeutral400,
+                          ),
+                          const SizedBox(height: 5),
+                          InputTextField(
+                            controller: _emailController,
+                            hintText: "Email",
+                            obscureText: false,
+                            autofocus: false,
+                            onChanged: (_) {
+                              profileScreenController.setIsChanged(true);
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          const NormalText(
+                            text: "Address",
+                            textSize: 14,
+                            textColor: kNeutral400,
+                          ),
+                          const SizedBox(height: 5),
+                          InputTextField(
+                            controller: _addressController,
+                            hintText: "Address",
+                            obscureText: false,
+                            autofocus: false,
+                            onChanged: (_) {
+                              profileScreenController.setIsChanged(true);
+                            },
+                          ),
+
+                          const SizedBox(
+                            height: 24,
+                          ),
+                           Center(child: Row(
+                            children: [
+                              const NormalText(text: "CUSTOMER CONTACT:",textSize: 14,),
+                              TextButton(onPressed: _makingPhoneCall, child: const NormalText(text: "7676940879",textSize:18,textColor: kApplicationThemeColor,))
+                            ],
+                          ),),
+                          const SizedBox(
+                            height: 24,
+                          ),
+                          Center(
+                            child: Button(
+                              onPress: () async {
+                                CustomSharedPref.setPref<bool>(
+                                    SharedPreferenceString.isLoggedIn, false);
+                                profileScreenController.setIsChanged(false);
+                                Get.off(const SplashScreen(),
+                                    transition: Transition.leftToRight);
+                              },
+                              backgroundColor: kApplicationThemeColor,
+                              buttonText: logOut,
+                              borderRadius: 18,
+                              textColor: kWhite,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
-        ),
-      )),
+            )),
     );
   }
 

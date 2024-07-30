@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   late final LoginScreenController loginScreenController;
   bool isSignInLoading = false;
-  bool _obscureText = false;
+  bool _obscureText = true;
 
   @override
   void initState() {
@@ -80,23 +80,37 @@ class _LoginScreenState extends State<LoginScreen> {
                             textColor: kApplicationThemeColor,
                             textFontWeight: FontWeight.w600),
                         const SizedBox(height: 16),
-                        const NormalText(
-                            text: phoneNumber,
-                            textColor: kBlackColor,
-                            textFontWeight: FontWeight.w600),
-                        const SizedBox(height: 8),
+                        const Row(
+                          children: [
+                            NormalText(
+                                text: phoneNumber,
+                                textColor: kBlackColor,
+                                textFontWeight: FontWeight.w600),
+                            NormalText(
+                              text: "*",
+                              textColor: kError,
+                              textFontWeight: FontWeight.w600,textSize: 24,),
+                          ],
+                        ),
                         InputTextField(
                           controller: _phoneNumberController,
                           hintText: enterYourNumber,
                           obscureText: false,
                           autofocus: false,
                         ),
-                        const SizedBox(height: 16),
-                        const NormalText(
-                            text: password,
-                            textColor: kBlackColor,
-                            textFontWeight: FontWeight.w600),
                         const SizedBox(height: 8),
+                        const Row(
+                          children: [
+                            NormalText(
+                                text: password,
+                                textColor: kBlackColor,
+                                textFontWeight: FontWeight.w600),
+                            NormalText(
+                              text: "*",
+                              textColor: kError,
+                              textFontWeight: FontWeight.w600,textSize: 24,),
+                          ],
+                        ),
                         InputTextField(
                           controller: _passwordController,
                           hintText: enterYourPassword,
@@ -116,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 16),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [

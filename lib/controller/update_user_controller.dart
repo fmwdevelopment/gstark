@@ -52,7 +52,7 @@ class UpdateUserController extends GetxController {
         };
 
         var value = await apiService.put(
-            ApiEndPoint.updateUserDataApi, Get.overlayContext ?? context,
+            ApiEndPoint.baseUrl+ApiEndPoint.updateUserDataApi, Get.overlayContext ?? context,
             body: responseBody,
             headers: {
               'x-header-token': email,

@@ -58,7 +58,7 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                 decoration: curvedEdgeContainerDecoration,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                margin: const EdgeInsets.only(left: 25, right: 25, top: 70),
+                margin: const EdgeInsets.only(left: 25, right: 25, top: 50),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -67,24 +67,38 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                         textSize: 20,
                         textColor: kApplicationThemeColor,
                         textFontWeight: FontWeight.w600),
-                    const SizedBox(height: 16),
-                    const NormalText(
-                        text: "Phone Number",
-                        textColor: kBlackColor,
-                        textFontWeight: FontWeight.w600),
                     const SizedBox(height: 8),
+                    const Row(
+                      children: [
+                        NormalText(
+                            text: "Phone Number",
+                            textColor: kBlackColor,
+                            textFontWeight: FontWeight.w600),
+                        NormalText(
+                            text: "*",
+                            textColor: kError,
+                            textFontWeight: FontWeight.w600,textSize: 24,),
+                      ],
+                    ),
                     InputTextField(
                       controller: _phoneNumberController,
                       hintText: enterYourNumber,
                       obscureText: false,
                       autofocus: false,
                     ),
-                    const SizedBox(height: 16),
-                    const NormalText(
-                        text: "GST Number",
-                        textColor: kBlackColor,
-                        textFontWeight: FontWeight.w600),
                     const SizedBox(height: 8),
+                    const Row(
+                      children: [
+                        NormalText(
+                            text: "GST Number",
+                            textColor: kBlackColor,
+                            textFontWeight: FontWeight.w600),
+                        NormalText(
+                          text: "*",
+                          textColor: kError,
+                          textFontWeight: FontWeight.w600,textSize: 24,),
+                      ],
+                    ),
                     InputTextField(
                       controller: _gstController,
                       hintText: "Enter GST Number",
@@ -97,46 +111,75 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           const SizedBox(height: 8),
-                          const NormalText(
-                              text: "Your birth place",
-                              textColor: kBlackColor,
-                              textFontWeight: FontWeight.w600),
-                          const SizedBox(height: 8),
+                          const Row(
+                            children: [
+                              NormalText(
+                                  text: "Your birth place",
+                                  textColor: kBlackColor,
+                                  textFontWeight: FontWeight.w600),
+                              NormalText(
+                                text: "*",
+                                textColor: kError,
+                                textFontWeight: FontWeight.w600,textSize: 24,),
+                            ],
+                          ),
                           InputTextField(
                             controller: _birthplaceController,
                             hintText: "Enter your birth place",
                             obscureText: false,
                             autofocus: false,
                           ),
-                          const SizedBox(height: 16),
-                          const NormalText(
-                              text: "Password",
-                              textColor: kBlackColor,
-                              textFontWeight: FontWeight.w600),
                           const SizedBox(height: 8),
+                          const Row(
+                            children: [
+                              NormalText(
+                                  text: "Password",
+                                  textColor: kBlackColor,
+                                  textFontWeight: FontWeight.w600),
+                              NormalText(
+                                text: "*",
+                                textColor: kError,
+                                textFontWeight: FontWeight.w600,textSize: 24,),
+                            ],
+                          ),
                           InputTextField(
                             controller: _passwordController,
                             hintText: "Enter Password",
                             obscureText: false,
                             autofocus: false,
                           ),
-                          const SizedBox(height: 16),
-                          const NormalText(
-                              text: "Confirm Password",
-                              textColor: kBlackColor,
-                              textFontWeight: FontWeight.w600),
                           const SizedBox(height: 8),
+                          const Row(
+                            children: [
+                              NormalText(
+                                  text: "Confirm Password",
+                                  textColor: kBlackColor,
+                                  textFontWeight: FontWeight.w600),
+                              NormalText(
+                                text: "*",
+                                textColor: kError,
+                                textFontWeight: FontWeight.w600,textSize: 24,),
+                            ],
+                          ),
                           InputTextField(
                             controller: _confirmPasswordController,
                             hintText: "Confirm Password",
                             obscureText: false,
                             autofocus: false,
-                          ),const SizedBox(height: 16),
-                          const NormalText(
-                              text: "Address",
-                              textColor: kBlackColor,
-                              textFontWeight: FontWeight.w600),
+                          ),
                           const SizedBox(height: 8),
+                          const Row(
+                            children: [
+                              NormalText(
+                                  text: "Address",
+                                  textColor: kBlackColor,
+                                  textFontWeight: FontWeight.w600),
+                              NormalText(
+                                text: "*",
+                                textColor: kError,
+                                textFontWeight: FontWeight.w600,textSize: 24,),
+                            ],
+                          ),
                           InputTextField(
                             controller: _addressController,
                             hintText: "Enter Address",
@@ -211,7 +254,6 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                       child: const NormalText(
                         textColor: kPrimaryMain,
                         text: 'Back',
-
                         textAlign: TextAlign.center,
                       ),
                     ),

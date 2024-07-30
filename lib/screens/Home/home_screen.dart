@@ -124,6 +124,92 @@ class HomeScreen extends StatelessWidget {
                 Column(
                   children: [
                     GestureDetector(
+                      onTap: () {
+                        Get.to(const GenerateInvoiceScreen(),
+                            transition: Transition.rightToLeft);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: kApplicationThemeColor, // Border color
+                            width: 2.0, // Border width
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          backgroundColor: kWhite,
+                          maxRadius: 60,
+                          child: SizedBox(
+                            width: 85, // Diameter of the CircleAvatar
+                            height: 85,
+                            child: Image.asset(
+                              "assets/images/invoice1.png",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const NormalText(
+                      text: "GENERATE INVOICE",
+                      textAlign: TextAlign.center,
+                      textFontWeight: FontWeight.w500,
+                      textSize: 14,
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+
+                        // Get.to(ExcelDownloader(),
+                        //     transition: Transition.rightToLeft);
+
+                        Get.to(const ReconciliationScreen(),
+                            transition: Transition.rightToLeft);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: kApplicationThemeColor, // Border color
+                            width: 2.0, // Border width
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          backgroundColor: kWhite,
+                          maxRadius: 60,
+                          child: SizedBox(
+                            width: 85, // Diameter of the CircleAvatar
+                            height: 85,
+                            child: Image.asset(
+                              "assets/images/reconciliation.jpg",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const NormalText(
+                      text: "2A/2B RECONCILIATION",
+                      textAlign: TextAlign.center,
+                      textFontWeight: FontWeight.w500,
+                      textSize: 14,
+                    ),
+                  ],
+                ),
+
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  children: [
+                    GestureDetector(
                       onTap: () async {
                         String clientId = await CustomSharedPref.getPref(
                             SharedPreferenceString.clientId);
@@ -204,92 +290,8 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-
-                        // Get.to(ExcelDownloader(),
-                        //     transition: Transition.rightToLeft);
-
-                            Get.to(const ReconciliationScreen(),
-                            transition: Transition.rightToLeft);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: kApplicationThemeColor, // Border color
-                            width: 2.0, // Border width
-                          ),
-                        ),
-                        child: CircleAvatar(
-                          backgroundColor: kWhite,
-                          maxRadius: 60,
-                          child: SizedBox(
-                            width: 85, // Diameter of the CircleAvatar
-                            height: 85,
-                            child: Image.asset(
-                              "assets/images/reconciliation.jpg",
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    const NormalText(
-                      text: "2A/2B RECONCILIATION",
-                      textAlign: TextAlign.center,
-                      textFontWeight: FontWeight.w500,
-                      textSize: 14,
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(const GenerateInvoiceScreen(),
-                            transition: Transition.rightToLeft);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: kApplicationThemeColor, // Border color
-                            width: 2.0, // Border width
-                          ),
-                        ),
-                        child: CircleAvatar(
-                          backgroundColor: kWhite,
-                          maxRadius: 60,
-                          child: SizedBox(
-                            width: 85, // Diameter of the CircleAvatar
-                            height: 85,
-                            child: Image.asset(
-                              "assets/images/invoice1.png",
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    const NormalText(
-                      text: "GENERATE INVOICE",
-                      textAlign: TextAlign.center,
-                      textFontWeight: FontWeight.w500,
-                      textSize: 14,
-                    ),
-                  ],
-                ),
-              ],
             )
+
           ],
         ),
       ),
