@@ -17,14 +17,14 @@ class ExcelListView extends StatefulWidget {
 class _ExcelListViewState extends State<ExcelListView> {
   late final ReconciliationScreenController reconciliationScreenController;
   final TextEditingController _searchController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
+
     reconciliationScreenController =
-        Get.isRegistered<ReconciliationScreenController>()
-            ? Get.find<ReconciliationScreenController>()
-            : Get.put(ReconciliationScreenController());
+    Get.isRegistered<ReconciliationScreenController>()
+        ? Get.find<ReconciliationScreenController>()
+        : Get.put(ReconciliationScreenController());
     initCall(context);
   }
   void initCall(BuildContext context) {
@@ -69,95 +69,95 @@ class _ExcelListViewState extends State<ExcelListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title:  NormalText(text: widget.name,textSize: 14,),
-        ),
+        // appBar: AppBar(
+        //   title:  NormalText(text: widget.name,textSize: 14,),
+        // ),
         body: Obx(() => Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  TextField(
-                    cursorColor: kApplicationThemeColor,
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      hintText: 'Search for GSTIN/Name/Invoice No',
-                      hintStyle: TextStyle(
-                        color: Colors.grey[400],
-                        fontSize: 16,
-                      ),
-                      prefixIcon: Icon(
-                        Icons.search,
-                        color: Colors.grey[400],
-                      ),
-                      suffixIcon: _searchController.text.isNotEmpty
-                          ? IconButton(
-                              icon: Icon(
-                                Icons.clear,
-                                color: Colors.grey[400],
-                              ),
-                              onPressed: () {
-                                _searchController.clear();
-                                _searchText(
-                                    ''); // Ensure this method handles empty search case
-                              },
-                            )
-                          : null,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: const BorderSide(
-                          color: kApplicationThemeColor,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: const BorderSide(
-                          color: kApplicationThemeColor,
-                        ),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 15.0),
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              TextField(
+                cursorColor: kApplicationThemeColor,
+                controller: _searchController,
+                decoration: InputDecoration(
+                  hintText: 'Search for GSTIN/Name/Invoice No',
+                  hintStyle: TextStyle(
+                    color: Colors.grey[400],
+                    fontSize: 16,
+                  ),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.grey[400],
+                  ),
+                  suffixIcon: _searchController.text.isNotEmpty
+                      ? IconButton(
+                    icon: Icon(
+                      Icons.clear,
+                      color: Colors.grey[400],
                     ),
-                    onChanged: _searchText,
-                    style: const TextStyle(
-                      fontSize: 16.0,
+                    onPressed: () {
+                      _searchController.clear();
+                      _searchText(
+                          ''); // Ensure this method handles empty search case
+                    },
+                  )
+                      : null,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: const BorderSide(
+                      color: kApplicationThemeColor,
                     ),
                   ),
-                  const SizedBox(
-                    height: 15,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: const BorderSide(
+                      color: kApplicationThemeColor,
+                    ),
                   ),
-                  reconciliationScreenController.isBusy?const Center(
-                    child: CircularProgressIndicator(color: kApplicationThemeColor,),
-                  ):
-                  reconciliationScreenController.filteredData.isEmpty
-                      ? const Center(
-                          child: NormalText(text: "No Data Found"),
-                        )
-                      : Expanded(
-                          child: HorizontalDataTable(
-                            leftHandSideColumnWidth: 0,
-                            rightHandSideColumnWidth: 2000,
-                            isFixedHeader: true,
-                            headerWidgets: _getTitleWidget(),
-                            leftSideItemBuilder: _generateFirstColumnRow,
-                            rightSideItemBuilder:
-                                _generateRightHandSideColumnRow,
-                            itemCount: reconciliationScreenController
-                                .filteredData.length,
-                            rowSeparatorWidget: const Divider(
-                              color: Colors.black38,
-                              height: 1.0,
-                              thickness: 0.0,
-                            ),
-                            leftHandSideColBackgroundColor:
-                                const Color(0xFFFFFFFF),
-                            rightHandSideColBackgroundColor:
-                                const Color(0xFFFFFFFF),
-                            itemExtent: 55,
-                          ),
-                        ),
-                ],
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 15.0),
+                ),
+                onChanged: _searchText,
+                style: const TextStyle(
+                  fontSize: 16.0,
+                ),
               ),
-            )));
+              const SizedBox(
+                height: 15,
+              ),
+              reconciliationScreenController.isBusy?const Center(
+                child: CircularProgressIndicator(color: kApplicationThemeColor,),
+              ):
+              reconciliationScreenController.filteredData.isEmpty
+                  ? const Center(
+                child: NormalText(text: "No Data Found"),
+              )
+                  : Expanded(
+                child: HorizontalDataTable(
+                  leftHandSideColumnWidth: 0,
+                  rightHandSideColumnWidth: 2000,
+                  isFixedHeader: true,
+                  headerWidgets: _getTitleWidget(),
+                  leftSideItemBuilder: _generateFirstColumnRow,
+                  rightSideItemBuilder:
+                  _generateRightHandSideColumnRow,
+                  itemCount: reconciliationScreenController
+                      .filteredData.length,
+                  rowSeparatorWidget: const Divider(
+                    color: Colors.black38,
+                    height: 1.0,
+                    thickness: 0.0,
+                  ),
+                  leftHandSideColBackgroundColor:
+                  const Color(0xFFFFFFFF),
+                  rightHandSideColBackgroundColor:
+                  const Color(0xFFFFFFFF),
+                  itemExtent: 55,
+                ),
+              ),
+            ],
+          ),
+        )));
   }
 
   List<Widget> _getTitleWidget() {
@@ -199,7 +199,7 @@ class _ExcelListViewState extends State<ExcelListView> {
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
           child: Text(reconciliationScreenController
-                  .filteredData[index].gstinOfSupplier ??
+              .filteredData[index].gstinOfSupplier ??
               ''),
         ),
         Container(
@@ -208,7 +208,7 @@ class _ExcelListViewState extends State<ExcelListView> {
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
           child: Text(reconciliationScreenController
-                  .filteredData[index].tradeLegalName ??
+              .filteredData[index].tradeLegalName ??
               ''),
         ),
         Container(
@@ -217,7 +217,7 @@ class _ExcelListViewState extends State<ExcelListView> {
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
           child: Text(reconciliationScreenController
-                  .filteredData[index].invoiceNumber ??
+              .filteredData[index].invoiceNumber ??
               ''),
         ),
         Container(
@@ -261,7 +261,7 @@ class _ExcelListViewState extends State<ExcelListView> {
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
           child: Text(reconciliationScreenController
-                  .filteredData[index].integratedTax ??
+              .filteredData[index].integratedTax ??
               ''),
         ),
         Container(

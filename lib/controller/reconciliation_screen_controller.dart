@@ -24,6 +24,7 @@ class ReconciliationScreenController extends GetxController {
   }
 
   final RxList<ExcelData> _data = RxList();
+
   List<ExcelData> get data => _data.value;
   setExcelData(List<ExcelData> value) {
     _data.value.clear();
@@ -185,7 +186,9 @@ class ReconciliationScreenController extends GetxController {
         });*/
 
          setFilteredData(data);
-
+         // for(var value in data){
+         //  print(value.taxableValue);
+         // }
          setBusy(false);
       } else {
         setBusy(false);

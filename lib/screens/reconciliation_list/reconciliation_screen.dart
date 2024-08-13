@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:gstark/screens/reconciliation_list/reconciliation_tab_view.dart';
 import '../../constants/app_colors.dart';
 import '../../constants/app_decorations.dart';
 import '../../controller/reconciliation_screen_controller.dart';
@@ -67,7 +68,9 @@ class _ReconciliationScreenState extends State<ReconciliationScreen> {
                       onTap: () {
                         // TODO: implement doc preview screen
                         print("url: ${ reconciliationScreenController.reconciliationData[index].file } at index: $index");
-                        Get.to( ExcelListView( name:reconciliationScreenController.reconciliationData[index].name ?? "" ,
+                        // Get.to( ExcelListView( name:reconciliationScreenController.reconciliationData[index].name ?? "" ,
+                        //     fileUrl: reconciliationScreenController.reconciliationData[index].file ?? ""),transition: Transition.rightToLeft);
+                        Get.to(ReconciliationTabView(name:reconciliationScreenController.reconciliationData[index].name ?? "",
                             fileUrl: reconciliationScreenController.reconciliationData[index].file ?? ""),transition: Transition.rightToLeft);
                       },
                       child: Container(

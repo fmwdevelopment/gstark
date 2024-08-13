@@ -18,4 +18,5 @@ class ApiEndPoint {
 
   static const String sendInvoiceData = '/api/invoice';
   static const String uploadInvoicePdf = '/api/document';
+
 }

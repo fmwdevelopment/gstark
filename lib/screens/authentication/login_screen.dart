@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:gstark/controller/login_screen_controller.dart';
 import 'package:gstark/screens/authentication/register_user_screen.dart';
@@ -89,7 +90,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             NormalText(
                               text: "*",
                               textColor: kError,
-                              textFontWeight: FontWeight.w600,textSize: 24,),
+                              textFontWeight: FontWeight.w600,
+                              textSize: 24,
+                            ),
                           ],
                         ),
                         InputTextField(
@@ -97,6 +100,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           hintText: enterYourNumber,
                           obscureText: false,
                           autofocus: false,
+                          keyboardType: TextInputType.number,
+                          inputParamter: [
+                            LengthLimitingTextInputFormatter(10),
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
                         ),
                         const SizedBox(height: 8),
                         const Row(
@@ -108,7 +116,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             NormalText(
                               text: "*",
                               textColor: kError,
-                              textFontWeight: FontWeight.w600,textSize: 24,),
+                              textFontWeight: FontWeight.w600,
+                              textSize: 24,
+                            ),
                           ],
                         ),
                         InputTextField(
@@ -153,7 +163,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           () => Button(
                             onPress: () async {
                               if (!loginScreenController.isBusy) {
-                                print("data: ${_phoneNumberController.text} ${_passwordController.text}");
+                                print(
+                                    "data: ${_phoneNumberController.text} ${_passwordController.text}");
 
                                 if (_phoneNumberController.text.isEmpty ||
                                     _passwordController.text.isEmpty) {
@@ -170,9 +181,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               //     email: _emailController.text,
                               //     password: _passwordController.text,
                               //     context: context);
-
-
-
                             },
                             buttonText: loginScreenController.isBusy
                                 ? "Signing In..."

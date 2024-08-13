@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../constants/app_colors.dart';
 
@@ -12,6 +13,8 @@ class InputTextField extends StatelessWidget {
   final Color hintTextColor;
   final bool autofocus;
   final Widget? suffixIcon;
+  final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputParamter;
   final ValueChanged<String>? onChanged;
 
   const InputTextField(
@@ -25,7 +28,7 @@ class InputTextField extends StatelessWidget {
       this.hintTextColor = kSecondaryGray700,
       this.autofocus = true,
       this.suffixIcon,
-        this.onChanged })
+        this.onChanged, this.inputParamter, this.keyboardType })
       : super(key: key);
 
   @override
@@ -33,9 +36,11 @@ class InputTextField extends StatelessWidget {
     return TextField(
       onChanged: onChanged ?? _defaultOnChanged,
       controller: controller,
+      keyboardType: keyboardType,
       obscureText: obscureText,
       autofocus: autofocus,
       autocorrect: false,
+      inputFormatters: inputParamter,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(
             horizontal: horizontalPadding, vertical: verticalPadding),
