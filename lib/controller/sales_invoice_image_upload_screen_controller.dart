@@ -93,7 +93,7 @@ class SalesInvoiceImageUploadScreenController extends GetxController {
         request.fields["userId"] = userId;
         request.fields["type"] = "sale";
         request.fields["description"] = "sale";
-
+        
         var response = await request.send();
 
         print('Status Code : ${response.statusCode}');

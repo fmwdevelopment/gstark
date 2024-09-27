@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       enableLog: false,
       home: const SplashScreen(),
-      title: 'Boas App',
+      title: 'gStark App',
       theme: ThemeData(fontFamily: 'Poppins'),
       locale: _locale,
     );

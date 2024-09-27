@@ -7,6 +7,7 @@ class ApiEndPoint {
   static const String validateApi = '/api/user/validate';
   static const String activateApi = '/api/user/activate';
   static const String resetPasswordApi = '/api/user/reset-password';
+
   static const String salesInvoiceListApi = '/api/document/list';
   static const String purchaseInvoiceListApi = '/api/document/list';
   static const String gstReturnsListApi = '/api/document/list';

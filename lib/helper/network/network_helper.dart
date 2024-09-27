@@ -5,15 +5,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:flutter/cupertino.dart';
-
 import '../../constants/shared_preference_string.dart';
 import '../../constants/string_constants.dart';
 import '../../utils/shared_preference/custom_shared_preference.dart';
 import '../../utils/toast_utils/error_toast.dart';
 import 'common_model.dart';
 import 'config.dart';
+
 
 class ApiService {
   ApiService();

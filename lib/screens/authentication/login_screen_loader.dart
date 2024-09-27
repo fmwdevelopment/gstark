@@ -9,7 +9,7 @@ class LoginScreenLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        height: MediaQuery.of(context).size.height-300,
         margin: const EdgeInsets.only(top: 15),
         child: ListView.builder(
             scrollDirection: Axis.vertical,
@@ -17,7 +17,7 @@ class LoginScreenLoader extends StatelessWidget {
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 margin:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                 child: ShimmerLoader(
                   child: ShimmerHorizontalLoadingTile(
                     height: 70,

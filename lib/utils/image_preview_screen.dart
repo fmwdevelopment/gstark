@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 import 'package:gstark/utils/text_utils/normal_text.dart';
-
 import '../constants/app_colors.dart';
 import '../constants/string_constants.dart';
 
@@ -57,6 +55,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
                       value: loadingProgress.expectedTotalBytes != null
                           ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
                           : null,
+                      color: kApplicationThemeColor,
                     ),
                   );
                 }

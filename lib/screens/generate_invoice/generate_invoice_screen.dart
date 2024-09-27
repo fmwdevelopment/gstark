@@ -26,12 +26,10 @@ class GenerateInvoiceScreen extends StatefulWidget {
 }
 
 class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
-
   final _customerNameController = TextEditingController();
   final _phoneNumberController = TextEditingController();
   final _customerGSTNController = TextEditingController();
   final _customerAddressController = TextEditingController();
-
 
   final _productNameController = TextEditingController();
   final _quantityController = TextEditingController();
@@ -369,7 +367,6 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                         _unitPriceController.text,
                                         selectedTax ?? '5'
                                       ]));
-
                                     });
                                     Get.back();
                                     print(generateInvoiceController.dataList);
@@ -406,7 +403,6 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
               )
             ],
           ),
-
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: SingleChildScrollView(
@@ -512,10 +508,12 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                     ),
                   ),
                   const SizedBox(height: 50.0),
-                  SizedBox                           (
+                  SizedBox(
                       height: generateInvoiceController.dataList.isEmpty
                           ? 40
-                          : (generateInvoiceController.dataList.length * 80.0).clamp(0.0, MediaQuery.of(context).size.height * 0.4),
+                          : (generateInvoiceController.dataList.length * 80.0)
+                              .clamp(0.0,
+                                  MediaQuery.of(context).size.height * 0.6),
                       child: ListView.builder(
                           itemCount: generateInvoiceController.dataList.length,
                           itemBuilder: (context, index) {
@@ -534,8 +532,8 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                     Column(
                                       children: [
                                         NormalText(
-                                          text:
-                                              '${generateInvoiceController.dataList[index][1]}',
+                                          text: generateInvoiceController
+                                              .dataList[index][1],
                                           textSize: 24,
                                           textFontWeight: FontWeight.w800,
                                         ),
@@ -619,7 +617,8 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                                         width: 20,
                                                       ),
                                                       Container(
-                                                        decoration: BoxDecoration(
+                                                        decoration:
+                                                            BoxDecoration(
                                                           borderRadius:
                                                               BorderRadius
                                                                   .circular(50),
@@ -640,7 +639,8 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                                   ),
                                                   content: Form(
                                                     key: _formKey,
-                                                    child: SingleChildScrollView(
+                                                    child:
+                                                        SingleChildScrollView(
                                                       child: Column(
                                                         mainAxisSize:
                                                             MainAxisSize.min,
@@ -676,8 +676,10 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                                               ),
                                                             ),
                                                             validator: (value) {
-                                                              if (value == null ||
-                                                                  value.isEmpty) {
+                                                              if (value ==
+                                                                      null ||
+                                                                  value
+                                                                      .isEmpty) {
                                                                 return 'Please enter a Product Name';
                                                               }
                                                             },
@@ -716,8 +718,10 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                                                 TextInputType
                                                                     .number,
                                                             validator: (value) {
-                                                              if (value == null ||
-                                                                  value.isEmpty) {
+                                                              if (value ==
+                                                                      null ||
+                                                                  value
+                                                                      .isEmpty) {
                                                                 return 'Please enter a quantity';
                                                               }
                                                               if (!validateQuantity(
@@ -763,8 +767,10 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                                                         decimal:
                                                                             true),
                                                             validator: (value) {
-                                                              if (value == null ||
-                                                                  value.isEmpty) {
+                                                              if (value ==
+                                                                      null ||
+                                                                  value
+                                                                      .isEmpty) {
                                                                 return 'Please enter a price';
                                                               }
                                                               if (!validatePrice(
@@ -804,8 +810,8 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                                             height: 10,
                                                           ),
                                                           const Align(
-                                                            alignment:
-                                                                Alignment.topLeft,
+                                                            alignment: Alignment
+                                                                .topLeft,
                                                             child: NormalText(
                                                               text:
                                                                   "Select Tax %",
@@ -814,7 +820,8 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                                                   kNeutral700,
                                                             ),
                                                           ),
-                                                          DropdownButton<String>(
+                                                          DropdownButton<
+                                                              String>(
                                                             value: selectedTax,
                                                             isExpanded: true,
                                                             icon: const Icon(
@@ -843,7 +850,8 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                                               return DropdownMenuItem<
                                                                   String>(
                                                                 value: value,
-                                                                child: NormalText(
+                                                                child:
+                                                                    NormalText(
                                                                   text: value,
                                                                   textSize: 16,
                                                                   textColor:
@@ -879,7 +887,8 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                                     ),
                                                     TextButton(
                                                       onPressed: () {
-                                                        if (_formKey.currentState!
+                                                        if (_formKey
+                                                            .currentState!
                                                             .validate()) {
                                                           setState(() {
                                                             generateInvoiceController
@@ -894,7 +903,8 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                                                     .text,
                                                                 _unitPriceController
                                                                     .text,
-                                                                selectedTax ?? '5'
+                                                                selectedTax ??
+                                                                    '5'
                                                               ])
                                                             ]);
                                                           });
@@ -952,13 +962,14 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                     false) {
                               errorToast(
                                   "Please enter valid phone number", context);
-                            } else if(_customerGSTNController.text.isEmpty){
+                            } else if (_customerGSTNController.text.isEmpty) {
                               errorToast(
                                   "Please enter the custome GSTN", context);
-                            }else if(_customerAddressController.text.isEmpty){
+                            } else if (_customerAddressController
+                                .text.isEmpty) {
                               errorToast(
                                   "Please enter the custome Address", context);
-                            }else if (generateInvoiceController
+                            } else if (generateInvoiceController
                                 .dataList.isEmpty) {
                               errorToast(
                                   "Please add the products to genearate invoice",
@@ -994,7 +1005,8 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                     (double.parse(product['tax']) / 100);
                                 totalAmount += totalPrice.toPrecision(2);
                                 totalTax += taxAmount.toPrecision(2);
-                                print("Tax for ${product[0]}: ${taxAmount.toPrecision(2)}");
+                                print(
+                                    "Tax for ${product[0]}: ${taxAmount.toPrecision(2)}");
                               }
 
                               // Calculate total price for each product
@@ -1002,7 +1014,8 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                 double totalPrice =
                                     double.parse(product['price']) *
                                         double.parse(product['quantity']) *
-                                        (1 + double.parse(product['tax']) / 100);
+                                        (1 +
+                                            double.parse(product['tax']) / 100);
                                 totalAmountWithTax += totalPrice.toPrecision(2);
                               }
                               var gstn = await CustomSharedPref.getPref(
@@ -1016,20 +1029,22 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                     .format(DateTime.now()),
                                 'invoice_no': invoicesNo,
                                 'total_before_tax': totalAmount.toPrecision(2),
-                                'total_after_tax': totalAmountWithTax.toPrecision(2),
+                                'total_after_tax':
+                                    totalAmountWithTax.toPrecision(2),
                                 'tax_amount': totalTax.toPrecision(2),
                                 'inter_state': interState,
                                 "items": formattedProductList,
-                                "customer_gstn":_customerGSTNController.text,
-                                "customer_address":_customerAddressController.text,
+                                "customer_gstn": _customerGSTNController.text,
+                                "customer_address":
+                                    _customerAddressController.text,
                               };
-
 
                               final generator = InvoicePdfGenerator();
                               var clientName = await CustomSharedPref.getPref(
                                   SharedPreferenceString.clientName);
-                              var clientAddress = await CustomSharedPref.getPref(
-                                  SharedPreferenceString.clientAddress);
+                              var clientAddress =
+                                  await CustomSharedPref.getPref(
+                                      SharedPreferenceString.clientAddress);
                               var phoneNumber = await CustomSharedPref.getPref(
                                   SharedPreferenceString.phoneNumber);
                               File pdfFile = await generator.generateInvoicePdf(
@@ -1037,20 +1052,20 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                   '$clientAddress, \n Phone No:$phoneNumber, GST No: $gstn',
                                   invoiceData);
 
-                              generateInvoiceController.setGeneratedPdf(pdfFile);
+                              generateInvoiceController
+                                  .setGeneratedPdf(pdfFile);
                               debugPrint('Invoice PDF generated at: $pdfFile');
                               debugPrint("invoiceData $invoiceData");
 
                               invoiceInfo.clear();
                               invoiceInfo.addAll(invoiceData);
 
-
-
                               if (generateInvoiceController.generatedPdf !=
                                   null) {
                                 PDFDocument pdfDocument =
                                     await PDFDocument.fromFile(
-                                        generateInvoiceController.generatedPdf!);
+                                        generateInvoiceController
+                                            .generatedPdf!);
                                 //show pdfviewer in dialog
                                 await showDialog(
                                   context: context,
@@ -1076,46 +1091,58 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                           },
                           buttonText: "PDF Generator"),
                       Obx(() => Button(
-                            buttonWidth: MediaQuery.of(context).size.width * 0.43,
-                            onPress: () async{
-
-                              if(!generateInvoiceController.isBusy){
+                            buttonWidth:
+                                MediaQuery.of(context).size.width * 0.43,
+                            onPress: () async {
+                              if (!generateInvoiceController.isBusy) {
                                 if (generateInvoiceController.generatedPdf !=
                                     null) {
+                                  bool isSuccess =
+                                      await generateInvoiceController
+                                          .sendInvoiceData(
+                                              context,
+                                              _customerGSTNController.text,
+                                              _customerNameController.text,
+                                              invoiceInfo['invoice_no'],
+                                              _phoneNumberController.text,
+                                              _customerAddressController.text,
+                                              invoiceInfo['total_before_tax'],
+                                              invoiceInfo['inter_state'] == true
+                                                  ? invoiceInfo['tax_amount'] /
+                                                      2
+                                                  : 0,
+                                              invoiceInfo['inter_state'] == true
+                                                  ? invoiceInfo['tax_amount'] /
+                                                      2
+                                                  : 0,
+                                              invoiceInfo['inter_state'] == true
+                                                  ? 0
+                                                  : invoiceInfo['tax_amount']);
 
-                                  bool isSuccess = await generateInvoiceController.sendInvoiceData(
-                                      context,
-                                      _customerGSTNController.text,
-                                      _customerNameController.text,
-                                      invoiceInfo['invoice_no'],
-                                      _phoneNumberController.text,
-                                      _customerAddressController.text,
-                                      invoiceInfo['total_before_tax'],
-                                      invoiceInfo['inter_state']==true?invoiceInfo['tax_amount'] / 2: 0,
-                                      invoiceInfo['inter_state']==true?invoiceInfo['tax_amount'] / 2: 0,
-                                      invoiceInfo['inter_state']==true?0:invoiceInfo['tax_amount']);
-
-                                  if(isSuccess){
-                                    generateInvoiceController.salesInvoiceUploadApi(
-                                        context,
-                                        generateInvoiceController.generatedPdf!,
-                                        'example.pdf');
-
-                                  }else{
+                                  if (isSuccess) {
+                                    generateInvoiceController
+                                        .salesInvoiceUploadApi(
+                                            context,
+                                            generateInvoiceController
+                                                .generatedPdf!,
+                                            'example.pdf');
+                                  } else {
                                     errorToast("Failed to Send data", context);
                                   }
                                 } else {
                                   errorToast("Generate Invoice First", context);
                                 }
                               }
-
-
                             },
-                            buttonText: generateInvoiceController.isBusy?"Uploading...":"Upload PDF",
+                            buttonText: generateInvoiceController.isBusy
+                                ? "Uploading..."
+                                : "Upload PDF",
                             backgroundColor:
                                 generateInvoiceController.generatedPdf == null
                                     ? kPrimary100
-                                    : generateInvoiceController.isBusy? kPrimary100:kApplicationThemeColor,
+                                    : generateInvoiceController.isBusy
+                                        ? kPrimary100
+                                        : kApplicationThemeColor,
                           )),
                     ],
                   )

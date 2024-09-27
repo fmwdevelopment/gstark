@@ -9,7 +9,7 @@ String getDateTime(String? inputString) {
     DateTime dateTime = DateTime.parse(isoDate);
     DateTime localDateTime = dateTime.toLocal();
 
-    String formattedDate = DateFormat('yyyy-MM-dd, hh:mm a').format(localDateTime);
+    String formattedDate = DateFormat('dd-MMM-yyyy, hh:mm a').format(localDateTime);
     return formattedDate.toString();
     // DateTime parseDate =
     //     DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(inputString);
