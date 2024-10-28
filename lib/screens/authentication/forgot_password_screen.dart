@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:gstark/constants/app_colors.dart';
 import 'package:gstark/controller/forgot_password_controller.dart';
-
+import 'package:gstark/screens/generate_invoice/generate_invoice_screen.dart';
+import 'package:gstark/utils/validation_utils/upper_case_text_formatter.dart';
 import '../../constants/app_decorations.dart';
 import '../../constants/string_constants.dart';
-import '../../utils/toast_utils/error_toast.dart';
-import '../../widgets/button.dart';
 import '../../utils/text_utils/normal_text.dart';
+import '../../utils/toast_utils/error_toast.dart';
+import '../../widgets/button_widget.dart';
 import '../../widgets/input_textfield.dart';
-import 'register_user_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -41,6 +41,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     _passwordController.text = '';
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,13 +50,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height,
             decoration: containerBottomCurvedDecoration,
           ),
           Container(
             decoration: curvedEdgeContainerDecoration,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            margin: const EdgeInsets.only(left: 25, right: 25, top: 70),
+            margin: const EdgeInsets.only(left: 16, right: 16, top: 70),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -63,18 +64,20 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     text: "Forgot Password?",
                     textSize: 20,
                     textColor: kApplicationThemeColor,
-                    textFontWeight: FontWeight.w600),
+                    textFontWeight: FontWeight.w400),
                 const SizedBox(height: 16),
                 const Row(
                   children: [
                     NormalText(
                         text: phoneNumber,
                         textColor: kBlackColor,
-                        textFontWeight: FontWeight.w600),
+                        textFontWeight: FontWeight.w400),
                     NormalText(
                       text: "*",
                       textColor: kError,
-                      textFontWeight: FontWeight.w600,textSize: 24,),
+                      textFontWeight: FontWeight.w400,
+                      textSize: 24,
+                    ),
                   ],
                 ),
                 InputTextField(
@@ -82,6 +85,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   hintText: enterYourNumber,
                   obscureText: false,
                   autofocus: false,
+                  keyboardType: TextInputType.number,
+                  inputParamter: [
+                    LengthLimitingTextInputFormatter(10),
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                 ),
                 const SizedBox(height: 8),
                 const Row(
@@ -89,11 +97,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     NormalText(
                         text: "GST Number",
                         textColor: kBlackColor,
-                        textFontWeight: FontWeight.w600),
+                        textFontWeight: FontWeight.w400),
                     NormalText(
                       text: "*",
                       textColor: kError,
-                      textFontWeight: FontWeight.w600,textSize: 24,),
+                      textFontWeight: FontWeight.w400,
+                      textSize: 24,
+                    ),
                   ],
                 ),
                 InputTextField(
@@ -101,18 +111,26 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   hintText: "Enter GST Number",
                   obscureText: false,
                   autofocus: false,
+                  inputParamter: [
+                    FilteringTextInputFormatter.allow(RegExp("[A-Za-z0-9]")),  // Only allow uppercase letters and digits
+                    LengthLimitingTextInputFormatter(15),
+                    UpperCaseTextFormatter()
+                  ],
+
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 10),
                 const Row(
                   children: [
                     NormalText(
                         text: "Birth Place",
                         textColor: kBlackColor,
-                        textFontWeight: FontWeight.w600),
+                        textFontWeight: FontWeight.w400),
                     NormalText(
                       text: "*",
                       textColor: kError,
-                      textFontWeight: FontWeight.w600,textSize: 24,),
+                      textFontWeight: FontWeight.w400,
+                      textSize: 24,
+                    ),
                   ],
                 ),
                 InputTextField(
@@ -127,11 +145,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     NormalText(
                         text: password,
                         textColor: kBlackColor,
-                        textFontWeight: FontWeight.w600),
+                        textFontWeight: FontWeight.w400),
                     NormalText(
                       text: "*",
                       textColor: kError,
-                      textFontWeight: FontWeight.w600,textSize: 24,),
+                      textFontWeight: FontWeight.w400,
+                      textSize: 24,
+                    ),
                   ],
                 ),
                 InputTextField(
@@ -141,7 +161,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   autofocus: false,
                 ),
                 const SizedBox(height: 46),
-                Obx(() => Button(
+                Obx(() => ButtonWidget(
                       onPress: () async {
                         if (!forgotPasswordController.isBusy) {
                           print(

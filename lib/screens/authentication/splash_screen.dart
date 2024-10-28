@@ -44,13 +44,29 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: kApplicationThemeColor,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [kPrimary200,kPrimary900])
+        ),
         child: const Center(
-          child: NormalText(
-            text: gStark,
-            textSize: 52,
-            textColor: kWhite,
-            textFontWeight: FontWeight.w600,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              NormalText(
+                text: gStark,
+                textSize: 52,
+                textColor: kWhite,
+                textFontWeight: FontWeight.w600,
+              ),
+               NormalText(
+                text: "Solution for your accounts",
+                textSize: 14,
+                textColor: kWhite,
+                textFontWeight: FontWeight.w400
+              ),
+            ],
           ),
         ),
       ),

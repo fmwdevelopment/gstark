@@ -5,7 +5,6 @@ import 'package:gstark/constants/string_constants.dart';
 import 'package:gstark/models/login_response_model.dart';
 import 'package:gstark/utils/shared_preference/custom_shared_preference.dart';
 import 'package:gstark/utils/toast_utils/error_toast.dart';
-
 import '../helper/network/api_end_point.dart';
 import '../helper/network/network_helper.dart';
 import '../screens/Home/home_screen.dart';
@@ -71,6 +70,8 @@ class LoginScreenController extends GetxController {
             CustomSharedPref.setPref<String>(
                 SharedPreferenceString.clientAddress,
                 loginResponseModel.response?.address ?? "");
+
+            print("login Response ${loginResponseModel.response}");
 
             Get.to(const HomeScreen(), transition: Transition.rightToLeft);
           }

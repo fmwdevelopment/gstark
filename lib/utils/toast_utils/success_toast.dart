@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../constants/app_colors.dart';
 import '../text_utils/normal_text.dart';
-import 'toast_utils.dart';
 
 successToast(
     {required String descriptionText,

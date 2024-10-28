@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:gstark/controller/register_screen_controller.dart';
+import 'package:gstark/utils/validation_utils/upper_case_text_formatter.dart';
 import '../../constants/app_colors.dart';
 import '../../constants/app_decorations.dart';
 import '../../constants/string_constants.dart';
 import '../../utils/text_utils/normal_text.dart';
 import '../../utils/toast_utils/error_toast.dart';
+import '../../widgets/button_widget.dart';
 import '../../widgets/input_textfield.dart';
-import '../../widgets/button.dart';
 
 class ValidateUserScreen extends StatefulWidget {
   const ValidateUserScreen({super.key});
@@ -51,16 +53,16 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height,
             decoration: containerBottomCurvedDecoration,
           ),
           Obx(() => Container(
                 decoration: curvedEdgeContainerDecoration,
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                margin: const EdgeInsets.only(left: 25, right: 25, top: 50),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                margin: const EdgeInsets.only(left: 16, right: 16, top: 70),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const NormalText(
                         text: validateUser,
@@ -73,11 +75,11 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                         NormalText(
                             text: "Phone Number",
                             textColor: kBlackColor,
-                            textFontWeight: FontWeight.w600),
+                            textFontWeight: FontWeight.w400,textSize: 14,),
                         NormalText(
                             text: "*",
                             textColor: kError,
-                            textFontWeight: FontWeight.w600,textSize: 24,),
+                            textFontWeight: FontWeight.w400,textSize: 24,),
                       ],
                     ),
                     InputTextField(
@@ -85,18 +87,23 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                       hintText: enterYourNumber,
                       obscureText: false,
                       autofocus: false,
+                      keyboardType: TextInputType.number,
+                      inputParamter: [
+                        LengthLimitingTextInputFormatter(10),
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
                     ),
                     const SizedBox(height: 8),
                     const Row(
                       children: [
                         NormalText(
                             text: "GST Number",
-                            textColor: kBlackColor,
-                            textFontWeight: FontWeight.w600),
+                            textColor: kBlackColor,textFontWeight: FontWeight.w400,textSize: 14,
+                           ),
                         NormalText(
                           text: "*",
                           textColor: kError,
-                          textFontWeight: FontWeight.w600,textSize: 24,),
+                          textFontWeight: FontWeight.w400,textSize: 24,),
                       ],
                     ),
                     InputTextField(
@@ -104,6 +111,11 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                       hintText: "Enter GST Number",
                       obscureText: false,
                       autofocus: false,
+                      inputParamter: [
+                        FilteringTextInputFormatter.allow(RegExp("[A-Za-z0-9]")),  // Only allow uppercase letters and digits
+                        LengthLimitingTextInputFormatter(15),
+                        UpperCaseTextFormatter()
+                      ],
                     ),
                     Visibility(
                       visible: registerScreenController.isValidated,
@@ -116,11 +128,11 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                               NormalText(
                                   text: "Your birth place",
                                   textColor: kBlackColor,
-                                  textFontWeight: FontWeight.w600),
+                                textFontWeight: FontWeight.w400,textSize: 14,),
                               NormalText(
                                 text: "*",
                                 textColor: kError,
-                                textFontWeight: FontWeight.w600,textSize: 24,),
+                                textFontWeight: FontWeight.w400,textSize: 24,),
                             ],
                           ),
                           InputTextField(
@@ -135,11 +147,11 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                               NormalText(
                                   text: "Password",
                                   textColor: kBlackColor,
-                                  textFontWeight: FontWeight.w600),
+                                textFontWeight: FontWeight.w400,textSize: 14,),
                               NormalText(
                                 text: "*",
                                 textColor: kError,
-                                textFontWeight: FontWeight.w600,textSize: 24,),
+                                textFontWeight: FontWeight.w400,textSize: 24,),
                             ],
                           ),
                           InputTextField(
@@ -154,11 +166,11 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                               NormalText(
                                   text: "Confirm Password",
                                   textColor: kBlackColor,
-                                  textFontWeight: FontWeight.w600),
+                                textFontWeight: FontWeight.w400,textSize: 14,),
                               NormalText(
                                 text: "*",
                                 textColor: kError,
-                                textFontWeight: FontWeight.w600,textSize: 24,),
+                                textFontWeight: FontWeight.w400,textSize: 24,),
                             ],
                           ),
                           InputTextField(
@@ -173,11 +185,11 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                               NormalText(
                                   text: "Address",
                                   textColor: kBlackColor,
-                                  textFontWeight: FontWeight.w600),
+                                textFontWeight: FontWeight.w400,textSize: 14,),
                               NormalText(
                                 text: "*",
                                 textColor: kError,
-                                textFontWeight: FontWeight.w600,textSize: 24,),
+                                textFontWeight: FontWeight.w400,textSize: 24,),
                             ],
                           ),
                           InputTextField(
@@ -189,8 +201,8 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
-                    Button(
+                    const SizedBox(height: 30),
+                    ButtonWidget(
                       onPress: () async {
                         if (!registerScreenController.isBusy) {
                           if (registerScreenController.isValidated) {
@@ -231,6 +243,8 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                           }
                         }
                       },
+                      buttonHeight: 40,
+                      buttonWidth: MediaQuery.of(context).size.width,
                       buttonText: registerScreenController.isBusy
                           ? "Validating..."
                           : registerScreenController.isValidated
@@ -238,7 +252,7 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
 
                               /// Todo: need to verify this text...
                               : validate,
-                      fontSize: 18,
+                      fontSize: 16,
                       backgroundColor: registerScreenController.isBusy
                           ? kPrimary200
                           : kApplicationThemeColor,
@@ -246,7 +260,6 @@ class _ValidateUserScreenState extends State<ValidateUserScreen> {
                           ? kPrimary200
                           : kApplicationThemeColor,
                     ),
-                    const SizedBox(height: 25),
                     TextButton(
                       onPressed: () {
                         Get.back();

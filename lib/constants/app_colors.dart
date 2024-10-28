@@ -13,8 +13,8 @@ const Color kSecondaryGray900 = Color(0xFF6F727A);
 const Color kSecondaryGray700 = Color(0xFF9CA1AD);
 const Color kPrimaryBlack = Color(0xFF232325);
 
+const Color kApplicationThemeColor = Color(0xFF3272B7);
 const Color kPrimary100 = Color(0xFFAFCBE9);
-const Color kApplicationThemeColor = Color(0xFF2181d9);
 const Color kPrimary200 = Color(0xFF98BCE3);
 const Color kPrimary300 = Color(0xFF81ADDD);
 const Color kPrimary400 = Color(0xFF6A9ED6);

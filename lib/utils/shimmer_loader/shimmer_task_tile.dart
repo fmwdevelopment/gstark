@@ -4,10 +4,11 @@ import 'shimmerLoader.dart';
 
 class ShimmerHorizontalLoadingTile extends StatelessWidget {
   const ShimmerHorizontalLoadingTile(
-      {Key? key, required this.height, this.width})
-      : super(key: key);
+      {super.key, required this.height, this.width});
+
   final double height;
   final double? width;
+
   @override
   Widget build(BuildContext context) {
     return ShimmerLoader(

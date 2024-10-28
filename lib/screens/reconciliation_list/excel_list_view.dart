@@ -81,19 +81,20 @@ class _ExcelListViewState extends State<ExcelListView> {
                 controller: _searchController,
                 decoration: InputDecoration(
                   hintText: 'Search for GSTIN/Name/Invoice No',
-                  hintStyle: TextStyle(
-                    color: Colors.grey[400],
+                  hintStyle: const TextStyle(
+                    color: kNeutral400,
                     fontSize: 16,
+                    fontFamily: 'ProximaNova'
                   ),
                   prefixIcon: Icon(
                     Icons.search,
-                    color: Colors.grey[400],
+                    color: kNeutral400,
                   ),
                   suffixIcon: _searchController.text.isNotEmpty
                       ? IconButton(
                     icon: Icon(
                       Icons.clear,
-                      color: Colors.grey[400],
+                      color: kNeutral400,
                     ),
                     onPressed: () {
                       _searchController.clear();
@@ -120,6 +121,7 @@ class _ExcelListViewState extends State<ExcelListView> {
                 onChanged: _searchText,
                 style: const TextStyle(
                   fontSize: 16.0,
+                  fontFamily: 'ProximaNova'
                 ),
               ),
               const SizedBox(
@@ -182,7 +184,7 @@ class _ExcelListViewState extends State<ExcelListView> {
       height: 56,
       padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
       alignment: Alignment.centerLeft,
-      child: Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
+      child: Text(label, style: const TextStyle(fontWeight: FontWeight.bold,fontFamily: 'ProximaNova')),
     );
   }
 
@@ -198,7 +200,7 @@ class _ExcelListViewState extends State<ExcelListView> {
           height: 52,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
-          child: Text(reconciliationScreenController
+          child: NormalText(text:reconciliationScreenController
               .filteredData[index].gstinOfSupplier ??
               ''),
         ),
@@ -207,7 +209,7 @@ class _ExcelListViewState extends State<ExcelListView> {
           height: 52,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
-          child: Text(reconciliationScreenController
+          child: NormalText(text:reconciliationScreenController
               .filteredData[index].tradeLegalName ??
               ''),
         ),
@@ -216,7 +218,7 @@ class _ExcelListViewState extends State<ExcelListView> {
           height: 52,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
-          child: Text(reconciliationScreenController
+          child: NormalText(text:reconciliationScreenController
               .filteredData[index].invoiceNumber ??
               ''),
         ),
@@ -225,8 +227,8 @@ class _ExcelListViewState extends State<ExcelListView> {
           height: 52,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
-          child: Text(
-              reconciliationScreenController.filteredData[index].invoiceDate ??
+          child: NormalText(
+              text:reconciliationScreenController.filteredData[index].invoiceDate ??
                   ''),
         ),
         Container(
@@ -234,8 +236,8 @@ class _ExcelListViewState extends State<ExcelListView> {
           height: 52,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
-          child: Text(
-              reconciliationScreenController.filteredData[index].invoiceValue ??
+          child: NormalText(
+              text:reconciliationScreenController.filteredData[index].invoiceValue ??
                   ''),
         ),
         Container(
@@ -243,7 +245,8 @@ class _ExcelListViewState extends State<ExcelListView> {
           height: 52,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
-          child: Text(
+          child: NormalText(
+              text:
               reconciliationScreenController.filteredData[index].rate ?? ''),
         ),
         Container(
@@ -251,7 +254,8 @@ class _ExcelListViewState extends State<ExcelListView> {
           height: 52,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
-          child: Text(
+          child:NormalText(
+              text:
               reconciliationScreenController.filteredData[index].taxableValue ??
                   ''),
         ),
@@ -260,7 +264,8 @@ class _ExcelListViewState extends State<ExcelListView> {
           height: 52,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
-          child: Text(reconciliationScreenController
+          child: NormalText(
+              text:reconciliationScreenController
               .filteredData[index].integratedTax ??
               ''),
         ),
@@ -269,7 +274,8 @@ class _ExcelListViewState extends State<ExcelListView> {
           height: 52,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
-          child: Text(
+          child: NormalText(
+              text:
               reconciliationScreenController.filteredData[index].centralTax ??
                   ''),
         ),
@@ -278,7 +284,8 @@ class _ExcelListViewState extends State<ExcelListView> {
           height: 52,
           padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
           alignment: Alignment.centerLeft,
-          child: Text(
+          child: NormalText(
+              text:
               reconciliationScreenController.filteredData[index].stateUtTax ??
                   ''),
         )

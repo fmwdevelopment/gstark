@@ -39,17 +39,19 @@ class _ReconciliationTabViewState extends State<ReconciliationTabView>
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(50),
               child: TabBar(
+                dividerColor:Colors.transparent,
                 controller: tabController,
                 indicator: const BoxDecoration(
                   color: Colors.transparent,
                 ),
+                labelPadding: const EdgeInsets.symmetric(horizontal: 10),
                 tabs: [
                   Container(
                     decoration: BoxDecoration(
                       color: tabController.index == 0
                           ? kApplicationThemeColor
-                          : Colors.grey[200],
-                      borderRadius: BorderRadius.circular(15),
+                          : kNeutral100,
+                      borderRadius: BorderRadius.circular(30),
                     ),
 
                     child: Tab(
@@ -60,6 +62,8 @@ class _ReconciliationTabViewState extends State<ReconciliationTabView>
                             color: tabController.index == 0
                                 ? Colors.white
                                 : kApplicationThemeColor,
+                            fontFamily: "ProximaNova",
+                            fontWeight: FontWeight.w600
                           ),
                         ),
                       ),
@@ -69,8 +73,8 @@ class _ReconciliationTabViewState extends State<ReconciliationTabView>
                     decoration: BoxDecoration(
                       color: tabController.index == 1
                           ? kApplicationThemeColor
-                          : Colors.grey[200],
-                      borderRadius: BorderRadius.circular(15),
+                          : kNeutral100,
+                      borderRadius: BorderRadius.circular(30),
                     ),
                     child: Tab(
                       child: Center(
@@ -80,6 +84,8 @@ class _ReconciliationTabViewState extends State<ReconciliationTabView>
                             color: tabController.index == 1
                                 ? Colors.white
                                 : kApplicationThemeColor,
+                            fontFamily: 'ProximaNova',
+                              fontWeight: FontWeight.w600
                           ),
                         ),
                       ),

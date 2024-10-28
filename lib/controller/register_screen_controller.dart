@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gstark/constants/string_constants.dart';
-import 'package:gstark/models/activate_user_failure_response_model.dart';
 import 'package:gstark/utils/toast_utils/error_toast.dart';
 import 'package:gstark/utils/toast_utils/success_toast.dart';
-
 import '../helper/network/api_end_point.dart';
 import '../helper/network/network_helper.dart';
 import '../models/activate_user_request_model.dart';

@@ -1,17 +1,19 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:gstark/constants/shared_preference_string.dart';
 import 'package:gstark/controller/profile_screen_controller.dart';
 import 'package:gstark/screens/Profile/update_profile_screen_loader.dart';
 import 'package:gstark/utils/shared_preference/custom_shared_preference.dart';
+import 'package:gstark/utils/validation_utils/upper_case_text_formatter.dart';
 import 'package:gstark/widgets/input_textfield.dart';
 import '../../constants/app_decorations.dart';
 import '../../constants/string_constants.dart';
 import '../../controller/update_user_controller.dart';
-import '../../widgets/button.dart';
+import '../../widgets/button_widget.dart';
 import '../../constants/app_colors.dart';
 import '../../utils/text_utils/normal_text.dart';
 import '../authentication/splash_screen.dart';
@@ -33,6 +35,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _gstController = TextEditingController();
   final _emailController = TextEditingController();
   final _addressController = TextEditingController();
+
+  bool enableName = false;
+  bool enablePhoneNumber = false;
+  bool enableGST = false;
+  bool enableEmail = false;
+  bool enableAddress = false;
 
   @override
   void initState() {
@@ -77,13 +85,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _gstController.text = gstn;
     _emailController.text = email;
     _addressController.text = address;
-
-    print(phoneNumber);
-    print(gstn);
-    print(email);
-    print(id);
-    print(name);
-    print(address);
   }
 
   Future<void> _makingPhoneCall() async {
@@ -103,7 +104,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         iconTheme:
             const IconThemeData(color: kWhite, size: 24 //change your color here
                 ),
-        backgroundColor: kApplicationThemeColor,
+        backgroundColor: kPrimary300,
         title: const NormalText(
           text: "Profile",
           textAlign: TextAlign.center,
@@ -112,40 +113,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
           textColor: kWhite,
         ),
         centerTitle: true,
-        actions: [
-          Container(
-            margin: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                color:kWhite, borderRadius: BorderRadius.circular(8)),
-            child: profileScreenController.isChanged == true
-                ? TextButton(
-                    onPressed: () {
-                      updateUserController.updateUser(
-                          phoneNumber: _phoneNumberController.text,
-                          gstn: _gstController.text,
-                          email: _emailController.text,
-                          name: _nameController.text,
-                          address: _addressController.text,
-                          context: context);
-                    },
-                    child: const NormalText(
-                      text: "Save",
-                      textAlign: TextAlign.center,
-                      textFontWeight: FontWeight.w500,
-                      textSize: 16,
-                      textColor: kApplicationThemeColor,
-                    ))
-                : TextButton(
-                    onPressed: () {},
-                    child: const NormalText(
-                      text: "Save",
-                      textAlign: TextAlign.center,
-                      textFontWeight: FontWeight.w500,
-                      textSize: 16,
-                      textColor: kPrimary100,
-                    )),
-          )
-        ],
+        // actions: [
+        //   Container(
+        //     margin: const EdgeInsets.all(10),
+        //     decoration: BoxDecoration(
+        //         color: kWhite, borderRadius: BorderRadius.circular(8)),
+        //     child: profileScreenController.isChanged == true
+        //         ? IconButton(
+        //             onPressed: () {
+        //               updateUserController.updateUser(
+        //                   phoneNumber: _phoneNumberController.text,
+        //                   gstn: _gstController.text,
+        //                   email: _emailController.text,
+        //                   name: _nameController.text,
+        //                   address: _addressController.text,
+        //                   context: context);
+        //             },
+        //             icon: const NormalText(
+        //               text: "Save",
+        //               textAlign: TextAlign.center,
+        //               textFontWeight: FontWeight.w500,
+        //               textSize: 16,
+        //               textColor: kApplicationThemeColor,
+        //             ))
+        //         : TextButton(
+        //             onPressed: () {},
+        //             child: const NormalText(
+        //               text: "Save",
+        //               textAlign: TextAlign.center,
+        //               textFontWeight: FontWeight.w500,
+        //               textSize: 16,
+        //               textColor: kPrimary100,
+        //             )),
+        //   )
+        // ],
       ),
       body: Obx(() => updateUserController.isBusy
           ? const UpdateProfileScreenLoader()
@@ -157,7 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.5,
+                      height: MediaQuery.of(context).size.height,
                       decoration: containerBottomCurvedDecoration,
                     ),
                     Container(
@@ -171,7 +172,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
+                          InkWell(
+                            onTap: (){
+                              setState(() {
+                                enableName = true;
+                                enablePhoneNumber = true;
+                                enableGST = true;
+                                enableEmail =true;
+                                enableAddress = true;
+                                profileScreenController.setIsChanged(true);
+                              });
+                            },
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Icon(
+                                  Icons.edit,
+                                  size: 16,
+                                ),
+
+                                Padding(
+                                  padding: EdgeInsets.only(left:2.0),
+                                  child: NormalText(text: "Edit"),
+                                )
+                              ],
+                            ),
+                          ),
                           const NormalText(
                             text: "Name",
                             textSize: 14,
@@ -186,6 +214,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onChanged: (_) {
                               profileScreenController.setIsChanged(true);
                             },
+                            enable: enableName,
                           ),
                           const SizedBox(height: 16),
                           const NormalText(
@@ -202,6 +231,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onChanged: (_) {
                               profileScreenController.setIsChanged(true);
                             },
+                            enable: enablePhoneNumber,
                           ),
                           const SizedBox(height: 16),
                           const NormalText(
@@ -218,6 +248,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onChanged: (_) {
                               profileScreenController.setIsChanged(true);
                             },
+                            enable: enableGST,
+                            inputParamter: [
+                              FilteringTextInputFormatter.allow(
+                                  RegExp("[A-Za-z0-9]")),
+                              // Only allow uppercase letters and digits
+                              LengthLimitingTextInputFormatter(15),
+                              UpperCaseTextFormatter()
+                            ],
                           ),
                           const SizedBox(height: 16),
                           const NormalText(
@@ -234,6 +272,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onChanged: (_) {
                               profileScreenController.setIsChanged(true);
                             },
+                            enable: enableEmail,
                           ),
                           const SizedBox(height: 16),
                           const NormalText(
@@ -250,34 +289,74 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             onChanged: (_) {
                               profileScreenController.setIsChanged(true);
                             },
-                          ),
-
-                          const SizedBox(
-                            height: 24,
-                          ),
-                           Center(child: Row(
-                            children: [
-                              const NormalText(text: "CUSTOMER CONTACT:",textSize: 14,),
-                              TextButton(onPressed: _makingPhoneCall, child: const NormalText(text: "7676940879",textSize:18,textColor: kApplicationThemeColor,))
-                            ],
-                          ),),
-                          const SizedBox(
-                            height: 24,
+                            enable: enableAddress,
                           ),
                           Center(
-                            child: Button(
-                              onPress: () async {
-                                CustomSharedPref.setPref<bool>(
-                                    SharedPreferenceString.isLoggedIn, false);
-                                profileScreenController.setIsChanged(false);
-                                Get.off(const SplashScreen(),
-                                    transition: Transition.leftToRight);
-                              },
-                              backgroundColor: kApplicationThemeColor,
-                              buttonText: logOut,
-                              borderRadius: 18,
-                              textColor: kWhite,
+                            child: Row(
+                              children: [
+                                const NormalText(
+                                  text: "CUSTOMER CONTACT:",
+                                  textSize: 14,
+                                ),
+                                TextButton(
+                                    onPressed: _makingPhoneCall,
+                                    child: const NormalText(
+                                      text: "7676940879",
+                                      textSize: 16,
+                                      textColor: kApplicationThemeColor,
+                                    ))
+                              ],
                             ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          profileScreenController.isChanged == true
+                              ? Center(
+                                  child: ButtonWidget(
+                                      onPress: () async {
+                                        updateUserController.updateUser(
+                                            phoneNumber:
+                                                _phoneNumberController.text,
+                                            gstn: _gstController.text,
+                                            email: _emailController.text,
+                                            name: _nameController.text,
+                                            address: _addressController.text,
+                                            context: context);
+
+                                        enableName = false;
+                                        enablePhoneNumber = false;
+                                        enableGST = false;
+                                        enableEmail = false;
+                                        enableAddress = false;
+                                        profileScreenController
+                                            .setIsChanged(false);
+                                      },
+                                      backgroundColor: kApplicationThemeColor,
+                                      buttonText: "Save",
+                                      borderRadius: 10,
+                                      textColor: kWhite,
+                                      buttonWidth:
+                                          MediaQuery.of(context).size.width),
+                                )
+                              : Container(),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Center(
+                            child: ButtonWidget(
+                                onPress: () async {
+                                  CustomSharedPref.setPref<bool>(
+                                      SharedPreferenceString.isLoggedIn, false);
+                                  profileScreenController.setIsChanged(false);
+                                  Get.offAll(const SplashScreen(),
+                                      transition: Transition.leftToRight);
+                                },
+                                backgroundColor: kApplicationThemeColor,
+                                buttonText: logOut,
+                                borderRadius: 10,
+                                textColor: kWhite,
+                                buttonWidth: MediaQuery.of(context).size.width),
                           ),
                         ],
                       ),

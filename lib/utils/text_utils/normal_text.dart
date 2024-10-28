@@ -5,7 +5,7 @@ import '../../constants/app_colors.dart';
 
 class NormalText extends StatelessWidget {
   const NormalText(
-      {Key? key,
+      {super.key,
       required this.text,
       this.textColor = kBlack,
       this.textSize = 16,
@@ -13,17 +13,19 @@ class NormalText extends StatelessWidget {
       this.maxLine = 2,
       this.isUnderlined = false,
       this.isCrossed = false,
-      this.textAlign = TextAlign.start})
-      : super(key: key);
+      this.textAlign = TextAlign.start,  this.fontStyle = FontStyle.normal,
+      });
 
   final String text;
   final Color textColor;
   final double textSize;
   final FontWeight? textFontWeight;
+  final FontStyle fontStyle;
   final int maxLine;
   final TextAlign? textAlign;
   final bool isUnderlined;
   final bool isCrossed;
+
   @override
   Widget build(BuildContext context) {
     final decoration = isUnderlined
@@ -32,12 +34,12 @@ class NormalText extends StatelessWidget {
             ? TextDecoration.lineThrough
             : TextDecoration.none;
     return Text(text,
-        style: GoogleFonts.poppins(
-          color: textColor,
-          fontSize: textSize,
-          fontWeight: textFontWeight,
-          decoration: decoration,
-        ),
+        style: TextStyle(
+            color: textColor,
+            fontSize: textSize,
+            fontFamily: 'ProximaNova',
+            fontWeight: textFontWeight,
+        fontStyle: fontStyle),
         textAlign: textAlign,
         maxLines: maxLine,
         overflow: TextOverflow.ellipsis,

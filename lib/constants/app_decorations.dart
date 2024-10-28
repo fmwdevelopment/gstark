@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'app_colors.dart';
 
 var outlinedButtonStyle = OutlinedButton.styleFrom(
@@ -25,17 +24,17 @@ ButtonStyle buttonDecoration(bool isButtonEnabled) {
   );
 }
 
-TextStyle textFormFieldTextInterStyle = GoogleFonts.inter(
+TextStyle textFormFieldTextInterStyle = const TextStyle(
     color: kPrimaryBlack,
     fontSize: 15,
     fontWeight: FontWeight.w600,
-    fontStyle: FontStyle.normal);
+    fontFamily: 'ProximaNova');
 
-TextStyle textFormFieldTextGreyInterStyle = GoogleFonts.inter(
+TextStyle textFormFieldTextGreyInterStyle = const TextStyle(
     color: kSecondaryGray700,
     fontSize: 15,
     fontWeight: FontWeight.w600,
-    fontStyle: FontStyle.normal);
+    fontFamily: 'ProximaNova');
 
 InputDecoration textFormFieldDecoration(
     {required String hintText,
@@ -94,17 +93,15 @@ TextStyle textFormFieldLabelInterStyle = GoogleFonts.inter(
     fontWeight: FontWeight.w400,
     fontStyle: FontStyle.normal);
 
-BoxDecoration containerBottomCurvedDecoration = BoxDecoration(
-  color: kApplicationThemeColor,
-  borderRadius: const BorderRadius.only(
-    bottomLeft: Radius.circular(30.0),
-    bottomRight: Radius.circular(30.0),
-  ),
-  border: Border.all(
-    color: kApplicationThemeColor,
-    width: 3.0,
-  ),
-);
+BoxDecoration containerBottomCurvedDecoration = const BoxDecoration(
+    // borderRadius: BorderRadius.only(
+    //   bottomLeft: Radius.circular(20.0),
+    //   bottomRight: Radius.circular(20.0),
+    // ),
+    gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [kPrimary300, kPrimary900]));
 
 BoxDecoration curvedEdgeContainerDecoration = BoxDecoration(
   color: kWhite,

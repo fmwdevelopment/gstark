@@ -7,7 +7,7 @@ import '../../constants/string_constants.dart';
 import '../../controller/purchase_invoice_image_upload_screen_controller.dart';
 import '../../controller/sales_invoice_image_upload_screen_controller.dart';
 import '../../utils/text_utils/normal_text.dart';
-import '../../widgets/button.dart';
+import '../../widgets/button_widget.dart';
 import '../sales_invoice/image_upload_screen_loader.dart';
 
 
@@ -107,7 +107,7 @@ class _PurchaseInvoiceImageUploadScreenState
                 const SizedBox(
                   height: 30,
                 ),
-                Button(
+                ButtonWidget(
                   buttonText: chooseDifferent,
                   fontSize: 18,
                   buttonWidth: MediaQuery.of(context).size.width,
@@ -122,7 +122,7 @@ class _PurchaseInvoiceImageUploadScreenState
                 const SizedBox(
                   height: 30,
                 ),
-                Button(
+                ButtonWidget(
                   buttonText: uploadBill,
                   fontSize: 18,
                   buttonWidth: MediaQuery.of(context).size.width,
@@ -162,7 +162,7 @@ class _PurchaseInvoiceImageUploadScreenState
                 const SizedBox(
                   height: 30,
                 ),
-                Button(
+                ButtonWidget(
                   buttonText: cameraString,
                   fontSize: 18,
                   buttonWidth: MediaQuery.of(context).size.width,
@@ -173,7 +173,7 @@ class _PurchaseInvoiceImageUploadScreenState
                 const SizedBox(
                   height: 30,
                 ),
-                Button(
+                ButtonWidget(
                   buttonText: photoGallery,
                   fontSize: 18,
                   buttonWidth: MediaQuery.of(context).size.width,

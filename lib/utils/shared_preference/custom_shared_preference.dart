@@ -1,12 +1,11 @@
 import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
-///Use it like this: CustomSharedPref.instance.setPref<T>("key", value);  or SFSharedPref.instance.getPref<T>("key");
-/// ex: CustomSharedPref.setPref<String>("name","nandish"); String name = await CustomSharedPref.getPref<String>("name") as String;
 class CustomSharedPref {
   static final CustomSharedPref _instance = CustomSharedPref._();
+
   CustomSharedPref._();
+
   static CustomSharedPref get instance => _instance;
 
   static Future setPref<T>(String key, T value) async {

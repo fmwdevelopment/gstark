@@ -45,7 +45,7 @@ class GenerateInvoiceController extends GetxController {
   Timer? uploadInvoiceApiCallTimer;
 
   salesInvoiceUploadApi(BuildContext context, File file, String fileName) {
-
+    print("uploadcall111");
     uploadInvoiceApiCall(context, file, fileName);
 
     uploadInvoiceApiCallTimer = Timer(const Duration(seconds: 30), () async {
@@ -59,6 +59,7 @@ class GenerateInvoiceController extends GetxController {
 
 
   uploadInvoiceApiCall(BuildContext context, File file, String fileName) async {
+    print("uploadcall");
     setBusy(true);
     String authToken =
         await CustomSharedPref.getPref(SharedPreferenceString.authToken);
@@ -126,7 +127,7 @@ class GenerateInvoiceController extends GetxController {
             successToast(
                 descriptionText: ' Invoice Uploaded Successfully',
                 context: context);
-
+            dataList.clear();
             Get.off(const HomeScreen(), transition: Transition.rightToLeft);
           } else if (response.statusCode == 400) {
             uploadInvoiceApiCallTimer?.cancel();
@@ -169,6 +170,7 @@ class GenerateInvoiceController extends GetxController {
 
   //call before upload invoice
   Future<bool> sendInvoiceData(
+
       BuildContext context,
       String gst_number,
       String party_name,
@@ -179,6 +181,8 @@ class GenerateInvoiceController extends GetxController {
       double cgst,
       double sgst,
       double igst) async {
+
+    print("sendInvoice");
     setBusy(true);
     bool isConnectedToInternet = await checkIsConnectedToInternet();
     if (isConnectedToInternet) {

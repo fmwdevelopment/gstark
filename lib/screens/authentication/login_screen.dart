@@ -9,7 +9,7 @@ import '../../constants/app_decorations.dart';
 import '../../constants/string_constants.dart';
 import '../../utils/invoice_pdf_generator.dart';
 import '../../utils/text_utils/normal_text.dart';
-import '../../widgets/button.dart';
+import '../../widgets/button_widget.dart';
 import '../../widgets/input_textfield.dart';
 import 'forgot_password_screen.dart';
 
@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height,
             decoration: containerBottomCurvedDecoration,
           ),
           Column(
@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const NormalText(
                     text: gStark,
-                    textFontWeight: FontWeight.w700,
+                    textFontWeight: FontWeight.w600,
                     textSize: 38,
                     textColor: kWhite,
                   ),
@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 20),
                     margin: const EdgeInsets.symmetric(
-                        horizontal: 25, vertical: 40),
+                        horizontal: 16, vertical: 40),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
@@ -86,11 +86,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             NormalText(
                                 text: phoneNumber,
                                 textColor: kBlackColor,
-                                textFontWeight: FontWeight.w600),
+                                textFontWeight: FontWeight.w400),
                             NormalText(
                               text: "*",
                               textColor: kError,
-                              textFontWeight: FontWeight.w600,
+                              textFontWeight: FontWeight.w400,
                               textSize: 24,
                             ),
                           ],
@@ -112,11 +112,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             NormalText(
                                 text: password,
                                 textColor: kBlackColor,
-                                textFontWeight: FontWeight.w600),
+                                textFontWeight: FontWeight.w400),
                             NormalText(
                               text: "*",
                               textColor: kError,
-                              textFontWeight: FontWeight.w600,
+                              textFontWeight: FontWeight.w400,
                               textSize: 24,
                             ),
                           ],
@@ -158,33 +158,25 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 46),
+                        const SizedBox(height: 40),
                         Obx(
-                          () => Button(
+                          () => ButtonWidget(
                             onPress: () async {
                               if (!loginScreenController.isBusy) {
-                                print(
-                                    "data: ${_phoneNumberController.text} ${_passwordController.text}");
-
                                 if (_phoneNumberController.text.isEmpty ||
                                     _passwordController.text.isEmpty) {
-                                  errorToast(pleaseFillTheCredentials, context);
+                                  errorToast("Please fill in the credentials",
+                                      context);
                                 } else {
                                   loginScreenController.signCustomerIn(
-                                      userId: _phoneNumberController.text,
-                                      password: _passwordController.text,
-                                      context: context);
+                                    userId: _phoneNumberController.text,
+                                    password: _passwordController.text,
+                                    context: context,
+                                  );
                                 }
                               }
-
-                              // loginScreenController.signCustomerIn(
-                              //     email: _emailController.text,
-                              //     password: _passwordController.text,
-                              //     context: context);
                             },
-                            buttonText: loginScreenController.isBusy
-                                ? "Signing In..."
-                                : signIn,
+                            buttonText: "LOGIN",
                             fontSize: 18,
                             backgroundColor: loginScreenController.isBusy
                                 ? kPrimary200
@@ -192,6 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             borderColor: loginScreenController.isBusy
                                 ? kPrimary200
                                 : kApplicationThemeColor,
+                            isLoading: loginScreenController.isBusy,
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -205,7 +198,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   const NormalText(
                     text: dontHaveAnAccount,
-                    textFontWeight: FontWeight.w500,
+                    textColor: kWhite,
+                    textFontWeight: FontWeight.w400,
                     textSize: 16,
                   ),
                   const SizedBox(width: 10),
@@ -214,11 +208,18 @@ class _LoginScreenState extends State<LoginScreen> {
                       Get.to(const ValidateUserScreen(),
                           transition: Transition.rightToLeft);
                     },
-                    child: const NormalText(
-                      text: signUp,
-                      textSize: 18,
-                      textFontWeight: FontWeight.w500,
-                      textColor: kPrimaryMain,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 20),
+                      decoration: BoxDecoration(
+                          color: kWhite,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: const NormalText(
+                        text: signUp,
+                        textSize: 16,
+                        textFontWeight: FontWeight.w600,
+                        textColor: kPrimaryMain,
+                      ),
                     ),
                   ),
                 ],

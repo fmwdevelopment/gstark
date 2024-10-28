@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:gstark/utils/text_utils/normal_text.dart';
 import '../../models/excel_data_model.dart';
 
 class AggregatedDataTable extends StatelessWidget {
   final List<AggregatedData> aggregatedData;
 
-  const AggregatedDataTable({required this.aggregatedData});
+  const AggregatedDataTable({super.key, required this.aggregatedData});
 
   @override
   Widget build(BuildContext context) {
@@ -24,29 +23,57 @@ class AggregatedDataTable extends StatelessWidget {
               child: DataTable(
                 dividerThickness: 0,
                 columns: const [
-                  DataColumn(label: Text('Trade/Legal Name')),
-                  DataColumn(label: Text('Sum of Taxable Value (\u{20B9})')),
-                  DataColumn(label: Text('Sum of Integrated Tax (\u{20B9})')),
-                  DataColumn(label: Text('Sum ofCentral Tax (\u{20B9})')),
-                  DataColumn(label: Text('Sum of State/UT Tax (\u{20B9})')),
+                  DataColumn(label: NormalText(text: 'Trade/Legal Name',textFontWeight: FontWeight.w700,)),
+                  DataColumn(
+                      label:
+                          NormalText(text: 'Sum of Taxable Value (\u{20B9})',textFontWeight: FontWeight.w700,)),
+                  DataColumn(
+                      label:
+                          NormalText(text: 'Sum of Integrated Tax (\u{20B9})',textFontWeight: FontWeight.w700,)),
+                  DataColumn(
+                      label: NormalText(text: 'Sum ofCentral Tax (\u{20B9})',textFontWeight: FontWeight.w700,)),
+                  DataColumn(
+                      label:
+                          NormalText(text: 'Sum of State/UT Tax (\u{20B9})',textFontWeight: FontWeight.w700,)),
                 ],
                 rows: aggregatedData.map((data) {
                   return DataRow(cells: [
-                    DataCell(Text(data.tradeLegalName)),
-                    DataCell(Text(data.sumTaxableValue.toStringAsFixed(2))),
-                    DataCell(Text(data.sumIntegratedTax.toStringAsFixed(2))),
-                    DataCell(Text(data.sumCentralTax.toStringAsFixed(2))),
-                    DataCell(Text(data.sumStateUtTax.toStringAsFixed(2))),
+                    DataCell(NormalText(text: data.tradeLegalName)),
+                    DataCell(NormalText(
+                        text: data.sumTaxableValue.toStringAsFixed(2))),
+                    DataCell(NormalText(
+                        text: data.sumIntegratedTax.toStringAsFixed(2))),
+                    DataCell(NormalText(
+                        text: data.sumCentralTax.toStringAsFixed(2))),
+                    DataCell(NormalText(
+                        text: data.sumStateUtTax.toStringAsFixed(2))),
                   ]);
                 }).toList()
                   ..add(
                     DataRow(
                       cells: [
-                        const DataCell(Text('Grand Total', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16))),
-                        DataCell(Text(grandTotal.sumTaxableValue.toStringAsFixed(2), style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 16))),
-                        DataCell(Text(grandTotal.sumIntegratedTax.toStringAsFixed(2), style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 16))),
-                        DataCell(Text(grandTotal.sumCentralTax.toStringAsFixed(2), style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 16))),
-                        DataCell(Text(grandTotal.sumStateUtTax.toStringAsFixed(2), style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 16))),
+                        const DataCell(NormalText(
+                          text: 'Grand Total',
+                          textFontWeight: FontWeight.w700,
+                          textSize: 16,
+                        )),
+                        DataCell(NormalText(
+                            text: grandTotal.sumTaxableValue.toStringAsFixed(2),
+                            textFontWeight: FontWeight.w700,
+                            textSize: 16)),
+                        DataCell(NormalText(
+                            text:
+                                grandTotal.sumIntegratedTax.toStringAsFixed(2),
+                            textFontWeight: FontWeight.w700,
+                            textSize: 16)),
+                        DataCell(NormalText(
+                            text: grandTotal.sumCentralTax.toStringAsFixed(2),
+                            textFontWeight: FontWeight.w700,
+                            textSize: 16)),
+                        DataCell(NormalText(
+                            text: grandTotal.sumStateUtTax.toStringAsFixed(2),
+                            textFontWeight: FontWeight.w700,
+                            textSize: 16)),
                       ],
                     ),
                   ),
@@ -59,7 +86,6 @@ class AggregatedDataTable extends StatelessWidget {
     );
   }
 }
-
 
 class AggregatedData {
   final String tradeLegalName;
@@ -76,7 +102,6 @@ class AggregatedData {
     required this.sumStateUtTax,
   });
 }
-
 
 List<AggregatedData> aggregateData(List<ExcelData> data) {
   // Create a map to store the aggregated values
@@ -136,4 +161,3 @@ AggregatedData calculateGrandTotals(List<AggregatedData> data) {
     sumStateUtTax: totalStateUtTax,
   );
 }
-
