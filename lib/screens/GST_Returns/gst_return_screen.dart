@@ -48,11 +48,11 @@ class _GSTReturnScreenState extends State<GSTReturnScreen> {
         body: Container(
           color: kWhite,
           height: MediaQuery.of(context).size.height,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Obx(() => DropdownButtonFormField<String>(
+          child: Column(
+            children: [
+              Obx(() => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                         labelText: "Select Financial Year",
                         labelStyle: const TextStyle(
@@ -94,18 +94,21 @@ class _GSTReturnScreenState extends State<GSTReturnScreen> {
                           ),
                         );
                       }).toList(),
-                    )),
-                const SizedBox(
-                  height: 16,
-                ),
-                // Month Dropdown with styling
-                Obx(() {
-                  if (gstReturnController
-                      .selectedFinancialYear.value.isNotEmpty) {
-                    List<String> months = getMonthsForFinancialYear(
-                        gstReturnController.selectedFinancialYear.value);
+                    ),
+              )),
+              const SizedBox(
+                height: 16,
+              ),
+              // Month Dropdown with styling
+              Obx(() {
+                if (gstReturnController
+                    .selectedFinancialYear.value.isNotEmpty) {
+                  List<String> months = getMonthsForFinancialYear(
+                      gstReturnController.selectedFinancialYear.value);
 
-                    return DropdownButtonFormField<String>(
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                         labelText: "Select Month",
                         labelStyle: const TextStyle(
@@ -146,188 +149,187 @@ class _GSTReturnScreenState extends State<GSTReturnScreen> {
                           ),
                         );
                       }).toList(),
-                    );
-                  } else {
-                    return const NormalText(
-                        text: 'Select Financial Year to pick a Month');
-                  }
-                }),
-                const SizedBox(height: 16),
-                const Divider(),
-                Obx(() => gstReturnController.isBusy
-                    ? const ScreenLoader()
-                    : gstReturnController.returnsData.isEmpty
-                        ? const Align(
-                            alignment: Alignment.center,
-                            child: Column(children: [
-                              SizedBox(height: 150),
-                              NormalText(
-                                text: 'No data available',
-                              ),
-                            ]),
-                          )
-                        : Expanded(
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 10),
-                              child: ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: gstReturnController
-                                      .returnsData.length,
-                                  itemBuilder: (BuildContext context,
-                                      int index) {
-                                    return InkWell(
-                                      onTap: () {
-                                        // TODO: implement doc preview screen
-                                        Get.to(DocumentPreviewScreen(
-                                          file: gstReturnController
-                                              .returnsData[index]
-                                              .file ??
-                                              "",
-                                          name: gstReturnController
-                                              .returnsData[index]
-                                              .name ??
-                                              "",
-                                        ));
-                                      },
-                                      child: Container(
-                                        decoration:
-                                        listItemDecoration,
+                    ),
+                  );
+                } else {
+                  return const NormalText(
+                      text: 'Select Financial Year to pick a Month');
+                }
+              }),
+              const Divider(),
+              Obx(() => gstReturnController.isBusy
+                  ? const ScreenLoader()
+                  : gstReturnController.returnsData.isEmpty
+                      ? const Align(
+                          alignment: Alignment.center,
+                          child: Column(children: [
+                            SizedBox(height: 150),
+                            NormalText(
+                              text: 'No data available',
+                            ),
+                          ]),
+                        )
+                      : Expanded(
+                          child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
+                            child: ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemCount: gstReturnController
+                                    .returnsData.length,
+                                itemBuilder: (BuildContext context,
+                                    int index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      // TODO: implement doc preview screen
+                                      Get.to(DocumentPreviewScreen(
+                                        file: gstReturnController
+                                            .returnsData[index]
+                                            .file ??
+                                            "",
+                                        name: gstReturnController
+                                            .returnsData[index]
+                                            .name ??
+                                            "",
+                                      ));
+                                    },
+                                    child: Container(
+                                      decoration:
+                                      listItemDecoration,
+                                      padding:
+                                      const EdgeInsets.all(4.0),
+                                      margin: const EdgeInsets
+                                          .symmetric(
+                                          horizontal: 15,
+                                          vertical: 10),
+                                      child: Padding(
                                         padding:
-                                        const EdgeInsets.all(4.0),
-                                        margin: const EdgeInsets
-                                            .symmetric(
-                                            horizontal: 15,
-                                            vertical: 10),
-                                        child: Padding(
-                                          padding:
-                                          const EdgeInsets.all(
-                                              8.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment
-                                                .start,
-                                            children: [
-                                              Stack(
-                                                clipBehavior:
-                                                Clip.none,
-                                                children: [
-                                                  Container(
-                                                    height: 50,
-                                                    width: 50,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(
-                                                            10)),
-                                                    child: ClipRRect(
+                                        const EdgeInsets.all(
+                                            8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment
+                                              .start,
+                                          children: [
+                                            Stack(
+                                              clipBehavior:
+                                              Clip.none,
+                                              children: [
+                                                Container(
+                                                  height: 50,
+                                                  width: 50,
+                                                  decoration: BoxDecoration(
                                                       borderRadius:
                                                       BorderRadius
                                                           .circular(
-                                                          10),
-                                                      child: Image
-                                                          .network(
-                                                        gstReturnController
-                                                            .returnsData[
-                                                        index]
-                                                            .thumbnail ??
-                                                            "",
-                                                        errorBuilder: (BuildContext
-                                                        context,
-                                                            Object
-                                                            exception,
-                                                            StackTrace?
-                                                            stackTrace) {
-                                                          return (gstReturnController.returnsData[index].mimetype !=
-                                                              null &&
-                                                              gstReturnController.returnsData[index].mimetype!.contains(
-                                                                  "pdf"))
-                                                              ? const Icon(Icons
-                                                              .picture_as_pdf)
-                                                              : const Icon(
-                                                              Icons.error);
-                                                        },
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  gstReturnController
-                                                      .returnsData[
-                                                  index]
-                                                      .reviewed ==
-                                                      false
-                                                      ? Positioned(
-                                                    top: -8,
-                                                    right: -5,
-                                                    child:
-                                                    Container(
-                                                      decoration:
-                                                      BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(20)),
-                                                      child:
-                                                      const Icon(
-                                                        Icons
-                                                            .check_circle,
-                                                        color:
-                                                        kSuccess,
-                                                        size:
-                                                        18,
-                                                      ),
-                                                    ),
-                                                  )
-                                                      : Container()
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment
-                                                    .start,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 225,
-                                                    child: NormalText(
-                                                      text: gstReturnController
+                                                          10)),
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                    BorderRadius
+                                                        .circular(
+                                                        10),
+                                                    child: Image
+                                                        .network(
+                                                      gstReturnController
                                                           .returnsData[
                                                       index]
-                                                          .name ??
+                                                          .thumbnail ??
                                                           "",
-                                                      textAlign:
-                                                      TextAlign
-                                                          .start,
-                                                      textFontWeight:
-                                                      FontWeight
-                                                          .w600,
-                                                      textSize: 14,
+                                                      errorBuilder: (BuildContext
+                                                      context,
+                                                          Object
+                                                          exception,
+                                                          StackTrace?
+                                                          stackTrace) {
+                                                        return (gstReturnController.returnsData[index].mimetype !=
+                                                            null &&
+                                                            gstReturnController.returnsData[index].mimetype!.contains(
+                                                                "pdf"))
+                                                            ? const Icon(Icons
+                                                            .picture_as_pdf)
+                                                            : const Icon(
+                                                            Icons.error);
+                                                      },
                                                     ),
                                                   ),
-                                                  NormalText(
-                                                    text: getDateTime(
-                                                        gstReturnController
-                                                            .returnsData[
-                                                        index]
-                                                            .cratedAt ??
-                                                            ""),
+                                                ),
+                                                gstReturnController
+                                                    .returnsData[
+                                                index]
+                                                    .reviewed ==
+                                                    false
+                                                    ? Positioned(
+                                                  top: -8,
+                                                  right: -5,
+                                                  child:
+                                                  Container(
+                                                    decoration:
+                                                    BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(20)),
+                                                    child:
+                                                    const Icon(
+                                                      Icons
+                                                          .check_circle,
+                                                      color:
+                                                      kSuccess,
+                                                      size:
+                                                      18,
+                                                    ),
+                                                  ),
+                                                )
+                                                    : Container()
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment
+                                                  .start,
+                                              children: [
+                                                SizedBox(
+                                                  width: 225,
+                                                  child: NormalText(
+                                                    text: gstReturnController
+                                                        .returnsData[
+                                                    index]
+                                                        .name ??
+                                                        "",
                                                     textAlign:
                                                     TextAlign
                                                         .start,
                                                     textFontWeight:
                                                     FontWeight
-                                                        .w200,
-                                                    textSize: 12,
+                                                        .w600,
+                                                    textSize: 14,
                                                   ),
-                                                ],
-                                              )
-                                            ],
-                                          ),
+                                                ),
+                                                NormalText(
+                                                  text: getDateTime(
+                                                      gstReturnController
+                                                          .returnsData[
+                                                      index]
+                                                          .cratedAt ??
+                                                          ""),
+                                                  textAlign:
+                                                  TextAlign
+                                                      .start,
+                                                  textFontWeight:
+                                                  FontWeight
+                                                      .w200,
+                                                  textSize: 12,
+                                                ),
+                                              ],
+                                            )
+                                          ],
                                         ),
                                       ),
-                                    );
-                                  })
-                            ),
-                          )),
-              ],
-            ),
+                                    ),
+                                  );
+                                })
+                          ),
+                        )),
+            ],
           ),
         ));
   }

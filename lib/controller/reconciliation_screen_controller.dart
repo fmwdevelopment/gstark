@@ -146,7 +146,9 @@ class ReconciliationScreenController extends GetxController {
   }
 
 
-  Future<void> fetchDataFromAPI(String url) async {
+
+
+Future<void> fetchDataFromAPI(String url) async {
     setBusy(true);
 
     try {
@@ -154,6 +156,8 @@ class ReconciliationScreenController extends GetxController {
       var response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
+        print("data new");
+
         var bytes = response.bodyBytes;
         var excel = Excel.decodeBytes(bytes);
         var table = excel[
@@ -166,7 +170,6 @@ class ReconciliationScreenController extends GetxController {
           'Invoice number',
           'Invoice Date',
           'Invoice Value(₹)',
-          'Rate(%)',
           'Taxable Value (₹)',
           'Integrated Tax(₹)',
           'Central Tax(₹)',
@@ -207,11 +210,10 @@ class ReconciliationScreenController extends GetxController {
                 invoiceNumber: columnData[2][index + 1]?.toString() ?? '',
                 invoiceDate: columnData[3][index + 1]?.toString() ?? '',
                 invoiceValue: columnData[4][index + 1]?.toString() ?? '',
-                rate: columnData[5][index + 1]?.toString() ?? '',
-                taxableValue: columnData[6][index + 1]?.toString() ?? '',
-                integratedTax: columnData[7][index + 1]?.toString() ?? '',
-                centralTax: columnData[8][index + 1]?.toString() ?? '',
-                stateUtTax: columnData[9][index + 1]?.toString() ?? ''));
+                taxableValue: columnData[5][index + 1]?.toString() ?? '',
+                integratedTax: columnData[6][index + 1]?.toString() ?? '',
+                centralTax: columnData[7][index + 1]?.toString() ?? '',
+                stateUtTax: columnData[8][index + 1]?.toString() ?? ''));
           }
 
           // print('hello ${columnData[1][index + 1]}');

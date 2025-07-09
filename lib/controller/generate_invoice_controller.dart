@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:gstark/screens/Home/home_screen.dart';
 import 'package:gstark/screens/sales_invoice/sales_invoice_screen.dart';
+import 'package:gstark/utils/success_dialogue.dart';
 import '../constants/shared_preference_string.dart';
 import '../constants/string_constants.dart';
 import '../helper/network/api_end_point.dart';
@@ -59,8 +60,10 @@ class GenerateInvoiceController extends GetxController {
 
 
   uploadInvoiceApiCall(BuildContext context, File file, String fileName) async {
-    print("uploadcall");
+
+
     setBusy(true);
+
     String authToken =
         await CustomSharedPref.getPref(SharedPreferenceString.authToken);
     String email = await CustomSharedPref.getPref(SharedPreferenceString.email);
@@ -124,11 +127,16 @@ class GenerateInvoiceController extends GetxController {
           if (response.statusCode == 200 || response.statusCode == 201) {
             uploadInvoiceApiCallTimer?.cancel();
             setBusy(false);
-            successToast(
-                descriptionText: ' Invoice Uploaded Successfully',
-                context: context);
+            // successToast(
+            //     descriptionText: ' Invoice Uploaded Successfully',
+            //     context: context);
+            showSuccessDialog(context,"Invoice uploaded successfully");
             dataList.clear();
-            Get.off(const HomeScreen(), transition: Transition.rightToLeft);
+            Future.delayed(const Duration(seconds: 3), () {
+              Get.offAll(const HomeScreen(), transition: Transition.rightToLeft);
+            });
+            // Get.back();
+
           } else if (response.statusCode == 400) {
             uploadInvoiceApiCallTimer?.cancel();
 
@@ -167,6 +175,8 @@ class GenerateInvoiceController extends GetxController {
       return false;
     }
   }
+
+
 
   //call before upload invoice
   Future<bool> sendInvoiceData(

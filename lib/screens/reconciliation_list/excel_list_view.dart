@@ -132,12 +132,13 @@ class _ExcelListViewState extends State<ExcelListView> {
               ):
               reconciliationScreenController.filteredData.isEmpty
                   ? const Center(
-                child: NormalText(text: "No Data Found"),
+                child: NormalText(text: "No Data Found!"),
               )
                   : Expanded(
                 child: HorizontalDataTable(
+
                   leftHandSideColumnWidth: 0,
-                  rightHandSideColumnWidth: 2000,
+                  rightHandSideColumnWidth: 1800,
                   isFixedHeader: true,
                   headerWidgets: _getTitleWidget(),
                   leftSideItemBuilder: _generateFirstColumnRow,
@@ -170,7 +171,6 @@ class _ExcelListViewState extends State<ExcelListView> {
       _getTitleItemWidget('Invoice Number', 200),
       _getTitleItemWidget('Invoice Date', 200),
       _getTitleItemWidget('Invoice Value', 200),
-      _getTitleItemWidget('Rate(%)', 200),
       _getTitleItemWidget('Taxable Value(₹)', 200),
       _getTitleItemWidget('Integrated Tax(₹)', 200),
       _getTitleItemWidget('Central Tax(₹)', 200),
@@ -240,15 +240,15 @@ class _ExcelListViewState extends State<ExcelListView> {
               text:reconciliationScreenController.filteredData[index].invoiceValue ??
                   ''),
         ),
-        Container(
-          width: 200,
-          height: 52,
-          padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-          alignment: Alignment.centerLeft,
-          child: NormalText(
-              text:
-              reconciliationScreenController.filteredData[index].rate ?? ''),
-        ),
+        // Container(
+        //   width: 200,
+        //   height: 52,
+        //   padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+        //   alignment: Alignment.centerLeft,
+        //   child: NormalText(
+        //       text:
+        //       reconciliationScreenController.filteredData[index].rate ?? ''),
+        // ),
         Container(
           width: 200,
           height: 52,

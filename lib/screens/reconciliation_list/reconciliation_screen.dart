@@ -49,11 +49,11 @@ class _ReconciliationScreenState extends State<ReconciliationScreen> {
         body: Container(
           color: kWhite,
           height: MediaQuery.of(context).size.height,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Obx(() => DropdownButtonFormField<String>(
+          child: Column(
+            children: [
+              Obx(() => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                         labelText: "Select Financial Year",
                         labelStyle: const TextStyle(
@@ -97,19 +97,22 @@ class _ReconciliationScreenState extends State<ReconciliationScreen> {
                           ),
                         );
                       }).toList(),
-                    )),
-                const SizedBox(
-                  height: 16,
-                ),
-                // Month Dropdown with styling
-                Obx(() {
-                  if (reconciliationScreenController
-                      .selectedFinancialYear.value.isNotEmpty) {
-                    List<String> months = getMonthsForFinancialYear(
-                        reconciliationScreenController
-                            .selectedFinancialYear.value);
+                    ),
+              )),
+              const SizedBox(
+                height: 16,
+              ),
+              // Month Dropdown with styling
+              Obx(() {
+                if (reconciliationScreenController
+                    .selectedFinancialYear.value.isNotEmpty) {
+                  List<String> months = getMonthsForFinancialYear(
+                      reconciliationScreenController
+                          .selectedFinancialYear.value);
 
-                    return DropdownButtonFormField<String>(
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: DropdownButtonFormField<String>(
                       decoration: InputDecoration(
                         labelText: "Select Month",
                         labelStyle: const TextStyle(
@@ -151,182 +154,183 @@ class _ReconciliationScreenState extends State<ReconciliationScreen> {
                           ),
                         );
                       }).toList(),
-                    );
-                  } else {
-                    return const NormalText(
-                        text: 'Select Financial Year to pick a Month');
-                  }
-                }),
-                const SizedBox(height: 16),
-                const Divider(),
-                Obx(() => reconciliationScreenController.isBusy
-                    ? const ScreenLoader()
-                    : reconciliationScreenController.reconciliationData.isEmpty
-                        ? const Align(
-                            alignment: Alignment.center,
-                            child: Column(children: [
-                              SizedBox(height: 150),
-                              NormalText(
-                                text: 'No data available',
-                              ),
-                            ]),
-                          )
-                        : Flexible(
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 10),
-                              child: ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  itemCount:
-                                  reconciliationScreenController
-                                      .reconciliationData.length,
-                                  itemBuilder: (BuildContext context,
-                                      int index) {
-                                    return InkWell(
-                                      onTap: () {
-                                        Get.to(
-                                            ReconciliationTabView(
-                                                name: reconciliationScreenController
-                                                    .reconciliationData[
-                                                index]
-                                                    .name ??
-                                                    "",
-                                                fileUrl:
+                    ),
+                  );
+                } else {
+                  return const NormalText(
+                      text: 'Select Financial Year to pick a Month');
+                }
+              }),
+              const Divider(),
+              Obx(() => reconciliationScreenController.isBusy
+                  ? const ScreenLoader()
+                  : reconciliationScreenController.reconciliationData.isEmpty
+                      ? const Align(
+                          alignment: Alignment.center,
+                          child: Column(children: [
+                            SizedBox(height: 150),
+                            NormalText(
+                              text: 'No data available',
+                            ),
+                          ]),
+                        )
+                      : Expanded(
+                          child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
+                            child: ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                itemCount:
+                                reconciliationScreenController
+                                    .reconciliationData.length,
+                                itemBuilder: (BuildContext context,
+                                    int index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      Get.to(
+                                          ReconciliationTabView(
+                                              name: reconciliationScreenController
+                                                  .reconciliationData[
+                                              index]
+                                                  .name ??
+                                                  "",
+                                              fileUrl:
+                                              reconciliationScreenController
+                                                  .reconciliationData[
+                                              index]
+                                                  .file ??
+                                                  ""),
+                                          transition:
+                                          Transition.rightToLeft);
+                                    },
+                                    child: Container(
+                                      decoration: listItemDecoration,
+                                      padding:
+                                      const EdgeInsets.all(8.0),
+                                      margin:
+                                      const EdgeInsets.symmetric(
+                                          vertical: 8.0),
+                                      child: Padding(
+                                        padding:
+                                        const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                          children: [
+                                            Stack(
+                                              clipBehavior: Clip.none,
+                                              children: [
+                                                Icon(Icons.file_copy_outlined),
+
+                                                // Container(
+                                                //   height: 50,
+                                                //   width: 50,
+                                                //   decoration: BoxDecoration(
+                                                //       borderRadius:
+                                                //       BorderRadius
+                                                //           .circular(
+                                                //           10)),
+                                                //   child: ClipRRect(
+                                                //     borderRadius:
+                                                //     BorderRadius
+                                                //         .circular(
+                                                //         10),
+                                                //     child:
+                                                //     Image.network(
+                                                //       reconciliationScreenController
+                                                //           .reconciliationData[
+                                                //       index]
+                                                //           .thumbnail ??
+                                                //           "",
+                                                //       errorBuilder: (BuildContext
+                                                //       context,
+                                                //           Object
+                                                //           exception,
+                                                //           StackTrace?
+                                                //           stackTrace) {
+                                                //         return const Icon(
+                                                //             Icons
+                                                //                 .file_copy_outlined);
+                                                //       },
+                                                //     ),
+                                                //   ),
+                                                // ),
                                                 reconciliationScreenController
                                                     .reconciliationData[
                                                 index]
-                                                    .file ??
-                                                    ""),
-                                            transition:
-                                            Transition.rightToLeft);
-                                      },
-                                      child: Container(
-                                        decoration: listItemDecoration,
-                                        padding:
-                                        const EdgeInsets.all(8.0),
-                                        margin:
-                                        const EdgeInsets.symmetric(
-                                            vertical: 8.0),
-                                        child: Padding(
-                                          padding:
-                                          const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                            children: [
-                                              Stack(
-                                                clipBehavior: Clip.none,
-                                                children: [
+                                                    .reviewed ==
+                                                    false
+                                                    ? Positioned(
+                                                  top: -8,
+                                                  right: -5,
+                                                  child:
                                                   Container(
-                                                    height: 50,
-                                                    width: 50,
                                                     decoration: BoxDecoration(
                                                         borderRadius:
-                                                        BorderRadius
-                                                            .circular(
-                                                            10)),
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                      BorderRadius
-                                                          .circular(
-                                                          10),
-                                                      child:
-                                                      Image.network(
-                                                        reconciliationScreenController
-                                                            .reconciliationData[
-                                                        index]
-                                                            .thumbnail ??
-                                                            "",
-                                                        errorBuilder: (BuildContext
-                                                        context,
-                                                            Object
-                                                            exception,
-                                                            StackTrace?
-                                                            stackTrace) {
-                                                          return const Icon(
-                                                              Icons
-                                                                  .file_copy_outlined);
-                                                        },
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  reconciliationScreenController
-                                                      .reconciliationData[
-                                                  index]
-                                                      .reviewed ==
-                                                      false
-                                                      ? Positioned(
-                                                    top: -8,
-                                                    right: -5,
+                                                        BorderRadius.circular(20)),
                                                     child:
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                          BorderRadius.circular(20)),
-                                                      child:
-                                                      const Icon(
-                                                        Icons
-                                                            .check_circle,
-                                                        color:
-                                                        kSuccess,
-                                                        size: 18,
-                                                      ),
-                                                    ),
-                                                  )
-                                                      : Container()
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment
-                                                    .start,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 225,
-                                                    child: NormalText(
-                                                      text: reconciliationScreenController
-                                                          .reconciliationData[
-                                                      index]
-                                                          .name ??
-                                                          "",
-                                                      textAlign:
-                                                      TextAlign
-                                                          .start,
-                                                      textFontWeight:
-                                                      FontWeight
-                                                          .w600,
-                                                      textSize: 14,
+                                                    const Icon(
+                                                      Icons
+                                                          .check_circle,
+                                                      color:
+                                                      kSuccess,
+                                                      size: 18,
                                                     ),
                                                   ),
-                                                  const SizedBox(
-                                                      height: 10),
-                                                  NormalText(
-                                                    text: getDateTime(
-                                                        reconciliationScreenController
-                                                            .reconciliationData[
-                                                        index]
-                                                            .cratedAt ??
-                                                            ""),
-                                                    textAlign: TextAlign
+                                                )
+                                                    : Container()
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment
+                                                  .start,
+                                              children: [
+                                                SizedBox(
+                                                  width: 225,
+                                                  child: NormalText(
+                                                    text: reconciliationScreenController
+                                                        .reconciliationData[
+                                                    index]
+                                                        .name ??
+                                                        "",
+                                                    textAlign:
+                                                    TextAlign
                                                         .start,
                                                     textFontWeight:
-                                                    FontWeight.w200,
+                                                    FontWeight
+                                                        .w600,
                                                     textSize: 14,
                                                   ),
-                                                ],
-                                              )
-                                            ],
-                                          ),
+                                                ),
+                                                const SizedBox(
+                                                    height: 10),
+                                                NormalText(
+                                                  text: getDateTime(
+                                                      reconciliationScreenController
+                                                          .reconciliationData[
+                                                      index]
+                                                          .cratedAt ??
+                                                          ""),
+                                                  textAlign: TextAlign
+                                                      .start,
+                                                  textFontWeight:
+                                                  FontWeight.w200,
+                                                  textSize: 14,
+                                                ),
+                                              ],
+                                            )
+                                          ],
                                         ),
                                       ),
-                                    );
-                                  })
-                            ),
-                          )),
-              ],
-            ),
+                                    ),
+                                  );
+                                })
+                          ),
+                        )),
+            ],
           ),
         ));
   }

@@ -5,7 +5,7 @@ class ExcelData {
   final String? invoiceNumber;
   final String? invoiceDate;
   final String? invoiceValue;
-  final String? rate;
+
   final String? taxableValue;
   final String? integratedTax;
   final String? centralTax;
@@ -18,7 +18,6 @@ class ExcelData {
         required this.invoiceNumber,
         required this.invoiceDate,
         required this.invoiceValue,
-        required this.rate,
         required this.taxableValue,
         required this.integratedTax,
         required this.centralTax,

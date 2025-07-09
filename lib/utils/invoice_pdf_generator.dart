@@ -182,9 +182,17 @@ class InvoicePdfGenerator {
 
   pw.Widget _getText(String text) {
     return pw.Container(
-        padding: const pw.EdgeInsets.all(5),
-        child: pw.Text(text, style: const pw.TextStyle(fontSize: 10)));
+      width: text.length>100 ? 200:null,
+      padding: const pw.EdgeInsets.all(5),
+      child: pw.Text(
+        text,
+        style: const pw.TextStyle(fontSize: 10),
+        textAlign: pw.TextAlign.left, // Align text to the left
+      ),
+    );
   }
+
+
 
   pw.Widget _buildItemsTable(Map<String, dynamic> invoiceData) {
     List<Map<String, dynamic>> items = invoiceData['items'];

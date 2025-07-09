@@ -34,6 +34,7 @@ class SalesInvoiceController extends GetxController {
   var selectedFinancialYear = ''.obs;
   var selectedMonth = ''.obs;
 
+
   // Method to update the selected financial year
   void setSelectedFinancialYear(String year) {
     selectedFinancialYear.value = year;

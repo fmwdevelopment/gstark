@@ -54,17 +54,27 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
     _phoneNumberController.addListener(_formatPhoneNumber);
   }
 
+
   void _formatPhoneNumber() {
     String input = _phoneNumberController.text;
 
-    // If number starts with +91 and has 12 digits, remove the +91 and keep the last 10 digits
+    // If the number starts with +91 and has exactly 13 characters, trim +91 and keep the last 10 digits
     if (input.startsWith("+91") && input.length == 13) {
       _phoneNumberController.text = input.substring(3);
-      _phoneNumberController.selection = TextSelection.fromPosition(
-        TextPosition(offset: _phoneNumberController.text.length),
-      );
     }
+
+    // Ensure only a valid 10-digit phone number is allowed
+    if (_phoneNumberController.text.length > 10) {
+      _phoneNumberController.text =
+          _phoneNumberController.text.substring(0, 10);
+    }
+
+    // Set the cursor to the end of the text
+    _phoneNumberController.selection = TextSelection.fromPosition(
+      TextPosition(offset: _phoneNumberController.text.length),
+    );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -445,6 +455,7 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                           obscureText: false,
                           autofocus: false,
                           keyboardType: TextInputType.number,
+
                         ),
                         const SizedBox(height: 10),
                         const NormalText(
@@ -1275,6 +1286,7 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
   void dispose() {
     // Disposing of all controllers to free up memory
     _customerNameController.dispose();
+    _phoneNumberController.removeListener(_formatPhoneNumber);
     _phoneNumberController.dispose();
     _customerGSTNController.dispose();
     _customerAddressController.dispose();

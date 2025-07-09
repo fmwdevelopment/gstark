@@ -40,12 +40,12 @@ class _SalesInvoiceViewState extends State<SalesInvoiceView> {
       child: Container(
         color: kWhite,
         height: MediaQuery.of(context).size.height,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Obx(() => DropdownButtonFormField<String>(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Obx(() => Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DropdownButtonFormField<String>(
                     decoration: InputDecoration(
                       labelText: "Select Financial Year",
                       labelStyle: const TextStyle(
@@ -88,18 +88,21 @@ class _SalesInvoiceViewState extends State<SalesInvoiceView> {
                         ),
                       );
                     }).toList(),
-                  )),
-              const SizedBox(
-                height: 16,
-              ),
-              // Month Dropdown with styling
-              Obx(() {
-                if (salesInvoiceController
-                    .selectedFinancialYear.value.isNotEmpty) {
-                  List<String> months = getMonthsForFinancialYear(
-                      salesInvoiceController.selectedFinancialYear.value);
+                  ),
+            )),
+            const SizedBox(
+              height: 16,
+            ),
+            // Month Dropdown with styling
+            Obx(() {
+              if (salesInvoiceController
+                  .selectedFinancialYear.value.isNotEmpty) {
+                List<String> months = getMonthsForFinancialYear(
+                    salesInvoiceController.selectedFinancialYear.value);
 
-                  return DropdownButtonFormField<String>(
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DropdownButtonFormField<String>(
                     decoration: InputDecoration(
                       labelText: "Select Month",
                       labelStyle: const TextStyle(
@@ -140,177 +143,173 @@ class _SalesInvoiceViewState extends State<SalesInvoiceView> {
                         ),
                       );
                     }).toList(),
-                  );
-                } else {
-                  return const NormalText(
-                      text: 'Select Financial Year to pick a Month');
-                }
-              }),
-              const SizedBox(height: 16),
-              const Divider(),
-              const SizedBox(height: 10),
-              Obx(() => salesInvoiceController.isBusy
-                  ? const ScreenLoader()
-                  : salesInvoiceController.salesData.isEmpty
-                      ? const Align(
-                          alignment: Alignment.center,
-                          child: Column(children: [
-                            SizedBox(height: 150),
-                            NormalText(
-                              text: 'No data available',
-                            ),
-                          ]),
-                        )
-                      : Flexible(
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          child: ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              itemCount:
-                              salesInvoiceController.salesData.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return InkWell(
-                                  onTap: () {
-                                    Get.to(ImagePreviewScreen(
-                                        file: salesInvoiceController
-                                            .salesData[index].file ??
-                                            ""));
-                                  },
-                                  child: Container(
-                                    decoration: listItemDecoration,
-                                    padding: const EdgeInsets.all(8.0),
-                                    // margin: const EdgeInsets.symmetric(
-                                    //     vertical: 8.0),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                        children: [
-                                          Stack(
-                                            clipBehavior: Clip.none,
-                                            children: [
-                                              Container(
-                                                height: 50,
-                                                width: 50,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                    BorderRadius.circular(
-                                                        10)),
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                  BorderRadius.circular(10),
-                                                  child: Image.network(
-                                                    salesInvoiceController
-                                                        .salesData[index]
-                                                        .thumbnail ??
-                                                        "",
-                                                    loadingBuilder: (BuildContext
-                                                    context,
-                                                        Widget child,
-                                                        ImageChunkEvent?
-                                                        loadingProgress) {
-                                                      if (loadingProgress ==
-                                                          null) {
-                                                        return child;
-                                                      } else {
-                                                        return Center(
-                                                          child:
-                                                          CircularProgressIndicator(
-                                                            color:
-                                                            kApplicationThemeColor,
-                                                            value: loadingProgress
-                                                                .expectedTotalBytes !=
-                                                                null
-                                                                ? loadingProgress
-                                                                .cumulativeBytesLoaded /
-                                                                (loadingProgress
-                                                                    .expectedTotalBytes ??
-                                                                    1)
-                                                                : null,
-                                                          ),
-                                                        );
-                                                      }
-                                                    },
-                                                    errorBuilder:
-                                                        (BuildContext context,
-                                                        Object error,
-                                                        StackTrace?
-                                                        stackTrace) {
-                                                      return const Center(
-                                                        child: Icon(
-                                                          Icons.picture_as_pdf,
-                                                        ),
-                                                      );
-                                                    },
+                  ),
+                );
+              } else {
+                return const NormalText(
+                    text: 'Select Financial Year to pick a Month');
+              }
+            }),
+            const Divider(),
+            const SizedBox(height: 10),
+            Obx(() => salesInvoiceController.isBusy
+                ? const ScreenLoader()
+                : salesInvoiceController.salesData.isEmpty
+                ? const Align(
+              alignment: Alignment.center,
+              child: Column(children: [
+                SizedBox(height: 150),
+                NormalText(
+                  text: 'No data available',
+                ),
+              ]),
+            )
+                : Expanded(
+                  child: ListView.builder(
+                      clipBehavior: Clip.hardEdge,
+                      scrollDirection: Axis.vertical,
+                      itemCount:
+                      salesInvoiceController.salesData.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return InkWell(
+                          onTap: () {
+                            Get.to(ImagePreviewScreen(
+                                file: salesInvoiceController
+                                    .salesData[index].file ??
+                                    ""));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10,vertical: 8),
+                              decoration: listItemDecoration,
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.start,
+                                children: [
+                                  Stack(
+                                    clipBehavior: Clip.none,
+                                    children: [
+                                      Container(
+                                        height: 50,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                            BorderRadius.circular(
+                                                10)),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                          BorderRadius.circular(10),
+                                          child: Image.network(
+                                            salesInvoiceController
+                                                .salesData[index]
+                                                .thumbnail ??
+                                                "",
+                                            loadingBuilder: (BuildContext
+                                            context,
+                                                Widget child,
+                                                ImageChunkEvent?
+                                                loadingProgress) {
+                                              if (loadingProgress ==
+                                                  null) {
+                                                return child;
+                                              } else {
+                                                return Center(
+                                                  child:
+                                                  CircularProgressIndicator(
+                                                    color:
+                                                    kApplicationThemeColor,
+                                                    value: loadingProgress
+                                                        .expectedTotalBytes !=
+                                                        null
+                                                        ? loadingProgress
+                                                        .cumulativeBytesLoaded /
+                                                        (loadingProgress
+                                                            .expectedTotalBytes ??
+                                                            1)
+                                                        : null,
                                                   ),
+                                                );
+                                              }
+                                            },
+                                            errorBuilder:
+                                                (BuildContext context,
+                                                Object error,
+                                                StackTrace?
+                                                stackTrace) {
+                                              return const Center(
+                                                child: Icon(
+                                                  Icons.picture_as_pdf,
                                                 ),
-                                              ),
-                                              salesInvoiceController
-                                                  .salesData[index]
-                                                  .reviewed ==
-                                                  false
-                                                  ? Positioned(
-                                                top: -8,
-                                                right: -5,
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                      color: kWhite,
-                                                      borderRadius:
-                                                      BorderRadius
-                                                          .circular(
-                                                          20)),
-                                                  child: const Icon(
-                                                    Icons.check_circle,
-                                                    color: kSuccess,
-                                                    size: 18,
-                                                  ),
-                                                ),
-                                              )
-                                                  : Container()
-                                            ],
+                                              );
+                                            },
                                           ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(
-                                                width:225,
-                                                child: NormalText(
-                                                  text: salesInvoiceController
-                                                      .salesData[index]
-                                                      .name ??
-                                                      "",
-                                                  textAlign: TextAlign.start,
-                                                  textFontWeight: FontWeight.w600,
-                                                  textSize: 14,
-                                                ),
-                                              ),
-                                              NormalText(
-                                                text: getDateTime(
-                                                    salesInvoiceController
-                                                        .salesData[index]
-                                                        .cratedAt ??
-                                                        ""),
-                                                textAlign: TextAlign.start,
-                                                textFontWeight: FontWeight.w200,
-                                                textSize: 14,
-                                              ),
-                                            ],
-                                          )
-                                        ],
+                                        ),
                                       ),
-                                    ),
+                                      salesInvoiceController
+                                          .salesData[index]
+                                          .reviewed ==
+                                          false
+                                          ? Positioned(
+                                        top: -8,
+                                        right: -5,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: kWhite,
+                                              borderRadius:
+                                              BorderRadius
+                                                  .circular(
+                                                  20)),
+                                          child: const Icon(
+                                            Icons.check_circle,
+                                            color: kSuccess,
+                                            size: 18,
+                                          ),
+                                        ),
+                                      )
+                                          : Container()
+                                    ],
                                   ),
-                                );
-                              }),
-                        ),
-                      )),
-            ],
-          ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width:225,
+                                        child: NormalText(
+                                          text: salesInvoiceController
+                                              .salesData[index]
+                                              .name ??
+                                              "",
+                                          textAlign: TextAlign.start,
+                                          textFontWeight: FontWeight.w600,
+                                          textSize: 14,
+                                        ),
+                                      ),
+                                      NormalText(
+                                        text: getDateTime(
+                                            salesInvoiceController
+                                                .salesData[index]
+                                                .cratedAt ??
+                                                ""),
+                                        textAlign: TextAlign.start,
+                                        textFontWeight: FontWeight.w200,
+                                        textSize: 14,
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                )),
+
+          ],
         ),
       ),
     );

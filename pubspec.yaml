@@ -3,7 +3,7 @@ description: A tax filing application.
 
 publish_to: 'none'
 
-version: 1.1.0+4
+version: 1.1.1+7
 
 environment:
   sdk: '>=3.3.2 <4.0.0'
