@@ -19,7 +19,7 @@ class GSTReturnsResponseModel {
 
 class Response {
   final List<ReturnsDocuments>? documents;
-  final int? month;
+  final String? month;
   final int? year;
 
   Response({
@@ -30,7 +30,7 @@ class Response {
 
   Response.fromJson(Map<String, dynamic> json)
       : documents = (json['documents'] as List?)?.map((dynamic e) => ReturnsDocuments.fromJson(e as Map<String,dynamic>)).toList(),
-        month = json['month'] as int?,
+        month = json['month'] as String?,
         year = json['year'] as int?;
 
   Map<String, dynamic> toJson() => {
@@ -43,7 +43,7 @@ class Response {
 class ReturnsDocuments {
   final String? thumbnail;
   final String? updatedAt;
-  final int? month;
+  final String? month;
   final String? cratedAt;
   final String? name;
   final String? description;
@@ -76,7 +76,7 @@ class ReturnsDocuments {
   ReturnsDocuments.fromJson(Map<String, dynamic> json)
       : thumbnail = json['thumbnail'] as String?,
         updatedAt = json['updated_at'] as String?,
-        month = json['month'] as int?,
+        month = json['month'] as String?,
         cratedAt = json['crated_at'] as String?,
         name = json['name'] as String?,
         description = json['description'] as String?,

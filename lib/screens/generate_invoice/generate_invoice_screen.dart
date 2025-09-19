@@ -28,10 +28,10 @@ class GenerateInvoiceScreen extends StatefulWidget {
 }
 
 class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
-  final _customerNameController = TextEditingController();
+  final _customerNameController = TextEditingController(text: "NA");
   final _phoneNumberController = TextEditingController();
-  final _customerGSTNController = TextEditingController();
-  final _customerAddressController = TextEditingController();
+  final _customerGSTNController = TextEditingController(text:"NA");
+  final _customerAddressController = TextEditingController(text:"NA");
 
   final _productNameController = TextEditingController();
   final _quantityController = TextEditingController();
@@ -1227,19 +1227,15 @@ class _GenerateInvoiceScreenState extends State<GenerateInvoiceScreen> {
                                                                   'tax_amount'] /
                                                               2
                                                           : 0,
-                                                      invoiceInfo['inter_state'] ==
+                                                      invoiceInfo['inter_state'] !=
                                                               true
                                                           ? 0
                                                           : invoiceInfo[
                                                               'tax_amount']);
 
                                                   if (isSuccess) {
-                                                    generateInvoiceController
-                                                        .salesInvoiceUploadApi(
-                                                            context,
-                                                            generateInvoiceController
-                                                                .generatedPdf!,
-                                                            'example.pdf');
+                                                    generateInvoiceController.salesInvoiceUploadApi(context, generateInvoiceController.generatedPdf!, 'example.pdf');
+
                                                   } else {
                                                     errorToast(
                                                         "Failed to Send data",

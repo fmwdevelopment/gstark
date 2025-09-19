@@ -59,122 +59,206 @@ class GenerateInvoiceController extends GetxController {
   }
 
 
-  uploadInvoiceApiCall(BuildContext context, File file, String fileName) async {
-
-
+  Future<void> uploadInvoiceApiCall(BuildContext context, File file, String fileName) async {
     setBusy(true);
 
-    String authToken =
-        await CustomSharedPref.getPref(SharedPreferenceString.authToken);
-    String email = await CustomSharedPref.getPref(SharedPreferenceString.email);
-    String userId =
-        await CustomSharedPref.getPref<String>(SharedPreferenceString.clientId);
+    try {
+      // Retrieve stored credentials
+      final authToken = await CustomSharedPref.getPref(SharedPreferenceString.authToken);
+      final email = await CustomSharedPref.getPref(SharedPreferenceString.email);
+      final userId = await CustomSharedPref.getPref<String>(SharedPreferenceString.clientId);
 
-    bool isConnectedToInternet = await checkIsConnectedToInternet();
-    if (isConnectedToInternet) {
-      try {
-        // Convert PDF to Image
-        final pdfDocument = await pdfRender.PdfDocument.openFile(file.path);
-        final page = await pdfDocument.getPage(1); // Get the first page
-        final pageImage = await page.render(
-          width: page.width.toInt(),
-          height: page.height.toInt(),
-        );
-        final imageBytes = pageImage.pixels;
-
-        // Convert the raw image to PNG
-        final image = await pageImage.createImageIfNotAvailable();
-        final pngBytes = await image.toByteData(format: ImageByteFormat.png);
-        final imageList = pngBytes!.buffer.asUint8List();
-
-        // Compress Image
-        final compressedImageBytes =
-            await FlutterImageCompress.compressWithList(
-          imageList,
-          quality: 95,
-        );
-
-        // Prepare API call
-        String url = ApiEndPoint.baseUrl+ApiEndPoint.uploadInvoicePdf;
-        String token = 'Bearer $authToken';
-        Map<String, String> headers = {'Authorization': token};
-        Map<String, String> headers1 = {'x-header-token': email};
-
-        var request = http.MultipartRequest('POST', Uri.parse(url));
-        request.headers.addAll(headers);
-        request.headers.addAll(headers1);
-
-        String mimeType =
-            lookupMimeType(fileName.replaceAll('.pdf', '.jpg')) ?? 'image/jpeg';
-        request.files.add(http.MultipartFile.fromBytes(
-          'file',
-          compressedImageBytes,
-          contentType: MediaType('image', mimeType.split('/')[1]),
-          filename: fileName.replaceAll('.pdf', '.jpg'),
-        ));
-        request.fields["userId"] = userId;
-        request.fields["type"] = "sale";
-        request.fields["description"] = "sale";
-
-        var response = await request.send();
-
-        print('Status Code : ${response.statusCode}');
-        print(response.stream.toString());
-
-        response.stream.bytesToString().asStream().listen((event) async {
-          var parsedJson = json.decode(event);
-
-          if (response.statusCode == 200 || response.statusCode == 201) {
-            uploadInvoiceApiCallTimer?.cancel();
-            setBusy(false);
-            // successToast(
-            //     descriptionText: ' Invoice Uploaded Successfully',
-            //     context: context);
-            showSuccessDialog(context,"Invoice uploaded successfully");
-            dataList.clear();
-            Future.delayed(const Duration(seconds: 3), () {
-              Get.offAll(const HomeScreen(), transition: Transition.rightToLeft);
-            });
-            // Get.back();
-
-          } else if (response.statusCode == 400) {
-            uploadInvoiceApiCallTimer?.cancel();
-
-            CommonModel commonModel = CommonModel.fromJson(parsedJson);
-            if (commonModel.response != null) {
-              errorToast(commonModel.response!, Get.overlayContext ?? context);
-            } else {
-              uploadInvoiceApiCallTimer?.cancel();
-              errorToast(somethingWentWrong, Get.overlayContext ?? context);
-            }
-
-            setBusy(false);
-          } else if (response.statusCode == 401) {
-            uploadInvoiceApiCallTimer?.cancel();
-            await apiService.storeJwt(false);
-
-            uploadInvoiceApiCall(Get.overlayContext ?? context, file, fileName);
-            setBusy(false);
-          } else {
-            uploadInvoiceApiCallTimer?.cancel();
-            errorToast(somethingWentWrong, context);
-            setBusy(false);
-          }
-        });
-      } catch (e) {
-        debugPrint(e.toString());
-        uploadInvoiceApiCallTimer?.cancel();
-        setBusy(false);
-        rethrow;
+      // Check internet
+      final isConnected = await checkIsConnectedToInternet();
+      if (!isConnected) {
+        errorToast(pleaseCheckYourInternetConnectivityAndTryAgain, Get.overlayContext ?? context);
+        return;
       }
-    } else {
+
+      // Convert PDF to image
+      final pdfDocument = await pdfRender.PdfDocument.openFile(file.path);
+      final page = await pdfDocument.getPage(1);
+      final renderedPage = await page.render(width: page.width.toInt(), height: page.height.toInt());
+      final rawImage = await renderedPage.createImageIfNotAvailable();
+      final pngBytes = await rawImage.toByteData(format: ImageByteFormat.png);
+      final imageBytes = pngBytes!.buffer.asUint8List();
+
+      // Compress image
+      final compressedImage = await FlutterImageCompress.compressWithList(imageBytes, quality: 95);
+
+      // Prepare request
+      final url = ApiEndPoint.baseUrl + ApiEndPoint.uploadInvoicePdf;
+      final request = http.MultipartRequest('POST', Uri.parse(url));
+      request.headers.addAll({
+        'Authorization': 'Bearer $authToken',
+        'x-header-token': email,
+      });
+
+      final mimeType = lookupMimeType(fileName.replaceAll('.pdf', '.jpg')) ?? 'image/jpeg';
+      request.files.add(http.MultipartFile.fromBytes(
+        'file',
+        compressedImage,
+        contentType: MediaType('image', mimeType.split('/')[1]),
+        filename: fileName.replaceAll('.pdf', '.jpg'),
+      ));
+
+      int currentMonth = DateTime.now().month;
+
+      request.fields.addAll({
+        'userId': userId,
+        'type': 'sale',
+        'description': 'sale',
+        'month': "$currentMonth"
+      });
+
+      // Send request
+      final response = await request.send();
+      final responseString = await response.stream.bytesToString();
+
+      debugPrint('Status Code: ${response.statusCode}');
+      debugPrint('Response Body: $responseString');
+
+      final jsonResponse = jsonDecode(responseString);
+      final isSuccess = jsonResponse['status'] == true;
+
+      if (isSuccess) {
+        uploadInvoiceApiCallTimer?.cancel();
+        showSuccessDialog(context, "Invoice uploaded successfully");
+
+        dataList.clear();
+        await Future.delayed(const Duration(seconds: 3));
+        Get.offAll(const HomeScreen(), transition: Transition.rightToLeft);
+      } else {
+        final errorMsg = jsonResponse['response'] ?? somethingWentWrong;
+        errorToast(errorMsg, Get.overlayContext ?? context);
+      }
+    } catch (e, stack) {
+      debugPrint("Upload error: $e");
+      debugPrint(stack.toString());
+      errorToast(somethingWentWrong, Get.overlayContext ?? context);
+    } finally {
       uploadInvoiceApiCallTimer?.cancel();
       setBusy(false);
-      errorToast(pleaseCheckYourInternetConnectivityAndTryAgain,
-          Get.overlayContext ?? context);
-      return false;
     }
   }
+
+
+  // uploadInvoiceApiCall(BuildContext context, File file, String fileName) async {
+  //
+  //
+  //   setBusy(true);
+  //
+  //   String authToken =
+  //       await CustomSharedPref.getPref(SharedPreferenceString.authToken);
+  //   String email = await CustomSharedPref.getPref(SharedPreferenceString.email);
+  //   String userId =
+  //       await CustomSharedPref.getPref<String>(SharedPreferenceString.clientId);
+  //
+  //   bool isConnectedToInternet = await checkIsConnectedToInternet();
+  //   if (isConnectedToInternet) {
+  //     try {
+  //       // Convert PDF to Image
+  //       final pdfDocument = await pdfRender.PdfDocument.openFile(file.path);
+  //       final page = await pdfDocument.getPage(1); // Get the first page
+  //       final pageImage = await page.render(
+  //         width: page.width.toInt(),
+  //         height: page.height.toInt(),
+  //       );
+  //       final imageBytes = pageImage.pixels;
+  //
+  //       // Convert the raw image to PNG
+  //       final image = await pageImage.createImageIfNotAvailable();
+  //       final pngBytes = await image.toByteData(format: ImageByteFormat.png);
+  //       final imageList = pngBytes!.buffer.asUint8List();
+  //
+  //       // Compress Image
+  //       final compressedImageBytes =
+  //           await FlutterImageCompress.compressWithList(
+  //         imageList,
+  //         quality: 95,
+  //       );
+  //
+  //       // Prepare API call
+  //       String url = ApiEndPoint.baseUrl+ApiEndPoint.uploadInvoicePdf;
+  //       String token = 'Bearer $authToken';
+  //       Map<String, String> headers = {'Authorization': token};
+  //       Map<String, String> headers1 = {'x-header-token': email};
+  //
+  //       var request = http.MultipartRequest('POST', Uri.parse(url));
+  //       request.headers.addAll(headers);
+  //       request.headers.addAll(headers1);
+  //
+  //       String mimeType =
+  //           lookupMimeType(fileName.replaceAll('.pdf', '.jpg')) ?? 'image/jpeg';
+  //       request.files.add(http.MultipartFile.fromBytes(
+  //         'file',
+  //         compressedImageBytes,
+  //         contentType: MediaType('image', mimeType.split('/')[1]),
+  //         filename: fileName.replaceAll('.pdf', '.jpg'),
+  //       ));
+  //       request.fields["userId"] = userId;
+  //       request.fields["type"] = "sale";
+  //       request.fields["description"] = "sale";
+  //
+  //       var response = await request.send();
+  //
+  //       print('Status Code : ${response.statusCode}');
+  //       print(response.stream.toString());
+  //
+  //       response.stream.bytesToString().asStream().listen((event) async {
+  //         var parsedJson = json.decode(event);
+  //
+  //         if (response.statusCode == 200 || response.statusCode == 201) {
+  //           uploadInvoiceApiCallTimer?.cancel();
+  //           setBusy(false);
+  //           // successToast(
+  //           //     descriptionText: ' Invoice Uploaded Successfully',
+  //           //     context: context);
+  //           showSuccessDialog(context,"Invoice uploaded successfully");
+  //           dataList.clear();
+  //           Future.delayed(const Duration(seconds: 3), () {
+  //             Get.offAll(const HomeScreen(), transition: Transition.rightToLeft);
+  //           });
+  //           // Get.back();
+  //
+  //         } else if (response.statusCode == 400) {
+  //           uploadInvoiceApiCallTimer?.cancel();
+  //
+  //           CommonModel commonModel = CommonModel.fromJson(parsedJson);
+  //           if (commonModel.response != null) {
+  //             errorToast(commonModel.response!, Get.overlayContext ?? context);
+  //           } else {
+  //             uploadInvoiceApiCallTimer?.cancel();
+  //             errorToast(somethingWentWrong, Get.overlayContext ?? context);
+  //           }
+  //
+  //           setBusy(false);
+  //         } else if (response.statusCode == 401) {
+  //           uploadInvoiceApiCallTimer?.cancel();
+  //           await apiService.storeJwt(false);
+  //
+  //           uploadInvoiceApiCall(Get.overlayContext ?? context, file, fileName);
+  //           setBusy(false);
+  //         } else {
+  //           uploadInvoiceApiCallTimer?.cancel();
+  //           errorToast(somethingWentWrong, context);
+  //           setBusy(false);
+  //         }
+  //       });
+  //     } catch (e) {
+  //       debugPrint(e.toString());
+  //       uploadInvoiceApiCallTimer?.cancel();
+  //       setBusy(false);
+  //       rethrow;
+  //     }
+  //   } else {
+  //     uploadInvoiceApiCallTimer?.cancel();
+  //     setBusy(false);
+  //     errorToast(pleaseCheckYourInternetConnectivityAndTryAgain,
+  //         Get.overlayContext ?? context);
+  //     return false;
+  //   }
+  // }
 
 
 
@@ -235,15 +319,18 @@ class GenerateInvoiceController extends GetxController {
            print("sent data");
            return true;
         } else {
+          print("sent data11");
           setBusy(false);
           return false;
         }
       } catch (e) {
         debugPrint(e.toString());
+        print("sent data22");
         setBusy(false);
         return false;
       }
     }else{
+      print("sent data33");
       return false;
     }
   }

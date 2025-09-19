@@ -223,12 +223,12 @@ class InvoicePdfGenerator {
             border: pw.TableBorder.all(width: 1, color: PdfColors.grey400),
             children: [
               _buildTotalAmount("Total", '${invoiceData['total_before_tax']}'),
-              invoiceData['inter_state'] == true
+              invoiceData['inter_state'] == false
                   ? _buildTotalAmount(
                       "CGST Tax", '${invoiceData['tax_amount'] / 2}')
                   : _buildTotalAmount(
                       'IGST Tax', '${invoiceData['tax_amount']}'),
-              invoiceData['inter_state'] == true
+              invoiceData['inter_state'] == false
                   ? _buildTotalAmount(
                       "SGST Tax", '${invoiceData['tax_amount'] / 2}')
                   : _buildTotalAmount('', ''),

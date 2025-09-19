@@ -101,6 +101,7 @@ class SalesInvoiceController extends GetxController {
                 "toDate": toDate,
               },
               "type": "sale"
+
             },
             headers: {
               'x-header-token': email,

@@ -179,9 +179,9 @@ class _SalesInvoiceViewState extends State<SalesInvoiceView> {
                                     ""));
                           },
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 8),
                             child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10,vertical: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 8),
                               decoration: listItemDecoration,
                               child: Row(
                                 mainAxisAlignment:

@@ -1,6 +1,10 @@
 class ApiEndPoint {
   /// API Base URL.
-  //static const String baseUrl = 'https://dev-api.gstark.co';
+
+  /// Developer mode
+  ///static const String baseUrl = 'https://dev-api.gstark.co';
+
+  ///Production mode
   static const String baseUrl = 'https://gstark-service-prod-77msy75epq-uc.a.run.app';
 
   static const String loginApi = '/api/user/login';

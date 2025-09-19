@@ -16,13 +16,14 @@ class ScreenLoader extends StatelessWidget {
             itemCount: 10,
             itemBuilder: (BuildContext context, int index) {
               return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 4),
+                margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: ShimmerLoader(
                   child: ShimmerHorizontalLoadingTile(
-                    height: 70,
+                    height: 60,
                     width: MediaQuery.of(context).size.width,
                   ),
                 ),
